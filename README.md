@@ -25,6 +25,15 @@ For now this looking glass is quite simple. Here you have some features:
   * Configurable list of routers
   * Tweakable interface (title, logo, footer)
   * Log all commands in a file
+  * Customizable output with regular expressions
+
+And here is a list of what this looking glass should be able to do in the
+future:
+
+  * Support of Cisco, Quagga, BIRD and more routers
+  * Support of various authentication types
+  * Configurable list of allowed commands
+  * More customizable interface
 
 Configuration
 -------------
