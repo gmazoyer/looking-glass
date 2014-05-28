@@ -7,7 +7,7 @@ Requirements
 ------------
 
   * Webserver such as Apache 2, or Lighttpd, etc…
-  * PHP module for the webserver (mod-php5 for Apache 2 for example)
+  * PHP (>= 5.2.0) module for the webserver (mod-php5 for Apache 2 for example)
   * SSH2 library for PHP libssh2-php
 
 Description
