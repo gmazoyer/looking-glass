@@ -1,0 +1,22 @@
+<?php
+
+$config['contact']['name'] = 'Example Support';
+$config['contact']['mail'] = 'support@example.com';
+
+$config['frontpage']['title'] = 'Looking Glass';
+$config['frontpage']['image'] = 'logo.png';
+$config['frontpage']['disclaimer'] = 'This is a disclaimer!';
+
+$config['misc']['logs'] = '/var/log/looking-glass.log';
+
+$config['filters'][0] = '/(client1|client2)/';
+$config['filters'][1] = '/^NotToShow/';
+
+$config['routers']['router1']['host'] = 'r1.example.net';
+$config['routers']['router1']['user'] = 'readonlyuser';
+$config['routers']['router1']['pass'] = 'readonlypassword';
+$config['routers']['router1']['auth'] = 'ssh2-password';
+$config['routers']['router1']['type'] = 'junos';
+$config['routers']['router1']['desc'] = 'Example\'s Router 1';
+
+// End of config.php
