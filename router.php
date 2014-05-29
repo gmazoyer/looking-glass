@@ -19,6 +19,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
+require_once 'config.php';
 require_once 'utils.php';
 
 class Router {
@@ -30,7 +31,7 @@ class Router {
   private $requester;
 
   public function __construct($id, $requester) {
-    include 'config.php';
+    global $config;
 
     $this->id = $id;
     $this->host = $config['routers'][$id]['host'];
@@ -40,14 +41,14 @@ class Router {
   }
 
   private function log_command($command) {
-    include 'config.php';
+    global $config;
 
     file_put_contents($config['misc']['logs'], $command,
       FILE_APPEND | LOCK_EX);
   }
 
   public function connect() {
-    include 'config.php';
+    global $config;
 
     switch ($this->auth) {
       case 'ssh-password':
