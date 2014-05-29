@@ -47,3 +47,13 @@ License
 
 Looking Glass is released under the terms of the GNU GPLv3. Please read the
 LICENSE file for more informations.
+
+Contact
+-------
+
+If you have any bugs, errors, improvements, patches, ideas, you can contact me
+on my email address <gmazoyer@gravitons.in>. You are also welcome to fork and
+make some pull requests.
+
+If you use this looking glass in your company, please drop me a mail. I would
+be glad to know that this project was helpful for you.

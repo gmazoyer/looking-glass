@@ -1,22 +1,38 @@
 <?php
 
+// People to contact
 $config['contact']['name'] = 'Example Support';
 $config['contact']['mail'] = 'support@example.com';
 
+// Frontpage configuration
+
+// Title of the page
 $config['frontpage']['title'] = 'Looking Glass';
+// Logo to display
 $config['frontpage']['image'] = 'logo.png';
+// Disclaimer to inform people using the looking glass
 $config['frontpage']['disclaimer'] = 'This is a disclaimer!';
 
+// Logs file when commands will be written
 $config['misc']['logs'] = '/var/log/looking-glass.log';
 
+// Things to remove from the output (PHP compatible regex)
 $config['filters'][0] = '/(client1|client2)/';
 $config['filters'][1] = '/^NotToShow/';
 
+// Router definition
+
+// The hostname or the IP address
 $config['routers']['router1']['host'] = 'r1.example.net';
+// The user to use to connect to the router
 $config['routers']['router1']['user'] = 'readonlyuser';
+// The password of the given user
 $config['routers']['router1']['pass'] = 'readonlypassword';
-$config['routers']['router1']['auth'] = 'ssh2-password';
+// The authentication mecanism to use (ssh-password only for now)
+$config['routers']['router1']['auth'] = 'ssh-password';
+// The router type (juniper/junos only supported for now)
 $config['routers']['router1']['type'] = 'junos';
+// The router description to be displayed in the router list
 $config['routers']['router1']['desc'] = 'Example\'s Router 1';
 
 // End of config.php
