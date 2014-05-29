@@ -148,7 +148,7 @@ final class LookingGlass {
     if (isset($this->frontpage['disclaimer']) &&
       !empty($this->frontpage['disclaimer'])) {
       print 'Your IP address: '.htmlentities($_SERVER['REMOTE_ADDR']).'<br />';
-      print htmlentities($this->frontpage['disclaimer']);
+      print $this->frontpage['disclaimer'];
       print '<br /><br />';
     }
 
