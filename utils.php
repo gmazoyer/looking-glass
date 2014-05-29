@@ -28,7 +28,7 @@ function match_ipv6($ip) {
 }
 
 function match_fqdn($fqdn) {
-  $regex = '/^(?=.{1,255}$)[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?(?:\.[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?)*\.?$/';
+  $regex = '/(?=^.{4,255}$)(^((?!-)[a-zA-Z0-9-]{1,63}(?<!-)\.)+[a-zA-Z]{2,63}$)/';
 
   if ((preg_match($regex, $fqdn) === false) ||
       (preg_match($regex, $fqdn) === 0)) {
