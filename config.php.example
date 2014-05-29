@@ -6,6 +6,8 @@ $config['contact']['mail'] = 'support@example.com';
 
 // Frontpage configuration
 
+// CSS to use
+$config['frontpage']['css'] = 'includes/style.css';
 // Title of the page
 $config['frontpage']['title'] = 'Looking Glass';
 // Logo to display

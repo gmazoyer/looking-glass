@@ -1,0 +1,3 @@
+<Files config.php>
+  Require all denied
+</Files>
