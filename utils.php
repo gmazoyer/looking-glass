@@ -19,10 +19,6 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-if (!defined('LOOKING_GLASS01')) {
-  exit;
-}
-
 function match_ipv4($ip) {
   return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
 }

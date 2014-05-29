@@ -19,10 +19,6 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-if (!defined('LOOKING_GLASS01')) {
-  exit;
-}
-
 require_once 'config.php';
 require_once 'router.php';
 require_once 'utils.php';
