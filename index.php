@@ -19,116 +19,176 @@
  */
 
 require_once 'config.php';
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="keywords" content="Looking Glass, LG, BGP, prefix-list, AS-path, ASN, traceroute, ping, IPv4, IPv6, Cisco, Juniper, Internet" />
-  <meta name="description" content="<?php echo $config['frontpage']['title']; ?>" />
-  <title><?php echo $config['frontpage']['title']; ?></title>
-  <link href="bootstrap-3.1.1/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="bootstrap-3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />
-  <link href="<?php echo $config['frontpage']['css']; ?>" rel="stylesheet" />
-</head>
 
-<body>
-  <div class="header_bar">
-    <h1><?php echo $config['frontpage']['title']; ?></h1><br />
-    <?php
-    if (isset($config['frontpage']['image'])) {
-      echo '<img src="'.$config['frontpage']['image'].'" alt="logo" />';
+final class LookingGlass {
+  private $frontpage;
+  private $contact;
+  private $misc;
+  private $filters;
+  private $routers;
+
+  function __construct() {
+    global $config;
+
+    $this->frontpage = $config['frontpage'];
+    $this->contact = $config['contact'];
+    $this->misc = $config['misc'];
+    $this->filters = $config['filters'];
+    $this->routers = $config['routers'];
+  }
+
+  private function render_routers() {
+    print '<div class="form-group">';
+    print '<label for="routers">Router to use</label>';
+    print '<select size="5" class="form-control" name="routers" id="routers">';
+
+    $first = true;
+    foreach (array_keys($this->routers) as $router) {
+      if ($first) {
+        $first = false;
+        print '<option value="'.$router.'" selected="selected">'.
+          $this->routers[$router]['desc'].'</option>';
+      } else {
+        print '<option value="'.$router.'">'.$this->routers[$router]['desc'].
+          '</option>';
+      }
     }
-    ?>
-  </div>
 
-  <div class="content" id="command_options">
-    <form role="form" action="execute.php" method="post">
-      <div class="form-group">
-        <label for="routers">Router to use</label>
-        <select size="5" class="form-control" name="routers" id="routers">
-        <?php
-        $first = true;
-        foreach (array_keys($config['routers']) as $router) {
-          if ($first) {
-            $first = false;
-            echo '<option value="'.$router.'" selected="selected">'.
-              $config['routers'][$router]['desc'].'</option>';
-          } else {
-            echo '<option value="'.$router.'">'.
-              $config['routers'][$router]['desc'].'</option>';
-          }
-        }
-        ?>
-        </select>
-      </div>
+    print '</select>';
+    print '</div>';
+  }
 
-      <div class="form-group">
-        <label for="query">Command to issue</label>
-        <select size="5" class="form-control" name="query" id="query">
-          <option value="bgp" selected="selected">show route IP_ADDRESS</option>
-          <option value="as-path-regex">show route as-path-regex AS_PATH_REGEX</option>
-          <option value="as">show route AS</option>
-          <option value="ping">ping IP_ADDRESS</option>
-          <option value="traceroute">traceroute IP_ADDRESS</option>
-        </select>
-      </div>
+  private function render_commands() {
+    print '<div class="form-group">';
+    print '<label for="query">Command to issue</label>';
+    print '<select size="5" class="form-control" name="query" id="query">';
+    print '<option value="bgp" selected="selected">show route IP_ADDRESS</option>';
+    print '<option value="as-path-regex">show route as-path-regex AS_PATH_REGEX</option>';
+    print '<option value="as">show route AS</option>';
+    print '<option value="ping">ping IP_ADDRESS</option>';
+    print '<option value="traceroute">traceroute IP_ADDRESS</option>';
+    print '</select>';
+    print '</div>';
+  }
 
-      <div class="form-group">
-        <label for="input-params">Parameters</label>
-        <input class="form-control" name="parameters" id="input-params" />
-      </div>
+  private function render_parameters() {
+    print '<div class="form-group">';
+    print '<label for="input-params">Parameters</label>';
+    print '<input class="form-control" name="parameters" id="input-params" />';
+    print '</div>';
+  }
 
-      <div class="confirm btn-group btn-group-justified">
-        <div class="btn-group">
-          <button class="btn btn-primary" id="send" type="submit">Enter</button>
-        </div>
-        <div class="btn-group">
-          <button class="btn btn-danger" id="clear" type="reset">Reset</button>
-        </div>
-      </div>
-    </form>
-  </div>
+  private function render_buttons() {
+    print '<div class="confirm btn-group btn-group-justified">';
+    print '<div class="btn-group">';
+    print '<button class="btn btn-primary" id="send" type="submit">Enter</button>';
+    print '</div>';
+    print '<div class="btn-group">';
+    print '<button class="btn btn-danger" id="clear" type="reset">Reset</button>';
+    print '</div>';
+    print '</div>';
+  }
 
-  <div class="loading">
-    <div class="progress progress-striped active">
-      <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-      </div>
-    </div>
-  </div>
+  private function render_header() {
+    print '<div class="header_bar">';
+    print '<h1>'.htmlentities($this->frontpage['title']).'</h1><br />';
+    if (isset($this->frontpage['image'])) {
+      print '<img src="'.$this->frontpage['image'].'" alt="logo" />';
+    }
+    print '</div>';
+  }
 
-  <div class="result">
-    <pre class="pre-scrollable" id="output"></pre>
-    <div class="reset">
-      <button class="btn btn-danger btn-block" id="backhome">Reset</button>
-    </div>
-  </div>
+  private function render_content() {
+    print '<div class="content" id="command_options">';
+    print '<form role="form" action="execute.php" method="post">';
 
-  <div class="footer_bar">
-    <p class="text-center">
-      <?php
-      if (isset($config['frontpage']['disclaimer']) &&
-        !empty($config['frontpage']['disclaimer'])) {
-        echo 'Your IP address: '.$_SERVER['REMOTE_ADDR'].'<br />';
-        echo $config['frontpage']['disclaimer'];
-        echo '<br /><br />';
+    foreach ($this->frontpage['order'] as $element) {
+      switch ($element) {
+        case 'routers':
+          $this->render_routers();
+          break;
+
+        case 'commands':
+          $this->render_commands();
+          break;
+
+        case 'parameters':
+          $this->render_parameters();
+          break;
+
+        case 'buttons':
+          $this->render_buttons();
+          break;
+
+        default:
+          break;
       }
+    }
 
-      if (isset($config['contact']) && !empty($config['contact'])) {
-        echo 'Contact:&nbsp;';
-        echo '<a href="mail:'.$config['contact']['mail'].'">'.
-          $config['contact']['name'].'</a>';
-      }
-      ?>
-    </p>
-  </div>
+    print '</form>';
+    print '</div>';
+    print '<div class="loading">';
+    print '<div class="progress progress-striped active">';
+    print '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">';
+    print '</div>';
+    print '</div>';
+    print '</div>';
+    print '<div class="result">';
+    print '<pre class="pre-scrollable" id="output"></pre>';
+    print '<div class="reset">';
+    print '<button class="btn btn-danger btn-block" id="backhome">Reset</button>';
+    print '</div>';
+    print '</div>';
+  }
 
-  <!-- jquery / bootstrap / custom functions -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-  <script src="bootstrap-3.1.1/js/bootstrap.min.js"></script>
-  <script src="includes/utils.js"></script>
-  </script>
-</body>
-</html>
+  private function render_footer() {
+    print '<div class="footer_bar">';
+    print '<p class="text-center">';
+
+    if (isset($this->frontpage['disclaimer']) &&
+      !empty($this->frontpage['disclaimer'])) {
+      print 'Your IP address: '.htmlentities($_SERVER['REMOTE_ADDR']).'<br />';
+      print htmlentities($this->frontpage['disclaimer']);
+      print '<br /><br />';
+    }
+
+    if (isset($this->contact) && !empty($this->contact)) {
+      print 'Contact:&nbsp;';
+      print '<a href="mail:'.$this->contact['mail'].'">'.
+        htmlentities($this->contact['name']).'</a>';
+    }
+
+    print '</p>';
+    print '</div>';
+  }
+
+  public function render() {
+    print '<!DOCTYPE html>';
+    print '<html lang="en">';
+    print '<head>';
+    print '<meta charset="utf-8" />';
+    print '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+    print '<meta name="viewport" content="width=device-width, initial-scale=1" />';
+    print '<meta name="keywords" content="Looking Glass, LG, BGP, prefix-list, AS-path, ASN, traceroute, ping, IPv4, IPv6, Cisco, Juniper, Internet" />';
+    print '<meta name="description" content="'.htmlentities($this->frontpage['title']).'" />';
+    print '<link href="bootstrap-3.1.1/css/bootstrap.min.css" rel="stylesheet" />';
+    print '<link href="bootstrap-3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />';
+    print '<link href="'.$this->frontpage['css'].'" rel="stylesheet" />';
+    print '</head>';
+    print '<body>';
+    $this->render_header();
+    $this->render_content();
+    $this->render_footer();
+    print '</body>';
+    print '<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>';
+    print '<script src="bootstrap-3.1.1/js/bootstrap.min.js"></script>';
+    print '<script src="includes/utils.js"></script>';
+    print '</body>';
+    print '</html>';
+  }
+}
+
+$looking_glass = new LookingGlass();
+$looking_glass->render();
+
+// End of index.php

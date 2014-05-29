@@ -14,6 +14,8 @@ $config['frontpage']['title'] = 'Looking Glass';
 $config['frontpage']['image'] = 'logo.png';
 // Disclaimer to inform people using the looking glass
 $config['frontpage']['disclaimer'] = 'This is a disclaimer!';
+// Frontpage order you can use: routers, commands, parameters, buttons
+$config['frontpage']['order'] = array('routers', 'commands', 'parameters', 'buttons');
 
 // Logs file when commands will be written
 $config['misc']['logs'] = '/var/log/looking-glass.log';
