@@ -38,6 +38,10 @@ future:
 Configuration
 -------------
 
+Copy the configuration **config.php.example** file to create a **config.php**
+file. It contains all the values (PHP variables) used to customize the looking
+glass.
+
 License
 -------
 
