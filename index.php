@@ -28,17 +28,17 @@
         <label for="routers">Router to use</label>
         <select size="5" class="form-control" name="routers">
         <?php
-          $first = true;
-          foreach (array_keys($config['routers']) as $router) {
-            if ($first) {
-              $first = false;
-              echo '<option value="'.$router.'" selected="selected">'.
-                $config['routers'][$router]['desc'].'</option>';
-            } else {
-              echo '<option value="'.$router.'">'.
-                $config['routers'][$router]['desc'].'</option>';
-            }
+        $first = true;
+        foreach (array_keys($config['routers']) as $router) {
+          if ($first) {
+            $first = false;
+            echo '<option value="'.$router.'" selected="selected">'.
+              $config['routers'][$router]['desc'].'</option>';
+          } else {
+            echo '<option value="'.$router.'">'.
+              $config['routers'][$router]['desc'].'</option>';
           }
+        }
         ?>
         </select>
       </div>
@@ -87,8 +87,8 @@
   <div class="footer_bar">
     <p class="text-center">
       <?php
-          if (isset($config['frontpage']['disclaimer']) &&
-            !empty($config['frontpage']['disclaimer'])) {
+      if (isset($config['frontpage']['disclaimer']) &&
+        !empty($config['frontpage']['disclaimer'])) {
         echo 'Your IP address: '.$_SERVER['REMOTE_ADDR'].'<br />';
         echo $config['frontpage']['disclaimer'];
         echo '<br /><br />';
