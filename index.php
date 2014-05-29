@@ -47,7 +47,7 @@ require_once 'config.php';
     <form role="form" action="execute.php" method="post">
       <div class="form-group">
         <label for="routers">Router to use</label>
-        <select size="5" class="form-control" id="routers">
+        <select size="5" class="form-control" name="routers" id="routers">
         <?php
         $first = true;
         foreach (array_keys($config['routers']) as $router) {
@@ -66,7 +66,7 @@ require_once 'config.php';
 
       <div class="form-group">
         <label for="query">Command to issue</label>
-        <select size="5" class="form-control" id="query">
+        <select size="5" class="form-control" name="query" id="query">
           <option value="bgp" selected="selected">show route IP_ADDRESS</option>
           <option value="as-path-regex">show route as-path-regex AS_PATH_REGEX</option>
           <option value="as">show route AS</option>
@@ -77,7 +77,7 @@ require_once 'config.php';
 
       <div class="form-group">
         <label for="input-params">Parameters</label>
-        <input class="form-control" id="input-params" />
+        <input class="form-control" name="parameters" id="input-params" />
       </div>
 
       <div class="confirm btn-group btn-group-justified">
