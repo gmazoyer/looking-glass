@@ -158,6 +158,8 @@ final class LookingGlass {
         htmlentities($this->contact['name']).'</a>';
     }
 
+    print '<br /><br />';
+    print '<span class="origin">Powered by <a href="https://github.com/respawner/looking-glass" title="Looking Glass Project">Looking Glass</a></span>';
     print '</p>';
     print '</div>';
   }

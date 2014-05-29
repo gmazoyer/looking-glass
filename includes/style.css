@@ -16,6 +16,9 @@ body {
   margin-left:      auto;
   margin-right:     auto;
 }
+.origin {
+  font-size:        0.8em;
+}
 .logo {
   text-align:       center;
   padding:          1%;
