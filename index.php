@@ -23,8 +23,9 @@ require_once 'config.php';
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="keywords" content="Looking Glass, LG, BGP, prefix-list, AS-path, ASN, traceroute, ping, IPv4, IPv6, Cisco, Juniper, Internet" />
   <meta name="description" content="<?php echo $config['frontpage']['title']; ?>" />
   <title><?php echo $config['frontpage']['title']; ?></title>
@@ -117,7 +118,8 @@ require_once 'config.php';
 
       if (isset($config['contact']) && !empty($config['contact'])) {
         echo 'Contact:&nbsp;';
-        echo '<a href="mail:'.$config['contact']['mail'].'">'.$config['contact']['name'].'</a>';
+        echo '<a href="mail:'.$config['contact']['mail'].'">'.
+          $config['contact']['name'].'</a>';
       }
       ?>
     </p>
