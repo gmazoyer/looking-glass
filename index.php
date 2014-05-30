@@ -173,7 +173,7 @@ final class LookingGlass {
     print '<meta name="viewport" content="width=device-width, initial-scale=1" />';
     print '<meta name="keywords" content="Looking Glass, LG, BGP, prefix-list, AS-path, ASN, traceroute, ping, IPv4, IPv6, Cisco, Juniper, Internet" />';
     print '<meta name="description" content="'.$this->frontpage['title'].'" />';
-    print '<title>'.htmlentities($this->frontpage['title'].'</title>';
+    print '<title>'.htmlentities($this->frontpage['title']).'</title>';
     print '<link href="bootstrap-3.1.1/css/bootstrap.min.css" rel="stylesheet" />';
     print '<link href="bootstrap-3.1.1/css/bootstrap-theme.min.css" rel="stylesheet" />';
     print '<link href="'.$this->frontpage['css'].'" rel="stylesheet" />';
