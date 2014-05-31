@@ -24,19 +24,52 @@ $config['misc']['logs'] = '/var/log/looking-glass.log';
 $config['filters'][0] = '/(client1|client2)/';
 $config['filters'][1] = '/^NotToShow/';
 
-// Router definition
+// Routers definitions
 
+// Authentication based on SSH with password
 // The hostname or the IP address
 $config['routers']['router1']['host'] = 'r1.example.net';
 // The user to use to connect to the router
 $config['routers']['router1']['user'] = 'readonlyuser';
 // The password of the given user
 $config['routers']['router1']['pass'] = 'readonlypassword';
-// The authentication mecanism to use (ssh-password only for now)
+// The authentication mecanism to use (ssh-password, ssh-key or telnet)
 $config['routers']['router1']['auth'] = 'ssh-password';
 // The router type (juniper/junos only supported for now)
-$config['routers']['router1']['type'] = 'junos';
+$config['routers']['router1']['type'] = 'juniper';
 // The router description to be displayed in the router list
 $config['routers']['router1']['desc'] = 'Example\'s Router 1';
+
+// Authentication based on SSH with key
+// The hostname or the IP address
+$config['routers']['router2']['host'] = 'r2.example.net';
+// The user to use to connect to the router
+$config['routers']['router2']['user'] = 'readonlyuser';
+// The public key of the given user
+$config['routers']['router2']['public_key'] = '/home/user/.ssh/key.pub';
+// The private key of the given user
+$config['routers']['router2']['private_key'] = '/home/user/.ssh/key.pub';
+// The passphrase of the key (optional if the key has no passphrase)
+$config['routers']['router2']['pass'] = 'mypassphrase';
+// The authentication mecanism to use (ssh-password, ssh-key or telnet)
+$config['routers']['router2']['auth'] = 'ssh-key';
+// The router type (juniper/junos only supported for now)
+$config['routers']['router2']['type'] = 'juniper';
+// The router description to be displayed in the router list
+$config['routers']['router2']['desc'] = 'Example\'s Router 2';
+
+// Authentication based on Telnet
+// The hostname or the IP address
+$config['routers']['router3']['host'] = 'r3.example.net';
+// The user to use to connect to the router
+$config['routers']['router3']['user'] = 'readonlyuser';
+// The password of the given user
+$config['routers']['router3']['pass'] = 'readonlypassword';
+// The authentication mecanism to use (ssh-password, ssh-key or telnet)
+$config['routers']['router3']['auth'] = 'telnet';
+// The router type (juniper/junos only supported for now)
+$config['routers']['router3']['type'] = 'juniper';
+// The router description to be displayed in the router list
+$config['routers']['router3']['desc'] = 'Example\'s Router 3';
 
 // End of config.php
