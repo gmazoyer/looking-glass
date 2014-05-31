@@ -21,7 +21,7 @@
 
 require_once 'config.php';
 require_once 'utils.php';
-require_once 'auth/ssh.php';
+require_once 'auth/authentication.php';
 
 class Router {
   private $id;
@@ -106,21 +106,10 @@ class Router {
     }
 
     $data = null;
-
-    if ($this->auth == 'ssh-password') {
-      if ($this->port != null) {
-        $connection = new SSH($this->host, $this->port);
-      } else {
-        $connection = new SSH($this->host);
-      }
-
-      $connection->set_type_auth_password(
-        $config['routers'][$this->id]['user'],
-        $config['routers'][$this->id]['pass']);
-      $connection->connect();
-      $data = $connection->send_command($complete_command);
-      $connection->disconnect();
-    }
+    $auth = Authentication::instance($config['routers'][$this->id]);
+    $auth->connect();
+    $data = $auth->send_command($complete_command);
+    $auth->disconnect();
 
     $this->log_command('['.date("Y-m-d H:i:s").'] [client: '.
       $this->requester.'] '.$this->host.'> '.$complete_command."\n");
