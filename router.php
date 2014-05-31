@@ -21,10 +21,12 @@
 
 require_once 'config.php';
 require_once 'utils.php';
+require_once 'auth/ssh.php';
 
 class Router {
   private $id;
   private $host;
+  private $port;
   private $type;
   private $auth;
   private $connection;
@@ -38,60 +40,22 @@ class Router {
     $this->type = $config['routers'][$id]['type'];
     $this->auth = $config['routers'][$id]['auth'];
     $this->requester = $requester;
+
+    if (isset($config['routers'][$id]['port'])) {
+      $this->port = $config['routers'][$id]['port'];
+    }
   }
 
-  private function log_command($command) {
+  protected function log_command($command) {
     global $config;
 
     file_put_contents($config['misc']['logs'], $command,
       FILE_APPEND | LOCK_EX);
   }
 
-  public function connect() {
+  public function send_command($command, $parameters) {
     global $config;
 
-    switch ($this->auth) {
-      case 'ssh-password':
-        $this->connection = ssh2_connect($this->host, 22);
-        if (!$this->connection) {
-          throw new Exception('Cannot connect to router');
-        }
-
-        $user = $config['routers'][$this->id]['user'];
-        $pass = $config['routers'][$this->id]['pass'];
-
-        if (!ssh2_auth_password($this->connection, $user, $pass)) {
-          throw new Exception('Bad login/password.');
-        }
-
-        break;
-
-      default:
-        echo 'Unknown protocol for connection.';
-    }
-  }
-
-  public function execute_command($command) {
-    if ($this->connection == null) {
-      $this->connect();
-    }
-
-    if (!($stream = ssh2_exec($this->connection, $command))) {
-      throw new Exception('SSH command failed');
-    }
-
-    stream_set_blocking($stream, true);
-
-    $data = '';
-    while ($buf = fread($stream, 4096)) {
-      $data .= $buf;
-    }
-    fclose($stream);
-
-    return $data;
-  }
-
-  public function send_command($command, $parameters) {
     switch ($command) {
       case 'bgp':
         if (($parameters != null) && (strlen($parameters) > 0)) {
@@ -141,18 +105,27 @@ class Router {
         return 'Command not supported.';
     }
 
+    $data = null;
+
+    if ($this->auth == 'ssh-password') {
+      if ($this->port != null) {
+        $connection = new SSH($this->host, $this->port);
+      } else {
+        $connection = new SSH($this->host);
+      }
+
+      $connection->set_type_auth_password(
+        $config['routers'][$this->id]['user'],
+        $config['routers'][$this->id]['pass']);
+      $connection->connect();
+      $data = $connection->send_command($complete_command);
+      $connection->disconnect();
+    }
+
     $this->log_command('['.date("Y-m-d H:i:s").'] [client: '.
       $this->requester.'] '.$this->host.'> '.$complete_command."\n");
-    return $this->execute_command($complete_command);
-  }
 
-  public function disconnect() {
-    $this->execute_command('exit'); 
-    $this->connection = null;
-  }
-
-  public function __destruct() {
-    $this->disconnect();
+    return $data;
   }
 }
 

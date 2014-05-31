@@ -78,11 +78,10 @@ if (isset($_POST['query']) && !empty($_POST['query']) &&
     // Do the processing
     // Router connection, command execution, disconnection
     $router = new Router($hostname, $_SERVER['REMOTE_ADDR']);
-    $router->connect();
     $data = $router->send_command($query, $parameters);
-    $router->disconnect();
 
     // Process the output line by line
+    $return = '';
     foreach (preg_split("/((\r?\n)|(\r\n?))/", $data) as $line) {
       // Get rid of empty lines
       if (empty($line)) {
