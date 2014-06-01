@@ -63,10 +63,6 @@ class Telnet extends Authentication {
     fclose($this->connection);
     $this->connection = null;
   }
-
-  public function __destruct() {
-    parent::__destruct();
-  }
 }
 
 // End of telnet.php

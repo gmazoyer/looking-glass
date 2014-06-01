@@ -98,10 +98,6 @@ class SSH extends Authentication {
     $this->send_command('exit');
     $this->connection = null;
   }
-
-  public function __destruct() {
-    parent::__destruct();
-  }
 }
 
 // End of ssh.php
