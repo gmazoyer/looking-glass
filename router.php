@@ -105,7 +105,6 @@ class Router {
         return 'Command not supported.';
     }
 
-    $data = null;
     $auth = Authentication::instance($config['routers'][$this->id]);
     $auth->connect();
     $data = $auth->send_command($complete_command);
