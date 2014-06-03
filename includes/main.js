@@ -1,4 +1,4 @@
-$(function() {
+$(document).ready(function() {
   // hide the optional parameters field
   $('.result').hide();
   $('.loading').hide();
