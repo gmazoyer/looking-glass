@@ -187,7 +187,7 @@ final class LookingGlass {
     print '</body>';
     print '<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>';
     print '<script src="bootstrap-3.1.1/js/bootstrap.min.js"></script>';
-    print '<script src="includes/utils.js"></script>';
+    print '<script src="includes/main.js"></script>';
     print '</body>';
     print '</html>';
   }
