@@ -101,6 +101,7 @@ final class LookingGlass {
   private function render_content() {
     print '<div class="content" id="command_options">';
     print '<form role="form" action="execute.php" method="post">';
+    print '<fieldset id="command_properties">';
 
     foreach ($this->frontpage['order'] as $element) {
       switch ($element) {
@@ -125,6 +126,7 @@ final class LookingGlass {
       }
     }
 
+    print '</fieldset>';
     print '</form>';
     print '</div>';
     print '<div class="loading">';

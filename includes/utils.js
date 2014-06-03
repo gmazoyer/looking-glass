@@ -5,15 +5,12 @@ $(function() {
 
   // show and hide loading bar
   $(document).ajaxStart(function() {
+    $('#command_properties').attr('disabled', '');
     $('.loading').show();
   });
   $(document).ajaxStop(function() {
+    $('#command_properties').removeAttr('disabled');
     $('.loading').hide();
-  });
-
-  // validate the parameters field
-  $('#input-params').on('input', function() {
-    var cmd = $('#query').val();
   });
 
   // reset the view to the default one
