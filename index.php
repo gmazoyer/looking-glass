@@ -151,7 +151,7 @@ final class LookingGlass {
     print '<div class="footer_bar">';
     print '<p class="text-center">';
 
-    if (!isset($this->frontpage['show_visitor_ip'] ||
+    if (!isset($this->frontpage['show_visitor_ip']) ||
       $this->frontpage['show_visitor_ip']) {
       print 'Your IP address: '.htmlentities($_SERVER['REMOTE_ADDR']).'<br />';
     }
