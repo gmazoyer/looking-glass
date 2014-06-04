@@ -46,13 +46,6 @@ class Router {
     }
   }
 
-  protected function log_command($command) {
-    global $config;
-
-    file_put_contents($config['misc']['logs'], $command,
-      FILE_APPEND | LOCK_EX);
-  }
-
   public function send_command($command, $parameters) {
     global $config;
 
@@ -110,8 +103,8 @@ class Router {
     $data = $auth->send_command($complete_command);
     $auth->disconnect();
 
-    $this->log_command('['.date("Y-m-d H:i:s").'] [client: '.
-      $this->requester.'] '.$this->host.'> '.$complete_command."\n");
+    log_to_file('[client: '.$this->requester.'] '.$this->host.'> '.
+      $complete_command);
 
     return $data;
   }

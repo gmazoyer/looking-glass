@@ -19,6 +19,8 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
+require_once 'config.php';
+
 function match_ipv4($ip) {
   return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
 }
@@ -58,5 +60,11 @@ function match_aspath_regex($aspath_regex) {
   // TODO: validate a regex with a regex?
   return true;
 }
+
+function log_to_file($log) {
+  $log = '['.date("Y-m-d H:i:s").'] '.$log."\n";
+  file_put_contents($config['misc']['logs'], $log, FILE_APPEND | LOCK_EX);
+}
+
 
 // End of utils.php

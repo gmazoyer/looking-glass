@@ -25,6 +25,7 @@ require_once 'utils.php';
 
 // Obvious spam
 if (!isset($_POST['dontlook']) || !empty($_POST['dontlook'])) {
+  log_to_file('Spam detected from '.$_SERVER['REMOTE_ADDR'].'.');
   die('Spam detected');
 }
 
