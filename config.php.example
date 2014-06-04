@@ -10,6 +10,7 @@ $config['contact']['mail'] = 'support@example.com';
 $config['frontpage']['css'] = 'includes/style.css';
 // Title of the page
 $config['frontpage']['title'] = 'Looking Glass';
+$config['frontpage']['show_title'] = true;
 // Logo to display
 $config['frontpage']['image'] = 'logo.png';
 // Disclaimer to inform people using the looking glass

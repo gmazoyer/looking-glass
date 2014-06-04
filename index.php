@@ -91,7 +91,10 @@ final class LookingGlass {
 
   private function render_header() {
     print '<div class="header_bar">';
-    print '<h1>'.htmlentities($this->frontpage['title']).'</h1><br />';
+    if (!isset($this->frontpage['show_title']) ||
+      $this->frontpage['show_title']) {
+      print '<h1>'.htmlentities($this->frontpage['title']).'</h1><br />';
+    }
     if (isset($this->frontpage['image'])) {
       print '<img src="'.$this->frontpage['image'].'" alt="logo" />';
     }
