@@ -69,7 +69,7 @@ class SSH extends Authentication {
       throw new Exception('Unknown type of connection for SSH.');
     }
 
-    if (!success) {
+    if (!$success) {
       throw new Exception('SSH authentication failed.');
     }
   }

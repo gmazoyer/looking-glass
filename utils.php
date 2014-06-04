@@ -62,6 +62,8 @@ function match_aspath_regex($aspath_regex) {
 }
 
 function log_to_file($log) {
+  global $config;
+
   $log = '['.date("Y-m-d H:i:s").'] '.$log."\n";
   file_put_contents($config['misc']['logs'], $log, FILE_APPEND | LOCK_EX);
 }
