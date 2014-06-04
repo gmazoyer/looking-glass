@@ -24,7 +24,7 @@ require_once 'router.php';
 require_once 'utils.php';
 
 // Obvious spam
-if (isset($_POST['dontlook']) || !empty($_POST['dontlook'])) {
+if (!isset($_POST['dontlook']) || !empty($_POST['dontlook'])) {
   die('Spam detected');
 }
 
