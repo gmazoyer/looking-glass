@@ -13,6 +13,8 @@ $config['frontpage']['title'] = 'Looking Glass';
 $config['frontpage']['show_title'] = true;
 // Logo to display
 $config['frontpage']['image'] = 'logo.png';
+// Show visitor IP address
+$config['frontpage']['show_visitor_ip'] = true;
 // Disclaimer to inform people using the looking glass
 $config['frontpage']['disclaimer'] = 'This is a disclaimer!';
 // Frontpage order you can use: routers, commands, parameters, buttons
