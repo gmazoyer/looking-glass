@@ -126,6 +126,7 @@ final class LookingGlass {
       }
     }
 
+    print '<input type="text" id="dontlook" name="dontlook" placeholder="Don\'t look at me!" />';
     print '</fieldset>';
     print '</form>';
     print '</div>';

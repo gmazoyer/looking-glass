@@ -23,6 +23,11 @@ require_once 'config.php';
 require_once 'router.php';
 require_once 'utils.php';
 
+// Obvious spam
+if (isset($_POST['dontlook']) || !empty($_POST['dontlook'])) {
+  die('Spam detected');
+}
+
 if (isset($_POST['query']) && !empty($_POST['query']) &&
     isset($_POST['routers']) && !empty($_POST['routers']) &&
     isset($_POST['parameters']) && !empty($_POST['parameters'])) {
