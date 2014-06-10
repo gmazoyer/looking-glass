@@ -192,9 +192,9 @@ final class LookingGlass {
     $this->render_content();
     $this->render_footer();
     print '</body>';
-    print '<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>';
+    print '<script src="js/jquery-1.11.1.min.js"></script>';
     print '<script src="bootstrap-3.1.1/js/bootstrap.min.js"></script>';
-    print '<script src="includes/main.js"></script>';
+    print '<script src="js/looking-glass.js"></script>';
     print '</body>';
     print '</html>';
   }
