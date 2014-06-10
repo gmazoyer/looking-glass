@@ -21,7 +21,7 @@
 
 require_once 'authentication.php';
 
-class Telnet extends Authentication {
+final class Telnet extends Authentication {
   private $port;
 
   public function __construct($config) {

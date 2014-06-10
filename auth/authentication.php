@@ -49,7 +49,7 @@ abstract class Authentication {
         return new Telnet($config);
 
       default:
-        'Unknown authentication mecanism "'.$config['auth'].'"."';
+        print 'Unknown authentication mecanism "'.$config['auth'].'"."';
         return null;
     }
   }

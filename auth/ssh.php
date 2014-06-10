@@ -21,7 +21,7 @@
 
 require_once 'authentication.php';
 
-class SSH extends Authentication {
+final class SSH extends Authentication {
   private $port;
 
   public function __construct($config) {
