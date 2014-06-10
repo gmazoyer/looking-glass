@@ -53,8 +53,8 @@ abstract class Router {
     $data = $auth->send_command($complete_command);
     $auth->disconnect();
 
-    log_to_file('['.date("Y-m-d H:i:s").'] [client: '.$this->requester.'] '.
-      $this->config['host'].'> '.$complete_command);
+    log_to_file('[client: '.$this->requester.'] '.$this->config['host'].'> '.
+      $complete_command);
 
     return $data;
   }
