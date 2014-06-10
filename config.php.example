@@ -7,7 +7,7 @@ $config['contact']['mail'] = 'support@example.com';
 // Frontpage configuration
 
 // CSS to use
-$config['frontpage']['css'] = 'includes/style.css';
+$config['frontpage']['css'] = 'css/style.css';
 // Title of the page
 $config['frontpage']['title'] = 'Looking Glass';
 $config['frontpage']['show_title'] = true;
