@@ -68,10 +68,22 @@ if (isset($_POST['query']) && !empty($_POST['query']) &&
 
   // Do the processing
   $router = Router::instance($hostname, $_SERVER['REMOTE_ADDR']);
-  $data = $router->send_command($query, $parameters);
 
-  // Display the result of the command
-  print process_output($data);
+  try {
+    $output = $router->send_command($query, $parameters);
+  } catch (Exception $e) {
+    $error = $e->getMessage();
+  }
+
+  if (isset($output)) {
+    // Display the result of the command
+    $data = array('result' => process_output($output));
+  } else {
+    // Display the error
+    $data = array('error' => $error);
+  }
+
+  print json_encode($data);
 }
 
 // End of execute.php

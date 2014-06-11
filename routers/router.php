@@ -45,16 +45,21 @@ abstract class Router {
     try {
       $complete_command = $this->build_command($command, $parameters);
     } catch (Exception $e) {
-      return $e->getMessage();
+      throw $e;
     }
 
     $auth = Authentication::instance($this->config);
-    $auth->connect();
-    $data = $auth->send_command($complete_command);
-    $auth->disconnect();
 
-    log_to_file('[client: '.$this->requester.'] '.$this->config['host'].'> '.
-      $complete_command);
+    try {
+      $auth->connect();
+      $data = $auth->send_command($complete_command);
+    } catch (Exception $e) {
+      throw $e;
+    } finally {
+      $auth->disconnect();
+      log_to_file('[client: '.$this->requester.'] '.$this->config['host'].'> '.
+        $complete_command);
+    }
 
     return $data;
   }

@@ -102,6 +102,10 @@ final class LookingGlass {
   }
 
   private function render_content() {
+    print '<div class="alert alert-danger alert-dismissable" id="error">';
+    print '<button type="button" class="close" aria-hidden="true">&times;</button>';
+    print '<strong>Error!</strong>&nbsp;<span id="error-text"></span>';
+    print '</div>';
     print '<div class="content" id="command_options">';
     print '<form role="form" action="execute.php" method="post">';
     print '<fieldset id="command_properties">';
