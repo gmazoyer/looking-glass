@@ -26,7 +26,7 @@ final class Juniper extends Router {
   protected function build_command($command, $parameters) {
     switch ($command) {
       case 'bgp':
-        if (match_ipv4($parameters) || match_ipv6($parameters)) {
+        if (match_ipv4($parameters)) {
           $complete_command = 'show route '.$parameters.
             ' table inet.0 protocol bgp active-path | no-more';
         } else if (match_ipv6($parameters)) {
