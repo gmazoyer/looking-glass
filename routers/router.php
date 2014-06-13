@@ -52,6 +52,7 @@ abstract class Router {
 
     try {
       $auth->connect();
+      $data = '';
 
       foreach ($commands as $selected) {
         $data .= $auth->send_command($selected);

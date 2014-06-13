@@ -30,10 +30,10 @@ final class Juniper extends Router {
       case 'bgp':
         if (match_ipv4($parameters)) {
           $commands[] = 'show route '.$parameters.
-            ' protocol bgp table inet.0 active-path | no-more';
+            ' protocol bgp table inet.0 active-path';
         } else if (match_ipv6($parameters)) {
           $commands[] = 'show route '.$parameters.
-            ' protocol bgp table inet6.0 active-path | no-more';
+            ' protocol bgp table inet6.0 active-path';
         } else {
           throw new Exception('The parameter is not an IPv4/IPv6 address.');
         }
@@ -42,9 +42,9 @@ final class Juniper extends Router {
       case 'as-path-regex':
         if (match_aspath_regex($parameters)) {
           $commands[] = 'show route aspath-regex '.$parameters.
-            ' protocol bgp table inet.0 | no-more';
+            ' protocol bgp table inet.0';
           $commands[] = 'show route aspath-regex '.$parameters.
-            ' protocol bgp table inet6.0 | no-more';
+            ' protocol bgp table inet6.0';
         } else {
           throw new Exception('The parameter is not an AS-Path regular expression like ".*XXXX YYYY.*".');
         }
@@ -53,9 +53,9 @@ final class Juniper extends Router {
       case 'as':
         if (match_as($parameters)) {
           $commands[] = 'show route aspath-regex ^'.$parameters.
-            '$ protocol bgp table inet.0 | no-more';
+            '$ protocol bgp table inet.0';
           $commands[] = 'show route aspath-regex ^'.$parameters.
-            '$ protocol bgp table inet6.0 | no-more';
+            '$ protocol bgp table inet6.0';
         } else {
           throw new Exception('The parameter is not an AS number.');
         }
