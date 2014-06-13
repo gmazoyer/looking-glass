@@ -39,11 +39,11 @@ abstract class Router {
     }
   }
 
-  protected abstract function build_command($command, $parameters);
+  protected abstract function build_commands($command, $parameters);
 
   public function send_command($command, $parameters) {
     try {
-      $complete_command = $this->build_command($command, $parameters);
+      $commands = $this->build_commands($command, $parameters);
     } catch (Exception $e) {
       throw $e;
     }
@@ -52,13 +52,19 @@ abstract class Router {
 
     try {
       $auth->connect();
-      $data = $auth->send_command($complete_command);
+
+      foreach ($commands as $selected) {
+        $data .= $auth->send_command($selected);
+      }
     } catch (Exception $e) {
       throw $e;
     } finally {
       $auth->disconnect();
-      log_to_file('[client: '.$this->requester.'] '.$this->config['host'].'> '.
-        $complete_command);
+
+      foreach ($commands as $selected) {
+        log_to_file('[client: '.$this->requester.'] '.$this->config['host'].'> '.
+        $selected);
+      }
     }
 
     return $data;
