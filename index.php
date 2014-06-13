@@ -90,6 +90,7 @@ final class LookingGlass {
   }
 
   private function render_header() {
+    print '<a href="." title="Home">';
     print '<div class="header_bar">';
     if (!isset($this->frontpage['show_title']) ||
       $this->frontpage['show_title']) {
@@ -99,6 +100,7 @@ final class LookingGlass {
       print '<img src="'.$this->frontpage['image'].'" alt="logo" />';
     }
     print '</div>';
+    print '</a>';
   }
 
   private function render_content() {
