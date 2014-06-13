@@ -35,7 +35,7 @@ abstract class Router {
     $this->requester = $requester;
 
     if (isset($config['routers'][$id]['port'])) {
-      $this->port = $config['routers'][$id]['port'];
+      $this->port = (int) $config['routers'][$id]['port'];
     }
   }
 
