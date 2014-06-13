@@ -64,7 +64,7 @@ final class Juniper extends Router {
       case 'ping':
         if (match_ipv4($parameters) || match_ipv6($parameters) ||
           match_fqdn($parameters)) {
-          $complete_command = 'ping count 10 '.$parameters.' rapid';
+          $commands[] = 'ping count 10 '.$parameters.' rapid';
         } else {
           throw new Exception('The parameter is not an IPv4/IPv6 address or a FQDN.');
         }
@@ -72,9 +72,9 @@ final class Juniper extends Router {
 
       case 'traceroute':
         if (match_ipv4($parameters)) {
-          $complete_command = 'traceroute '.$parameters.' as-number-lookup';
+          $commands[] = 'traceroute '.$parameters.' as-number-lookup';
         } else if (match_ipv6($parameters) || match_fqdn($parameters)) {
-          $complete_command = 'traceroute '.$parameters;
+          $commands[] = 'traceroute '.$parameters;
         } else {
           throw new Exception('The parameter is not an IPv4/IPv6 address or a FQDN.');
         }
