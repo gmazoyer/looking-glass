@@ -41,10 +41,10 @@ final class Juniper extends Router {
 
       case 'as-path-regex':
         if (match_aspath_regex($parameters)) {
-          $commands[] = 'show route aspath-regex '.$parameters.
-            ' protocol bgp table inet.0';
-          $commands[] = 'show route aspath-regex '.$parameters.
-            ' protocol bgp table inet6.0';
+          $commands[] = 'show route aspath-regex "'.$parameters.
+            '" protocol bgp table inet.0';
+          $commands[] = 'show route aspath-regex "'.$parameters.
+            '" protocol bgp table inet6.0';
         } else {
           throw new Exception('The parameter is not an AS-Path regular expression like ".*XXXX YYYY.*".');
         }
@@ -52,10 +52,10 @@ final class Juniper extends Router {
 
       case 'as':
         if (match_as($parameters)) {
-          $commands[] = 'show route aspath-regex ^'.$parameters.
-            '$ protocol bgp table inet.0';
-          $commands[] = 'show route aspath-regex ^'.$parameters.
-            '$ protocol bgp table inet6.0';
+          $commands[] = 'show route aspath-regex "^'.$parameters.
+            '$" protocol bgp table inet.0';
+          $commands[] = 'show route aspath-regex "^'.$parameters.
+            '$" protocol bgp table inet6.0';
         } else {
           throw new Exception('The parameter is not an AS number.');
         }
