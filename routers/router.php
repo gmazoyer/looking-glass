@@ -34,10 +34,6 @@ abstract class Router {
     $this->config = $config;
     $this->id = $id;
     $this->requester = $requester;
-
-    if (isset($config['routers'][$id]['port'])) {
-      $this->port = (int) $config['routers'][$id]['port'];
-    }
   }
 
   protected abstract function build_commands($command, $parameters);
