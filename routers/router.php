@@ -20,6 +20,7 @@
  */
 
 require_once 'config.php';
+require_once 'cisco.php';
 require_once 'juniper.php';
 require_once 'utils.php';
 require_once 'auth/authentication.php';
@@ -63,8 +64,8 @@ abstract class Router {
       $auth->disconnect();
 
       foreach ($commands as $selected) {
-        log_to_file('[client: '.$this->requester.'] '.$this->config['host'].'> '.
-        $selected);
+        log_to_file('[client: '.$this->requester.'] '.$this->config['host'].
+          '> '.$selected);
       }
     }
 
@@ -77,6 +78,10 @@ abstract class Router {
     $router_config = $config['routers'][$id];
 
     switch ($router_config['type']) {
+      case 'cisco':
+      case 'ios':
+        return new Cisco($router_config, $id, $requester);
+
       case 'juniper':
       case 'junos':
         return new Juniper($router_config, $id, $requester);

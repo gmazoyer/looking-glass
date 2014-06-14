@@ -27,7 +27,7 @@ final class Telnet extends Authentication {
   public function __construct($config) {
     parent::__construct($config);
 
-    $this->port = isset($this->config['port']) ? $this->config['port'] : 23;
+    $this->port = isset($this->config['port']) ? (int) $this->config['port'] : 23;
   }
 
   protected function check_config() {
