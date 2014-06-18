@@ -42,14 +42,16 @@ final class Telnet extends Authentication {
       throw new Exception('Cannot connect to router.');
     }
 
-    fputs($this->connection, $this->config['user']."\r");
-    fputs($this->connection, $this->config['pass']."\r");
+    fputs($this->connection, $this->config['user']."\r\n");
+    fputs($this->connection, $this->config['pass']."\r\n");
   }
 
   public function send_command($command) {
     if ($this->connection == null) {
       $this->connect();
     }
+
+    fputs($this->connection, $command."\r\n");
 
     $data = '';
     while(!feof(!$this->connection)) {
