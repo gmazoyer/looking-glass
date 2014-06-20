@@ -26,12 +26,15 @@ final class Bird extends Router {
   protected function build_commands($command, $parameters) {
     $commands = array();
 
+    $birdc = '/usr/sbin/birdc';
+    $birdc6 = '/usr/sbin/birdc6';
+
     switch ($command) {
       case 'bgp':
         if (match_ipv4($parameters)) {
-          $commands[] = 'birdc show route for '.$parameters;
+          $commands[] = $birdc.' \'show route for '.$parameters.'\'';
         } else if (match_ipv6($parameters)) {
-          $commands[] = 'birdc6 show route for '.$parameters;
+          $commands[] = $birdc6.' \'show route for '.$parameters.'\'';
         } else {
           throw new Exception('The parameter is not an IPv4/IPv6 address.');
         }
@@ -39,8 +42,10 @@ final class Bird extends Router {
 
       case 'as-path-regex':
         if (match_aspath_regex($parameters)) {
-          $commands[] = 'birdc show route where bgp_path ~ [= '.$parameters.' =]';
-          $commands[] = 'birdc6 show route where bgp_path ~ [= '.$parameters.' =]';
+          $commands[] = $birdc.' \'show route where bgp_path ~ [= '.
+            $parameters.' =]\'';
+          $commands[] = $birdc6.' \'show route where bgp_path ~ [= '.
+            $parameters.' =]\'';
         } else {
           throw new Exception('The parameter is not an AS-Path regular expression like ".*XXXX YYYY.*".');
         }
@@ -48,8 +53,10 @@ final class Bird extends Router {
 
       case 'as':
         if (match_as($parameters)) {
-          $commands[] = 'birdc show route where bgp_path ~ [= '.$parameters.' =]';
-          $commands[] = 'birdc6 show route where bgp_path ~ [= '.$parameters.' =]';
+          $commands[] = $birdc.' \'show route where bgp_path ~ [= '.
+            $parameters.' =]\'';
+          $commands[] = $birdc6.' \'show route where bgp_path ~ [= '.
+            $parameters.' =]\'';
         } else {
           throw new Exception('The parameter is not an AS number.');
         }
