@@ -23,6 +23,9 @@ $config['frontpage']['order'] = array('routers', 'commands', 'parameters', 'butt
 // Logs file when commands will be written
 $config['misc']['logs'] = '/var/log/looking-glass.log';
 
+// Allow private ASN
+$config['misc']['allow_private_asn'] = false;
+
 // Things to remove from the output (PHP compatible regex)
 $config['filters'][0] = '/(client1|client2)/';
 $config['filters'][1] = '/^NotToShow/';

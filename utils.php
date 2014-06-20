@@ -41,6 +41,8 @@ function match_fqdn($fqdn) {
 }
 
 function match_as($as) {
+  global $config;
+
   $options_wide_range = array(
     'options' => array('min_range' => 1, 'max_range' => 4294967294)
   );
@@ -51,9 +53,21 @@ function match_as($as) {
     'options' => array('min_range' => 4200000000, 'max_range' => 4294967294)
   );
 
-  return (filter_var($as, FILTER_VALIDATE_INT, $options_wide_range) &&
-         !filter_var($as, FILTER_VALIDATE_INT, $options_16bit_private) &&
-         !filter_var($as, FILTER_VALIDATE_INT, $options_32bit_private));
+  if (!filter_var($as, FILTER_VALIDATE_INT, $options_wide_range)) {
+    return false;
+  }
+
+  if (filter_var($as, FILTER_VALIDATE_INT, $options_16bit_private)) {
+    return isset($config['misc']['allow_private_asn']) &&
+      $config['misc']['allow_private_asn'] == true;
+  }
+
+  if (filter_var($as, FILTER_VALIDATE_INT, $options_32bit_private)) {
+    return isset($config['misc']['allow_private_asn']) &&
+      $config['misc']['allow_private_asn'] == true;
+  }
+
+  return true;
 }
 
 function match_aspath_regex($aspath_regex) {
