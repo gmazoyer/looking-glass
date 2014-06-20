@@ -24,7 +24,6 @@ final class LookingGlass {
   private $frontpage;
   private $contact;
   private $misc;
-  private $filters;
   private $routers;
 
   function __construct() {
@@ -33,7 +32,6 @@ final class LookingGlass {
     $this->frontpage = $config['frontpage'];
     $this->contact = $config['contact'];
     $this->misc = $config['misc'];
-    $this->filters = $config['filters'];
     $this->routers = $config['routers'];
   }
 

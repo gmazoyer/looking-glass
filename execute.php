@@ -35,12 +35,14 @@ function process_output($output) {
 
     $valid = true;
 
-    foreach ($config['filters'] as $filter) {
-      // Line has been marked as invalid
-      // Or filtered based on the configuration
-      if (!$valid || (preg_match($filter, $line) === 1)) {
-        $valid = false;
-        break;
+    if (isset($config['filters'])) {
+      foreach ($config['filters'] as $filter) {
+        // Line has been marked as invalid
+        // Or filtered based on the configuration
+        if (!$valid || (preg_match($filter, $line) === 1)) {
+          $valid = false;
+          break;
+        }
       }
     }
 
