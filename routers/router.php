@@ -20,6 +20,7 @@
  */
 
 require_once 'config.php';
+require_once 'bird.php';
 require_once 'cisco.php';
 require_once 'juniper.php';
 require_once 'utils.php';
@@ -53,16 +54,13 @@ abstract class Router {
 
       foreach ($commands as $selected) {
         $data .= $auth->send_command($selected);
-      }
-    } catch (Exception $e) {
-      throw $e;
-    } finally {
-      $auth->disconnect();
-
-      foreach ($commands as $selected) {
         log_to_file('[client: '.$this->requester.'] '.$this->config['host'].
           '> '.$selected);
       }
+
+      $auth->disconnect();
+    } catch (Exception $e) {
+      throw $e;
     }
 
     return $data;
@@ -73,7 +71,10 @@ abstract class Router {
 
     $router_config = $config['routers'][$id];
 
-    switch ($router_config['type']) {
+    switch (strtolower($router_config['type'])) {
+      case 'bird':
+        return new Bird($router_config, $id, $requester);
+
       case 'cisco':
       case 'ios':
         return new Cisco($router_config, $id, $requester);

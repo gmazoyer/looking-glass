@@ -61,4 +61,18 @@ $config['routers']['router2']['type'] = 'juniper';
 // The router description to be displayed in the router list
 $config['routers']['router2']['desc'] = 'Example\'s Router 2';
 
+// Router based on BIRD
+// The hostname or the IP address
+$config['routers']['router3']['host'] = 'r3.example.net';
+// The user to use to connect to the router
+$config['routers']['router3']['user'] = 'birduser';
+// The password of the given user
+$config['routers']['router3']['pass'] = 'birduserpassword';
+// The authentication mecanism to use (can be ssh-password or ssh-key)
+$config['routers']['router3']['auth'] = 'ssh-password';
+// The router type (can only be bird)
+$config['routers']['router3']['type'] = 'bird';
+// The router description to be displayed in the router list
+$config['routers']['router3']['desc'] = 'Example\'s Router 3';
+
 // End of config.php
