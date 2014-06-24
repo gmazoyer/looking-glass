@@ -46,7 +46,7 @@ License
 -------
 
 Looking Glass is released under the terms of the GNU GPLv3. Please read the
-LICENSE file for more informations.
+LICENSE file for more information.
 
 Contact
 -------
