@@ -72,7 +72,7 @@ final class LookingGlass {
   private function render_parameters() {
     print '<div class="form-group">';
     print '<label for="input-params">Parameters</label>';
-    print '<input class="form-control" name="parameters" id="input-params" />';
+    print '<input class="form-control" name="parameters" id="input-params" autofocus />';
     print '</div>';
   }
 
