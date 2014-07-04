@@ -54,9 +54,6 @@ body {
   margin-left:      auto;
   margin-right:     auto;
 }
-#dontlook {
-  display:          none;
-}
 pre {
   color:            #FFFFFF;
   background-color: #000000;
