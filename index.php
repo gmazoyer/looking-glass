@@ -198,7 +198,6 @@ final class LookingGlass {
     print '</body>';
     print '<script src="js/jquery-1.11.1.min.js"></script>';
     print '<script src="js/looking-glass.js"></script>';
-    print '</body>';
     print '</html>';
   }
 }
