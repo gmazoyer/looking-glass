@@ -167,7 +167,7 @@ final class LookingGlass {
 
     if (isset($this->contact) && !empty($this->contact)) {
       print 'Contact:&nbsp;';
-      print '<a href="mail:'.$this->contact['mail'].'">'.
+      print '<a href="mailto:'.$this->contact['mail'].'">'.
         htmlentities($this->contact['name']).'</a>';
     }
 
