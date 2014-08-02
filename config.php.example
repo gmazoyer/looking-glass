@@ -52,9 +52,7 @@ $config['routers']['router2']['host'] = 'r2.example.net';
 // The user to use to connect to the router
 $config['routers']['router2']['user'] = 'readonlyuser';
 // The public key of the given user
-$config['routers']['router2']['public_key'] = '/home/user/.ssh/key.pub';
-// The private key of the given user
-$config['routers']['router2']['private_key'] = '/home/user/.ssh/key.pub';
+$config['routers']['router2']['private_key'] = '/home/user/.ssh/key';
 // The passphrase of the key (optional if the key has no passphrase)
 $config['routers']['router2']['pass'] = 'mypassphrase';
 // The authentication mecanism to use (ssh-key for SSH based on keys)
