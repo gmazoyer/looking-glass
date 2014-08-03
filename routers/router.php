@@ -49,7 +49,6 @@ abstract class Router {
     $auth = Authentication::instance($this->config);
 
     try {
-      $auth->connect();
       $data = '';
 
       foreach ($commands as $selected) {
@@ -57,8 +56,6 @@ abstract class Router {
         log_to_file('[client: '.$this->requester.'] '.$this->config['host'].
           '> '.$selected);
       }
-
-      $auth->disconnect();
     } catch (Exception $e) {
       throw $e;
     }

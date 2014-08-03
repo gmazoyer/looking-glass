@@ -47,9 +47,7 @@ final class Telnet extends Authentication {
   }
 
   public function send_command($command) {
-    if ($this->connection == null) {
-      $this->connect();
-    }
+    $this->connect();
 
     fputs($this->connection, $command."\r\n");
 
@@ -57,6 +55,8 @@ final class Telnet extends Authentication {
     while(!feof(!$this->connection)) {
       $data .= fread($this->connection, 4096);
     }
+
+    $this->disconnect();
 
     return $data;
   }
