@@ -71,7 +71,7 @@ final class SSH extends Authentication {
   }
 
   public function send_command($command) {
-    if ($this->connection == null) {
+    if (($this->connection == null) || !$this->connection->isConnected()) {
       $this->connect();
     }
 
@@ -81,7 +81,7 @@ final class SSH extends Authentication {
   }
 
   public function disconnect() {
-    $this->send_command('exit');
+    $this->connection->disconnect();
     $this->connection = null;
   }
 }

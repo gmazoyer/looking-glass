@@ -96,5 +96,4 @@ function log_to_file($log) {
   file_put_contents($config['misc']['logs'], $log, FILE_APPEND | LOCK_EX);
 }
 
-
 // End of utils.php
