@@ -57,9 +57,9 @@ final class Cisco extends Router {
 
       case 'ping':
         if (match_ipv4($parameters)) {
-          $commands[] = 'ping '.$parameters.' count 10';
+          $commands[] = 'ping '.$parameters.' repeat 10';
         } else if (match_ipv6($parameters)) {
-          $commands[] = 'ping ipv6 '.$parameters.' count 10';
+          $commands[] = 'ping ipv6 '.$parameters.' repeat 10';
         } else {
           throw new Exception('The parameter is not an IPv4/IPv6 address.');
         }
