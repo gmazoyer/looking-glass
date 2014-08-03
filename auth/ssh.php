@@ -81,8 +81,10 @@ final class SSH extends Authentication {
   }
 
   public function disconnect() {
-    $this->connection->disconnect();
-    $this->connection = null;
+    if ($this->connection != null) {
+      $this->connection->disconnect();
+      $this->connection = null;
+    }
   }
 }
 
