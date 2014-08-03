@@ -22,11 +22,25 @@
 require_once 'config.php';
 
 function match_ipv4($ip) {
-  return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+  if (strrpos($ip, '/'))  {
+    $ip_and_mask = explode('/', $ip, 2);
+
+    return filter_var($ip_and_mask[0], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) &&
+      filter_var($ip_and_mask[1], FILTER_VALIDATE_INT);
+  } else {
+    return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+  }
 }
 
 function match_ipv6($ip) {
-  return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+  if (strrpos($ip, '/'))  {
+    $ip_and_mask = explode('/', $ip, 2);
+
+    return filter_var($ip_and_mask[0], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) &&
+      filter_var($ip_and_mask[1], FILTER_VALIDATE_INT);
+  } else {
+    return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+  }
 }
 
 function match_fqdn($fqdn) {
