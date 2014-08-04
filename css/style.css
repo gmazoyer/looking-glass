@@ -43,6 +43,14 @@ body {
   margin-left:      auto;
   margin-right:     auto;
 }
+.label {
+  font-size:        1.3em;
+  display:          block;
+  width:            50%;
+  margin-bottom:    1em;
+  margin-left:      auto;
+  margin-right:     auto;
+}
 .reset {
   width:            25%;
   margin-left:      auto;

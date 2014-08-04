@@ -27,8 +27,8 @@ $config['misc']['logs'] = '/var/log/looking-glass.log';
 $config['misc']['allow_private_asn'] = false;
 
 // Things to remove from the output (PHP compatible regex)
-$config['filters'][0] = '/(client1|client2)/';
-$config['filters'][1] = '/^NotToShow/';
+$config['filters'][] = '/(client1|client2)/';
+$config['filters'][] = '/^NotToShow/';
 
 // Routers definitions
 

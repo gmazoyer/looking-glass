@@ -52,7 +52,9 @@ abstract class Router {
       $data = '';
 
       foreach ($commands as $selected) {
-        $data .= $auth->send_command($selected);
+        $data .= '<span class="label label-primary">'.$selected.'</span>';
+        $data .= '<pre class="pre-scrollable">'.$auth->send_command($selected).
+          '</pre>';
         log_to_file('[client: '.$this->requester.'] '.$this->config['host'].
           '> '.$selected);
       }

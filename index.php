@@ -144,7 +144,7 @@ final class LookingGlass {
     print '</div>';
     print '</div>';
     print '<div class="result">';
-    print '<pre class="pre-scrollable" id="output"></pre>';
+    print '<div id="output"></div>';
     print '<div class="reset">';
     print '<button class="btn btn-danger btn-block" id="backhome">Reset</button>';
     print '</div>';
