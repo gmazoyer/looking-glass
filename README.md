@@ -16,7 +16,7 @@ execute some commands on routers. The output is sent back to the user.
 For now this looking glass is quite simple. Here you have some features:
 
   * Interface using Javascript and AJAX calls (needs a decent browser)
-  * Support of BIRD, Cisco and Juniper routers
+  * Support of BIRD, Cisco, Juniper and Quagga routers
   * Support of Telnet and SSH connection to routers using password
     authentication and SSH keys.
   * Configurable list of routers
@@ -55,4 +55,4 @@ be glad to know that this project was helpful for you.
 
   * [Bootstrap](http://getbootstrap.com/) and [JQuery](http://jquery.com/) for
     making CSS and Javascript less painful for people like me.
-  * [Romain Boissat](https://chroot-me.in/) for all his great ideas and bug reports.
+  * [Romain Boissat](https://chroot-me.in/) for all his great ideas, bug reports and contributions.
