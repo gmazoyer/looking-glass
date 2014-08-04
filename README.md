@@ -1,16 +1,13 @@
-Looking Glass
-=============
+# Looking Glass
 
 Easy to deploy Looking Glass made in PHP.
 
-Requirements
-------------
+## Requirements
 
   * Webserver such as Apache 2, or Lighttpd, etc…
   * PHP (>= 5.2.0) module for the webserver (mod-php5 for Apache 2 for example)
 
-Description
------------
+## Description
 
 This web application made in PHP is what we call a **Looking Glass**. This is a
 tool used to get some information about networks by giving the opportunity to
@@ -34,21 +31,18 @@ future:
   * Support of other types of authentication
   * Configurable list of allowed commands
 
-Configuration
--------------
+## Configuration
 
 Copy the configuration **config.php.example** file to create a **config.php**
 file. It contains all the values (PHP variables) used to customize the looking
 glass.
 
-License
--------
+## License
 
 Looking Glass is released under the terms of the GNU GPLv3. Please read the
 LICENSE file for more information.
 
-Contact
--------
+## Contact
 
 If you have any bugs, errors, improvements, patches, ideas, you can contact me
 on my email address <gmazoyer@gravitons.in>. You are also welcome to fork and
@@ -56,3 +50,9 @@ make some pull requests.
 
 If you use this looking glass in your company, please drop me a mail. I would
 be glad to know that this project was helpful for you.
+
+## Thanks
+
+  * [Bootstrap](http://getbootstrap.com/) and [JQuery](http://jquery.com/) for
+    making CSS and Javascript less painful for people like me.
+  * [Romain Boissat](https://chroot-me.in/) for all his great ideas and bug reports.
