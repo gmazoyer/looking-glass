@@ -21,8 +21,8 @@
 
 require_once 'config.php';
 
-function match_ipv4($ip) {
-  if (strrpos($ip, '/'))  {
+function match_ipv4($ip, $ip_only = true) {
+  if (strrpos($ip, '/') && !$ip_only)  {
     $ip_and_mask = explode('/', $ip, 2);
 
     return filter_var($ip_and_mask[0], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) &&
@@ -32,8 +32,8 @@ function match_ipv4($ip) {
   }
 }
 
-function match_ipv6($ip) {
-  if (strrpos($ip, '/'))  {
+function match_ipv6($ip, $ip_only = true) {
+  if (strrpos($ip, '/') && !$ip_only)  {
     $ip_and_mask = explode('/', $ip, 2);
 
     return filter_var($ip_and_mask[0], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) &&

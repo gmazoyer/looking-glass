@@ -30,9 +30,9 @@ final class Quagga extends Router {
 
     switch ($command) {
       case 'bgp':
-        if (match_ipv4($parameters)) {
+        if (match_ipv4($parameters), false) {
           $commands[] = $vtysh.'show bgp ipv4 unicast '.$parameters.'"';
-        } else if (match_ipv6($parameters)) {
+        } else if (match_ipv6($parameters), false) {
           $commands[] = $vtysh.'show bgp ipv6 unicast '.$parameters.'"';
         } else {
           throw new Exception('The parameter is not an IPv4/IPv6 address.');
@@ -85,4 +85,4 @@ final class Quagga extends Router {
   }
 }
 
-// End of cisco.php
+// End of quagga.php
