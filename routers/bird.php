@@ -31,9 +31,9 @@ final class Bird extends Router {
 
     switch ($command) {
       case 'bgp':
-        if (match_ipv4($parameters), false) {
+        if (match_ipv4($parameters, false)) {
           $commands[] = $birdc.' \'show route for '.$parameters.'\'';
-        } else if (match_ipv6($parameters), false) {
+        } else if (match_ipv6($parameters, false)) {
           $commands[] = $birdc6.' \'show route for '.$parameters.'\'';
         } else {
           throw new Exception('The parameter is not an IPv4/IPv6 address.');
