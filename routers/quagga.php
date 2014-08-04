@@ -22,16 +22,18 @@
 require_once 'router.php';
 require_once 'utils.php';
 
-final class Cisco extends Router {
+final class Quagga extends Router {
   protected function build_commands($command, $parameters) {
     $commands = array();
+
+    $vtysh = 'vtysh -c "';
 
     switch ($command) {
       case 'bgp':
         if (match_ipv4($parameters)) {
-          $commands[] = 'show bgp ipv4 unicast '.$parameters;
+          $commands[] = $vtysh.'show bgp ipv4 unicast '.$parameters.'"';
         } else if (match_ipv6($parameters)) {
-          $commands[] = 'show bgp ipv6 unicast '.$parameters;
+          $commands[] = $vtysh.'show bgp ipv6 unicast '.$parameters.'"';
         } else {
           throw new Exception('The parameter is not an IPv4/IPv6 address.');
         }
@@ -39,8 +41,8 @@ final class Cisco extends Router {
 
       case 'as-path-regex':
         if (match_aspath_regex($parameters)) {
-          $commands[] = 'show bgp ipv4 unicast quote-regexp "'.$parameters.'"';
-          $commands[] = 'show bgp ipv6 unicast quote-regexp "'.$parameters.'"';
+          $commands[] = $vtysh.'show ip bgp regexp '.$parameters.'"';
+          $commands[] = $vtysh.'show ipv6 bgp regexp '.$parameters.'"';
         } else {
           throw new Exception('The parameter is not an AS-Path regular expression like ".*XXXX YYYY.*".');
         }
@@ -48,8 +50,8 @@ final class Cisco extends Router {
 
       case 'as':
         if (match_as($parameters)) {
-          $commands[] = 'show bgp ipv4 unicast quote-regexp "^'.$parameters.'_"';
-          $commands[] = 'show bgp ipv6 unicast quote-regexp "^'.$parameters.'_"';
+          $commands[] = $vtysh.'show ip bgp regexp ^'.$parameters.'_'.'"';
+          $commands[] = $vtysh.'show ipv6 bgp regexp ^'.$parameters.'_'.'"';
         } else {
           throw new Exception('The parameter is not an AS number.');
         }
@@ -57,9 +59,9 @@ final class Cisco extends Router {
 
       case 'ping':
         if (match_ipv4($parameters)) {
-          $commands[] = 'ping '.$parameters.' repeat 10';
+          $commands[] = 'ping -A -c 10 '.$parameters;
         } else if (match_ipv6($parameters)) {
-          $commands[] = 'ping ipv6 '.$parameters.' repeat 10';
+          $commands[] = 'ping6 -A -c 10 '.$parameters;
         } else {
           throw new Exception('The parameter is not an IPv4/IPv6 address.');
         }
@@ -67,9 +69,9 @@ final class Cisco extends Router {
 
       case 'traceroute':
         if (match_ipv4($parameters)) {
-          $commands[] = 'traceroute ip '.$parameters;
+          $commands[] = 'traceroute -4 -A -q1 -N32 -w1 -m15 '.$parameters;
         } else if (match_ipv6($parameters)) {
-          $commands[] = 'traceroute ipv6 '.$parameters;
+          $commands[] = 'traceroute -6 -A -q1 -N32 -w1 -m15 '.$parameters;
         } else {
           throw new Exception('The parameter is not an IPv4/IPv6 address.');
         }

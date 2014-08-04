@@ -23,6 +23,7 @@ require_once 'config.php';
 require_once 'bird.php';
 require_once 'cisco.php';
 require_once 'juniper.php';
+require_once 'quagga.php';
 require_once 'utils.php';
 require_once 'auth/authentication.php';
 
@@ -81,6 +82,10 @@ abstract class Router {
       case 'juniper':
       case 'junos':
         return new Juniper($router_config, $id, $requester);
+
+      case 'quagga':
+      case 'zebra':
+        return new Quagga($router_config, $id, $requester);
 
       default:
         print 'Unknown router type "'.$router_config['type'].'"."';
