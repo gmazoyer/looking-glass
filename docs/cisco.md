@@ -106,6 +106,6 @@ router#
 
 ## References
 
-[1] http://www.cisco.com/en/US/docs/ios/12_3t/12_3t7/feature/guide/gtclivws.html
-[2] http://www.cisco.com/c/dam/en/us/products/collateral/security/ios-network-foundation-protection-nfp/prod_presentation0900aecd80313ff4.pdf
-[3] http://www.cisco.com/c/en/us/td/docs/ios/12_2/security/configuration/guide/fsecur_c/scfpass.html
+  * [1] http://www.cisco.com/en/US/docs/ios/12_3t/12_3t7/feature/guide/gtclivws.html
+  * [2] http://www.cisco.com/c/dam/en/us/products/collateral/security/ios-network-foundation-protection-nfp/prod_presentation0900aecd80313ff4.pdf
+  * [3] http://www.cisco.com/c/en/us/td/docs/ios/12_2/security/configuration/guide/fsecur_c/scfpass.html
