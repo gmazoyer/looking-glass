@@ -11,10 +11,10 @@ execute the commands is advised.
 Of all methods to create a restricted user, we know of two methods to achieve
 such setup:
 
-  * Role Based CLI [1][2] + access-class restriction
+  * Role Based CLI with Views [1][2] + access-class restriction
   * Privilege exec levels manipulation [3]
 
-We highly recommand the view method, though we will document both.
+We highly recommand the first method, though we will document both.
 
 ## Configuration: Views method
 
