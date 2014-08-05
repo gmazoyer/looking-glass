@@ -198,8 +198,8 @@ final class LookingGlass {
     print '<h4 class="modal-title">Help</h4>';
     print '</div>';
     print '<div class="modal-body">';
-    print '<h4>Command</h4>';
-    print '<p id="command-help"></p>';
+    print '<h4>Command <small id="command-reminder"></small></h4>';
+    print '<p id="description-help"></p>';
     print '<h4>Parameter</h4>';
     print '<p id="parameter-help"></p>';
     print '</div>';

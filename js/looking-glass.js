@@ -6,7 +6,8 @@ function request_doc(query) {
   }).done(function(response) {
     var response = $.parseJSON(response);
 
-    $('#command-help').html(response.query);
+    $('#command-reminder').text(response.command);
+    $('#description-help').html(response.description);
     $('#parameter-help').html(response.parameter);
   }).fail(function(xhr) {
     $('#help-content').text('Cannot load documentation...');

@@ -62,7 +62,7 @@ body {
   margin-left:      auto;
   margin-right:     auto;
 }
-#command-help, #parameter-help {
+#description-help, #parameter-help {
   font-size:        1.3em;
 }
 pre {
