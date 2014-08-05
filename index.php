@@ -195,12 +195,12 @@ final class LookingGlass {
     print '<div class="modal-content">';
     print '<div class="modal-header">';
     print '<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>';
-    print '<h4 class="modal-title">Help</h4>';
+    print '<h3 class="modal-title">Help</h4>';
     print '</div>';
     print '<div class="modal-body">';
-    print '<h3>Command</h3>';
+    print '<h4>Command</h4>';
     print '<p id="command-help"></p>';
-    print '<h3>Parameter</h3>';
+    print '<h4>Parameter</h4>';
     print '<p id="parameter-help"></p>';
     print '</div>';
     print '<div class="modal-footer">';
