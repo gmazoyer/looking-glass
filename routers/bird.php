@@ -67,6 +67,18 @@ final class Bird extends Router {
           $commands[] = 'ping -A -c 10 '.$parameters;
         } else if (match_ipv6($parameters)) {
           $commands[] = 'ping6 -A -c 10 '.$parameters;
+        } else if (match_fqdn($parameters)) {
+          $ip_address = fqdn_to_ip_address($parameters);
+
+          if (!$ip_address) {
+            throw new Exception('No A or AAAA record found for '.$parameters);
+          }
+
+          if (match_ipv4($ip_address)) {
+            $commands[] = 'ping -A -c 10 '.$parameters;
+          } else if (match_ipv6($ip_address)) {
+            $commands[] = 'ping6 -A -c 10 '.$parameters;
+          }
         } else {
           throw new Exception('The parameter is not an IPv4/IPv6 address.');
         }
@@ -77,6 +89,18 @@ final class Bird extends Router {
           $commands[] = 'traceroute -4 -A -q1 -N32 -w1 -m15 '.$parameters;
         } else if (match_ipv6($parameters)) {
           $commands[] = 'traceroute -6 -A -q1 -N32 -w1 -m15 '.$parameters;
+        } else if (match_fqdn($parameters)) {
+          $ip_address = fqdn_to_ip_address($parameters);
+
+          if (!$ip_address) {
+            throw new Exception('No A or AAAA record found for '.$parameters);
+          }
+
+          if (match_ipv4($ip_address)) {
+            $commands[] = 'traceroute -4 -A -q1 -N32 -w1 -m15 '.$parameters;
+          } else if (match_ipv6($ip_address)) {
+            $commands[] = 'traceroute -6 -A -q1 -N32 -w1 -m15 '.$parameters;
+          }
         } else {
           throw new Exception('The parameter is not an IPv4/IPv6 address.');
         }

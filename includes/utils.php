@@ -89,6 +89,46 @@ function match_aspath_regex($aspath_regex) {
   return true;
 }
 
+function fqdn_to_ip_address($fqdn) {
+  $dns_record = dns_get_record($fqdn, DNS_A + DNS_AAAA);
+
+  // No DNS record found
+  if (!$dns_record) {
+    return false;
+  }
+
+  $records_nb = count($dns_record);
+
+  // Only one record found
+  if ($records_nb == 1) {
+    if ($dns_record[0]['type'] == 'AAAA') {
+      return $dns_record[0]['ipv6'];
+    } else if ($dns_record[0]['type'] == 'A') {
+      return $dns_record[0]['ip'];
+    } else {
+      return false;
+    }
+  }
+
+  // Several records found
+  if ($records_nb > 1) {
+    // TODO: this could probably be more optimal
+    foreach ($dns_record as $record) {
+      if ($record['type'] == 'AAAA') {
+        return $record['ipv6'];
+      }
+    }
+
+    foreach ($dns_record as $record) {
+      if ($record['type'] == 'AAA') {
+        return $record['ipv4'];
+      }
+    }
+
+    return false;
+  }
+}
+
 function log_to_file($log) {
   global $config;
 
