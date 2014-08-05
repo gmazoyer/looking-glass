@@ -27,7 +27,7 @@ For now this looking glass is quite simple. Here you have some features:
 And here is a list of what this looking glass should be able to do in the
 future:
 
-  * Support of Quagga and more routers
+  * Support more routers
   * Support of other types of authentication
   * Configurable list of allowed commands
 
