@@ -4,17 +4,6 @@ $(document).ready(function() {
   $('.loading').hide();
   $('.alert').hide();
 
-  // show and hide loading bar
-  $(document).ajaxStart(function() {
-    $('#command_properties').attr('disabled', '');
-    $('.alert').hide();
-    $('.loading').show();
-  });
-  $(document).ajaxStop(function() {
-    $('#command_properties').removeAttr('disabled');
-    $('.loading').hide();
-  });
-
   // close the alert bar
   $('.close').click(function() {
     $('.alert').slideUp();
@@ -36,7 +25,18 @@ $(document).ready(function() {
     $.ajax({
       type: 'post',
       url: 'execute.php',
-      data: $('form').serialize()
+      data: $('form').serialize(),
+      beforeSend: function() {
+        // show loading bar
+        $('#command_properties').attr('disabled', '');
+        $('.alert').hide();
+        $('.loading').show();
+      },
+      complete: function() {
+        // hide loading bar
+        $('#command_properties').removeAttr('disabled');
+        $('.loading').hide();
+      }
     }).done(function(response) {
       var response = $.parseJSON(response);
 
