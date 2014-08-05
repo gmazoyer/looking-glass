@@ -22,6 +22,13 @@
 require_once 'config.php';
 require_once 'routers/router.php';
 
+// From where the user *really* comes from.
+if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+  $requester = $_SERVER['HTTP_X_FORWARDED_FOR'];
+} else {
+  $requester = $_SERVER['REMOTE_ADDR'];
+}
+
 function process_output($output) {
   global $config;
 
@@ -57,7 +64,7 @@ function process_output($output) {
 
 // Obvious spam
 if (!isset($_POST['dontlook']) || !empty($_POST['dontlook'])) {
-  log_to_file('Spam detected from '.$_SERVER['REMOTE_ADDR'].'.');
+  log_to_file('Spam detected from '.$requester.'.');
   die('Spam detected');
 }
 
@@ -69,7 +76,7 @@ if (isset($_POST['query']) && !empty($_POST['query']) &&
   $parameters = htmlspecialchars($_POST['parameters']);
 
   // Do the processing
-  $router = Router::instance($hostname, $_SERVER['REMOTE_ADDR']);
+  $router = Router::instance($hostname, $requester);
 
   try {
     $output = $router->send_command($query, $parameters);
