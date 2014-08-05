@@ -1,7 +1,7 @@
 # Looking Glass: Quagga/Zebra configuration and tips.
 
 Only Quagga on Debian GNU/Linux and how to (merely) secure an restricted ssh user will
-be detailed. Other OS were not tested.
+be detailed. Other OSes were not tested.
 
 Quagga is average concerning code and security QA, thus security will be mainly
 based on shell, path and ssh access restriction. Password authentication will
@@ -17,7 +17,7 @@ not even be presented here, only key based authentication.
 
 Looking Glass directly calls `vtysh -c "quaggavty command"`. Thus, the `lg` user
 only needs to run `vtysh`, `ping` and `traceroute`. To achieve this, we
-recommend the use of `rbash`[1] (restricted bash), ssh key based authentication
+recommend the use of `rbash` [1] (restricted bash), ssh key based authentication
 and a bit of dark magic.
 
 ## Configuration
@@ -68,7 +68,7 @@ and reload sshd:
 
 ## Debug
 
-Test the ssh connexion from the server where the looking glass is installed:
+Test the ssh connection from the server where the looking glass is installed:
 
 `ssh -i lg-user-id_rsa.key lg@quagga-router.example.com`
 
