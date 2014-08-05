@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Please don't edit this file!
+ * Make changes to the configuration array in config.php.
+ */
+
 $config = array (
 
   // Frontpage configuration
