@@ -19,12 +19,13 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
+require_once 'includes/config.defaults.php';
 require_once 'config.php';
 require_once 'bird.php';
 require_once 'cisco.php';
 require_once 'juniper.php';
 require_once 'quagga.php';
-require_once 'utils.php';
+require_once 'includes/utils.php';
 require_once 'auth/authentication.php';
 
 abstract class Router {

@@ -20,7 +20,7 @@
  */
 
 require_once 'router.php';
-require_once 'utils.php';
+require_once 'includes/utils.php';
 
 final class Juniper extends Router {
   protected function build_commands($command, $parameters) {
