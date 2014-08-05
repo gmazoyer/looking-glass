@@ -221,8 +221,8 @@ final class LookingGlass {
     print '<meta name="keywords" content="Looking Glass, LG, BGP, prefix-list, AS-path, ASN, traceroute, ping, IPv4, IPv6, Cisco, Juniper, Internet" />';
     print '<meta name="description" content="'.$this->frontpage['title'].'" />';
     print '<title>'.htmlentities($this->frontpage['title']).'</title>';
-    print '<link href="bootstrap-3.2.0/css/bootstrap.min.css" rel="stylesheet" />';
-    print '<link href="bootstrap-3.2.0/css/bootstrap-theme.min.css" rel="stylesheet" />';
+    print '<link href="libs/bootstrap-3.2.0/css/bootstrap.min.css" rel="stylesheet" />';
+    print '<link href="libs/bootstrap-3.2.0/css/bootstrap-theme.min.css" rel="stylesheet" />';
     print '<link href="'.$this->frontpage['css'].'" rel="stylesheet" />';
     print '</head>';
     print '<body>';
@@ -232,7 +232,7 @@ final class LookingGlass {
     $this->render_help_modal();
     print '</body>';
     print '<script src="js/jquery-2.1.1.min.js"></script>';
-    print '<script src="bootstrap-3.2.0/js/bootstrap.min.js"></script>';
+    print '<script src="libs/bootstrap-3.2.0/js/bootstrap.min.js"></script>';
     print '<script src="js/looking-glass.js"></script>';
     print '</html>';
   }
