@@ -1,4 +1,9 @@
 <?php
+/* Main configuration file example.
+ *
+ * DO NOT EDIT NOR RENAME, please copy to 'config.php' and edit the new file!
+ *
+ */
 
 // People to contact
 $config['contact']['name'] = 'Example Support';

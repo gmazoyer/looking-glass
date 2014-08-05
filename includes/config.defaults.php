@@ -6,8 +6,7 @@ $config = array (
   'frontpage' => array (
     // CSS to use
     'css' => 'css/style.css',
-    // Title of the page
-    'title' => 'Looking Glass',
+    // Display the title
     'show_title' => true,
     // Show visitor IP address
     'show_visitor_ip' => true,
