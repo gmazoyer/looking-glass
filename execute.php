@@ -68,6 +68,12 @@ if (!isset($_POST['dontlook']) || !empty($_POST['dontlook'])) {
   die('Spam detected');
 }
 
+// Just asked for the documentation
+if (isset($_POST['doc']) && !empty($_POST['doc'])) {
+  $query = htmlspecialchars($_POST['doc']);
+  print json_encode($config['doc'][$query]);
+}
+
 if (isset($_POST['query']) && !empty($_POST['query']) &&
     isset($_POST['routers']) && !empty($_POST['routers']) &&
     isset($_POST['parameters']) && !empty($_POST['parameters'])) {

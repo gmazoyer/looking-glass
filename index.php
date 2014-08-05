@@ -71,8 +71,15 @@ final class LookingGlass {
 
   private function render_parameters() {
     print '<div class="form-group">';
-    print '<label for="input-params">Parameters</label>';
+    print '<label for="input-params">Parameter</label>';
+    print '<div class="input-group">';
     print '<input class="form-control" name="parameters" id="input-params" autofocus />';
+    print '<div class="input-group-btn">';
+    print '<button type="button" class="btn btn-info" data-toggle="modal" data-target="#help">';
+    print '<span class="glyphicon glyphicon-question-sign"></span> Help';
+    print '</button>';
+    print '</div>';
+    print '</div>';
     print '</div>';
   }
 
@@ -181,6 +188,28 @@ final class LookingGlass {
     print '</div>';
   }
 
+  private function render_help_modal() {
+    print '<div id="help" class="modal fade">';
+    print '<div class="modal-dialog">';
+    print '<div class="modal-content">';
+    print '<div class="modal-header">';
+    print '<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>';
+    print '<h4 class="modal-title">Help</h4>';
+    print '</div>';
+    print '<div class="modal-body">';
+    print '<h3>Command</h3>';
+    print '<p id="command-help"></p>';
+    print '<h3>Parameter</h3>';
+    print '<p id="parameter-help"></p>';
+    print '</div>';
+    print '<div class="modal-footer">';
+    print '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+    print '</div>';
+    print '</div>';
+    print '</div>';
+    print '</div>';
+  }
+
   public function render() {
     print '<!DOCTYPE html>';
     print '<html lang="en">';
@@ -199,8 +228,10 @@ final class LookingGlass {
     $this->render_header();
     $this->render_content();
     $this->render_footer();
+    $this->render_help_modal();
     print '</body>';
     print '<script src="js/jquery-2.1.1.min.js"></script>';
+    print '<script src="bootstrap-3.2.0/js/bootstrap.min.js"></script>';
     print '<script src="js/looking-glass.js"></script>';
     print '</html>';
   }

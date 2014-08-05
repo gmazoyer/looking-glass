@@ -1,3 +1,18 @@
+function request_doc(query) {
+  $.ajax({
+    type: 'post',
+    url: 'execute.php',
+    data: { doc: query, dontlook: '' }
+  }).done(function(response) {
+    var response = $.parseJSON(response);
+
+    $('#command-help').html(response.query);
+    $('#parameter-help').html(response.parameter);
+  }).fail(function(xhr) {
+    $('#help-content').text('Cannot load documentation...');
+  });
+}
+
 $(document).ready(function() {
   // hide the optional parameters field
   $('.result').hide();
@@ -16,6 +31,15 @@ $(document).ready(function() {
   $('#backhome').click(function() {
     $('.content').slideDown();
     $('.result').slideUp();
+  });
+
+  // initialize the help modal
+  request_doc($('#query').val());
+
+  // update help when a command is selected
+  $('#query').on('change', function(e) {
+    e.preventDefault();
+    request_doc($('#query').val());
   });
 
   // send an ajax request that will get the info on the router
