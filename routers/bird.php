@@ -26,8 +26,8 @@ final class Bird extends Router {
   protected function build_commands($command, $parameters) {
     $commands = array();
 
-    $birdc = '/usr/sbin/birdc';
-    $birdc6 = '/usr/sbin/birdc6';
+    $birdc = 'birdc';
+    $birdc6 = 'birdc6';
 
     switch ($command) {
       case 'bgp':
