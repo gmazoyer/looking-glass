@@ -17,7 +17,7 @@ not even be presented here, only key based authentication.
 
 Looking Glass directly calls `vtysh -c "quaggavty command"`. Thus, the `lg` user
 only needs to run `vtysh`, `ping` and `traceroute`. To achieve this, we
-recommend the use of `rbash` [1] (restricted bash), ssh key based authentication
+recommend the use of `rbash` (restricted bash, see [1]), ssh key based authentication
 and a bit of dark magic.
 
 ## Configuration
