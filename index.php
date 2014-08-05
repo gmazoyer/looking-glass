@@ -157,11 +157,11 @@ final class LookingGlass {
 
     if (!isset($this->frontpage['show_visitor_ip']) ||
       $this->frontpage['show_visitor_ip']) {
-        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-          print 'Your IP address: '.htmlentities($_SERVER['HTTP_X_FORWARDED_FOR']).'<br />';
-        } else {
-          print 'Your IP address: '.htmlentities($_SERVER['REMOTE_ADDR']).'<br />';
-        }
+      if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        print 'Your IP address: '.htmlentities($_SERVER['HTTP_X_FORWARDED_FOR']).'<br />';
+      } else {
+        print 'Your IP address: '.htmlentities($_SERVER['REMOTE_ADDR']).'<br />';
+      }
     }
 
     if (isset($this->frontpage['disclaimer'])) {
