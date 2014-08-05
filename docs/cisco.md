@@ -84,7 +84,7 @@ router(config)# end
 router#
 ```
 
-Test the ssh/telnet connexion from the server where the looking glass is installed.
+Test the ssh/telnet connection from the server where the looking glass is installed.
 
 Display the resulting logs during your tests:
 
