@@ -34,7 +34,8 @@ root@quagga-router ~#
 root@quagga-router ~# su -l lg
 
 # create ssh userdir and authorized the looking glass RSA pubkey with limited access and features.
-lg@quagga-router ~# mkdir ~/.ssh/   lg@quagga-router ~# echo 'from="lg.example.com,$IP4-OF-YOUR-LG",no-port-forwarding,no-x11-forwarding,no-agent-forwarding ssh-rsa $RSA-PUBKEY-HERE lg@looking-glass' >| ~/.ssh/authorized_keys
+lg@quagga-router ~# mkdir ~/.ssh/
+lg@quagga-router ~# echo 'from="lg.example.com,$IP4-OF-YOUR-LG",no-port-forwarding,no-x11-forwarding,no-agent-forwarding ssh-rsa $RSA-PUBKEY-HERE lg@looking-glass' >| ~/.ssh/authorized_keys
 
 # truncate the profile dotfile
 lg@quagga-router ~# echo >| ~/.profile
