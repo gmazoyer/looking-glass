@@ -56,20 +56,16 @@ final class Cisco extends Router {
         break;
 
       case 'ping':
-        if (match_ipv4($parameters)) {
+        if (match_ipv4($parameters) || match_ipv6($parameters) || match_fqdn($parameters)) {
           $commands[] = 'ping '.$parameters.' repeat 10';
-        } else if (match_ipv6($parameters)) {
-          $commands[] = 'ping ipv6 '.$parameters.' repeat 10';
         } else {
           throw new Exception('The parameter is not an IPv4/IPv6 address.');
         }
         break;
 
       case 'traceroute':
-        if (match_ipv4($parameters)) {
-          $commands[] = 'traceroute ip '.$parameters;
-        } else if (match_ipv6($parameters)) {
-          $commands[] = 'traceroute ipv6 '.$parameters;
+        if (match_ipv4($parameters) || match_ipv6($parameters) || match_fqdn($parameters)) {
+          $commands[] = 'traceroute '.$parameters;
         } else {
           throw new Exception('The parameter is not an IPv4/IPv6 address.');
         }
