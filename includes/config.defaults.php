@@ -51,6 +51,7 @@ $config = array (
       'parameter' => 'The parameter must be an IPv4/IPv6 address (without mask) or a fully qualified domain name.<br /><br />Example of valid arguments:<br /><ul><li>10.1.1.1</li><li>2001:db8:1337::42</li><li>example.com</li></ul>'
     )
   )
+
 );
 
 // End of config.defaults..php
