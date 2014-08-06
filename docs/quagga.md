@@ -25,15 +25,15 @@ and a bit of dark magic.
 Rough steps ahead (maybe more doc later):
 
 ```
-#create the "lg" unix user
+# create the "lg" unix user and add it to 'quaggavty' group.
 root@quagga-router ~# adduser lg
 (boring questions)
-root@quagga-router ~#
+root@quagga-router ~# adduser lg quaggavty
 
 # log in as lg user
 root@quagga-router ~# su -l lg
 
-# create ssh userdir and authorized the looking glass RSA pubkey with limited access and features.
+# create ssh userdir and authorized the looking glass RSA pubkey with limited access and features
 lg@quagga-router ~# mkdir ~/.ssh/
 lg@quagga-router ~# echo 'from="lg.example.com,$IP4-OF-YOUR-LG",no-port-forwarding,no-x11-forwarding,no-agent-forwarding ssh-rsa $RSA-PUBKEY-HERE lg@looking-glass' >| ~/.ssh/authorized_keys
 
