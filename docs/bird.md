@@ -29,7 +29,7 @@ Rough steps ahead (maybe more doc later):
 # create the "lg" unix user
 root@bird-router ~# adduser lg
 (boring questions)
-root@bird-router ~#
+root@bird-router ~# adduser lg bird
 
 # log in as lg user
 root@bird-router ~# su -l lg
