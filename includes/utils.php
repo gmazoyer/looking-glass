@@ -21,6 +21,17 @@
 
 require_once 'config.php';
 
+/**
+ * Test if a given parameter is an IPv4 or not.
+ *
+ * @param  string  $ip      the parameter to test.
+ * @param  boolean $ip_only optional parameter, if omitted or set to true, it
+ *                          will ensure that the first parameter is an IPv4
+ *                          address without mask, if set to false the IP/MASK
+ *                          form is considered as valid.
+ * @return boolean true if the parameter matches an IPv4 address, false
+ *                 otherwise.
+ */
 function match_ipv4($ip, $ip_only = true) {
   if (strrpos($ip, '/') && !$ip_only)  {
     $ip_and_mask = explode('/', $ip, 2);
@@ -32,6 +43,17 @@ function match_ipv4($ip, $ip_only = true) {
   }
 }
 
+/**
+ * Test if a given parameter is an IPv6 or not.
+ *
+ * @param  string  $ip      the parameter to test.
+ * @param  boolean $ip_only optional parameter, if omitted or set to true, it
+ *                          will ensure that the first parameter is an IPv6
+ *                          address without mask, if set to false the IP/MASK
+ *                          form is considered as valid.
+ * @return boolean true if the parameter matches an IPv6 address, false
+ *                 otherwise.
+ */
 function match_ipv6($ip, $ip_only = true) {
   if (strrpos($ip, '/') && !$ip_only)  {
     $ip_and_mask = explode('/', $ip, 2);
@@ -43,6 +65,12 @@ function match_ipv6($ip, $ip_only = true) {
   }
 }
 
+/**
+ * Test if a given parameter is a valid FQDN or not.
+ *
+ * @param  string  $fqdn the parameter to test.
+ * @return boolean true if the parameter matches a valid FQDN, false otherwise.
+ */
 function match_fqdn($fqdn) {
   $regex = '/(?=^.{4,255}$)(^((?!-)[a-zA-Z0-9-]{1,63}(?<!-)\.)+[a-zA-Z]{2,63}$)/';
 
@@ -54,6 +82,12 @@ function match_fqdn($fqdn) {
   }
 }
 
+/**
+ * Test if a given parameter is a valid AS number or not.
+ *
+ * @param  integer $as the parameter to test.
+ * @return boolean true if the parameter matches a valid ASN, false otherwise.
+ */
 function match_as($as) {
   global $config;
 
@@ -89,6 +123,18 @@ function match_aspath_regex($aspath_regex) {
   return true;
 }
 
+/**
+ * For a given FQDN try to find the corresponding IPv4 or IPv6 address.
+ *
+ * If there is multiple addresses attached to the same FQDN it will give the
+ * first IPv4 or IPv6 found.
+ *
+ * If the FQDN have both IPv4 and IPv6 addresses it will give the first IPv6
+ * address found.
+ *
+ * @param  string $fqdn the FQDN to use to search in the DNS databases.
+ * @return string an IPv4 or IPv6 address based on the DNS records.
+ */
 function fqdn_to_ip_address($fqdn) {
   $dns_record = dns_get_record($fqdn, DNS_A + DNS_AAAA);
 
@@ -129,6 +175,11 @@ function fqdn_to_ip_address($fqdn) {
   }
 }
 
+/**
+ * Send the given parameter to the logs file.
+ *
+ * @param string $log the log to be recorded in the logs file.
+ */
 function log_to_file($log) {
   global $config;
 
