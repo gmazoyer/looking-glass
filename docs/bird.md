@@ -26,7 +26,7 @@ dark magic.
 Rough steps ahead (maybe more doc later):
 
 ```
-# create the "lg" unix user
+# create the "lg" unix user and add it to "bird" group
 root@bird-router ~# adduser lg
 (boring questions)
 root@bird-router ~# adduser lg bird
@@ -34,7 +34,7 @@ root@bird-router ~# adduser lg bird
 # log in as lg user
 root@bird-router ~# su -l lg
 
-# create ssh userdir and authorized the looking glass RSA pubkey with limited access and features.
+# create ssh userdir and authorized the looking glass RSA pubkey with limited access and features
 lg@bird-router ~# mkdir ~/.ssh/
 lg@bird-router ~# echo 'from="lg.example.com,$IP4-OF-YOUR-LG",no-port-forwarding,no-x11-forwarding,no-agent-forwarding ssh-rsa $RSA-PUBKEY-HERE lg@looking-glass' >| ~/.ssh/authorized_keys
 
