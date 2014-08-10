@@ -11,6 +11,8 @@ $config = array (
   'frontpage' => array (
     // Use Bootstrap theme
     'bootstrap_theme' => true,
+    // Custom Bootstrap theme
+    'custom_bootstrap_theme' => false,
     // CSS to use
     'css' => 'css/style.css',
     // Display the title
@@ -65,4 +67,4 @@ $config = array (
 
 );
 
-// End of config.defaults..php
+// End of config.defaults.php
