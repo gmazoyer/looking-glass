@@ -222,7 +222,9 @@ final class LookingGlass {
     print '<meta name="description" content="'.$this->frontpage['title'].'" />';
     print '<title>'.htmlentities($this->frontpage['title']).'</title>';
     print '<link href="libs/bootstrap-3.2.0/css/bootstrap.min.css" rel="stylesheet" />';
-    print '<link href="libs/bootstrap-3.2.0/css/bootstrap-theme.min.css" rel="stylesheet" />';
+    if ($this->frontpage['bootstrap_theme']) {
+      print '<link href="libs/bootstrap-3.2.0/css/bootstrap-theme.min.css" rel="stylesheet" />';
+    }
     print '<link href="'.$this->frontpage['css'].'" rel="stylesheet" />';
     print '</head>';
     print '<body>';

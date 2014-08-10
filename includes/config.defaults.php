@@ -9,6 +9,8 @@ $config = array (
 
   // Frontpage configuration
   'frontpage' => array (
+    // Use Bootstrap theme
+    'bootstrap_theme' => true,
     // CSS to use
     'css' => 'css/style.css',
     // Display the title
