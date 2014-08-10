@@ -5,10 +5,10 @@
  * Make changes to the configuration array in config.php.
  */
 
-$config = array (
+$config = array(
 
   // Frontpage configuration
-  'frontpage' => array (
+  'frontpage' => array(
     // Use Bootstrap theme
     'bootstrap_theme' => true,
     // Custom Bootstrap theme
@@ -32,7 +32,7 @@ $config = array (
   ),
 
   // Documentation (must be HTML)
-  'doc' => array (
+  'doc' => array(
     // Documentation for the 'show route' query
     'bgp' => array(
       'command' => 'show route IP_ADDRESS',

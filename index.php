@@ -225,7 +225,7 @@ final class LookingGlass {
     if ($this->frontpage['bootstrap_theme']) {
       print '<link href="libs/bootstrap-3.2.0/css/bootstrap-theme.min.css" rel="stylesheet" />';
     }
-    if ($this->frontpage['custom_boostrap_theme']) {
+    if ($this->frontpage['custom_bootstrap_theme']) {
       print '<link href="'.$this->frontpage['custom_bootstrap_theme'].'" rel="stylesheet" />';
     }
     print '<link href="'.$this->frontpage['css'].'" rel="stylesheet" />';
