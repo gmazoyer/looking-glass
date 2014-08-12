@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Looking Glass - An easy to deploy Looking Glass
  * Copyright (C) 2014 Guillaume Mazoyer <gmazoyer@gravitons.in>
@@ -27,9 +28,7 @@ final class LookingGlass {
   private $misc;
   private $routers;
 
-  function __construct() {
-    global $config;
-
+  function __construct($config) {
     $this->frontpage = $config['frontpage'];
     $this->contact = $config['contact'];
     $this->misc = $config['misc'];
@@ -243,7 +242,7 @@ final class LookingGlass {
   }
 }
 
-$looking_glass = new LookingGlass();
+$looking_glass = new LookingGlass($config);
 $looking_glass->render();
 
 // End of index.php
