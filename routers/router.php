@@ -54,7 +54,7 @@ abstract class Router {
       $data = '';
 
       foreach ($commands as $selected) {
-        $data .= '<span class="label label-primary">'.$selected.'</span>';
+        $data .= '<p><kbd>Command: '.$selected.'</kdb></p>';
         $data .= '<pre class="pre-scrollable">'.$auth->send_command($selected).
           '</pre>';
         log_to_file('[client: '.$this->requester.'] '.$this->config['host'].
