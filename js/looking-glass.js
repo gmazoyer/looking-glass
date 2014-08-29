@@ -24,8 +24,11 @@ $(document).ready(function() {
   $('.close').click(function() {
     $('.alert').slideUp();
   });
+
+  // close the alert bar and reset the doc modal
   $('#clear').click(function() {
     $('.alert').slideUp();
+    request_doc($('#query').val());
   });
 
   // reset the view to the default one
