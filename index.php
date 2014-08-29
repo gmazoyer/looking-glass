@@ -97,8 +97,7 @@ final class LookingGlass {
   private function render_header() {
     print '<a href="." title="Home">';
     print '<div class="header_bar">';
-    if (!isset($this->frontpage['show_title']) ||
-      $this->frontpage['show_title']) {
+    if ($this->frontpage['show_title']) {
       print '<h1>'.htmlentities($this->frontpage['title']).'</h1><br />';
     }
     if (isset($this->frontpage['image'])) {
@@ -162,8 +161,7 @@ final class LookingGlass {
     print '<div class="footer_bar">';
     print '<p class="text-center">';
 
-    if (!isset($this->frontpage['show_visitor_ip']) ||
-      $this->frontpage['show_visitor_ip']) {
+    if ($this->frontpage['show_visitor_ip']) {
       if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
         print 'Your IP address: '.htmlentities($_SERVER['HTTP_X_FORWARDED_FOR']).'<br />';
       } else {
