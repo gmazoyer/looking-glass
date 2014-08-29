@@ -24,8 +24,16 @@ $(document).ready(function() {
   $('.close').click(function() {
     $('.alert').slideUp();
   });
-  $('#clear').click(function() {
+
+  // clear the form and page
+  $('#clear').click(function(e) {
     $('.alert').slideUp();
+
+    e.preventDefault();
+
+    // reset the form and update the doc modal
+    $(this).closest('form').get(0).reset();
+    request_doc($('#query').val());
   });
 
   // reset the view to the default one
