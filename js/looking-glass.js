@@ -71,15 +71,21 @@ $(document).ready(function() {
         $('.loading').hide();
       }
     }).done(function(response) {
-      var response = $.parseJSON(response);
-
-      if (response.error) {
-        $('#error-text').text(response.error);
+      if (!response || (response.length === 0)) {
+        // no parameter given
+        $('#error-text').text('No parameter given.');
         $('.alert').slideDown();
       } else {
-        $('#output').html(response.result);
-        $('.content').slideUp();
-        $('.result').slideDown();
+        var response = $.parseJSON(response);
+
+        if (response.error) {
+          $('#error-text').text(response.error);
+          $('.alert').slideDown();
+        } else {
+          $('#output').html(response.result);
+          $('.content').slideUp();
+          $('.result').slideDown();
+        }
       }
     }).fail(function(xhr) {
       $('#error-text').text(xhr.responseText);
