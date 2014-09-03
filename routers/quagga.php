@@ -44,7 +44,7 @@ final class Quagga extends Router {
           $commands[] = $vtysh.'show ip bgp regexp '.$parameters.'"';
           $commands[] = $vtysh.'show ipv6 bgp regexp '.$parameters.'"';
         } else {
-          throw new Exception('The parameter is not an AS-Path regular expression like ".*XXXX YYYY.*".');
+          throw new Exception('The parameter is not an AS-Path regular expression.');
         }
         break;
 

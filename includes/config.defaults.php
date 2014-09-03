@@ -28,7 +28,12 @@ $config = array(
     // Logs file when commands will be written
     'logs' => '/var/log/looking-glass.log',
     // Allow private ASN
-    'allow_private_asn' => false
+    'allow_private_asn' => false,
+    // Allow RFC1918 IPv4 and FD/FC IPv6 as parameters
+    'allow_private_ip' => true,
+    // Allow reserved IPv4 addresses (0.0.0.0/8, 169.254.0.0/16,
+    // 192.0.2.0/24 and 224.0.0.0/4)
+    'allow_reserved_ip' => true
   ),
 
   // Documentation (must be HTML)
@@ -37,7 +42,7 @@ $config = array(
     'bgp' => array(
       'command' => 'show route IP_ADDRESS',
       'description' => 'Show the best routes to a given destination.',
-      'parameter' => 'The parameter must be a valid destination. Destination means an IPv4/IPv6 address or a subnet. Masks are also accepted as part of a valid IPv4/IPv6 address.<br />Please note that some routers always need a mask to be given when looking for an IPv6 address.<br /><br />Example of valid arguments:<br /><ul><li>10.1.1.1</li><li>172.16.0.0/12</li><li>2001:db8:1337::42</li><li>2001:db8::/32</li>'
+      'parameter' => 'The parameter must be a valid destination. Destination means an IPv4/IPv6 address or a subnet. Masks are also accepted as part of a valid IPv4/IPv6 address.<br />RFC1918 addresses, IPv6 starting with FD or FC, and IPv4 reserved ranges (0.0.0.0/8, 169.254.0.0/16, 192.0.2.0/24 and 224.0.0.0/4) may be refused.<br />Please note that some routers always need a mask to be given when looking for an IPv6 address.<br /><br />Example of valid arguments:<br /><ul><li>8.8.8.8</li><li>8.8.4.0/24</li><li>2001:db8:1337::42</li><li>2001:db8::/32</li>'
     ),
     // Documentation for the 'as-path-regex' query
     'as-path-regex' => array(
@@ -55,13 +60,13 @@ $config = array(
     'ping' => array(
       'command' => 'ping IP_ADDRESS',
       'description' => 'Send 10 pings to the given destination.',
-      'parameter' => 'The parameter must be an IPv4/IPv6 address (without mask) or a fully qualified domain name.<br /><br />Example of valid arguments:<br /><ul><li>10.1.1.1</li><li>2001:db8:1337::42</li><li>example.com</li></ul>'
+      'parameter' => 'The parameter must be an IPv4/IPv6 address (without mask) or a fully qualified domain name.<br />RFC1918 addresses, IPv6 starting with FD or FC, and IPv4 reserved ranges (0.0.0.0/8, 169.254.0.0/16, 192.0.2.0/24 and 224.0.0.0/4) may be refused.<br /><br />Example of valid arguments:<br /><ul><li>8.8.8.8</li><li>2001:db8:1337::42</li><li>example.com</li></ul>'
     ),
     // Documentation for the 'traceroute' query
     'traceroute' => array(
       'command' =>'traceroute IP_ADDRESS',
       'description' => 'Display the path to a given destination.',
-      'parameter' => 'The parameter must be an IPv4/IPv6 address (without mask) or a fully qualified domain name.<br /><br />Example of valid arguments:<br /><ul><li>10.1.1.1</li><li>2001:db8:1337::42</li><li>example.com</li></ul>'
+      'parameter' => 'The parameter must be an IPv4/IPv6 address (without mask) or a fully qualified domain name.<br />RFC1918 addresses, IPv6 starting with FD or FC, and IPv4 reserved ranges (0.0.0.0/8, 169.254.0.0/16, 192.0.2.0/24 and 224.0.0.0/4) may be refused.<br /><br />Example of valid arguments:<br /><ul><li>8.8.8.8</li><li>2001:db8:1337::42</li><li>example.com</li></ul>'
     )
   )
 

@@ -22,6 +22,40 @@
 require_once 'config.php';
 
 /**
+ * Test if a given parameter is a private IPv4 or IPv6.
+ *
+ * @param  string  $ip the parameter to test.
+ * @return boolean true if the parameter is a private IP address, false
+ *                 otherwise.
+ */
+function match_private_ip_range($ip) {
+  if (empty($ip)) {
+    return false;
+  }
+
+  $is_private = filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE);
+
+  return (!$is_private ? true : false);
+}
+
+/**
+ * Test if a given parameter is a reserved IPv4.
+ *
+ * @param  string  $ip the parameter to test.
+ * @return boolean true if the parameter is a reserved IPv4 address, false
+ *                 otherwise.
+ */
+function match_reserved_ip_range($ip) {
+  if (empty($ip)) {
+    return false;
+  }
+
+  $is_reserved = filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_RES_RANGE);
+
+  return (!$is_reserved ? true : false);
+}
+
+/**
  * Test if a given parameter is an IPv4 or not.
  *
  * @param  string  $ip      the parameter to test.
@@ -33,12 +67,38 @@ require_once 'config.php';
  *                 otherwise.
  */
 function match_ipv4($ip, $ip_only = true) {
+  global $config;
+
+  if (empty($ip)) {
+    return false;
+  }
+
   if (strrpos($ip, '/') && !$ip_only)  {
     $ip_and_mask = explode('/', $ip, 2);
+
+    if (!$config['misc']['allow_private_ip'] &&
+        match_private_ip_range($ip_and_mask[0])) {
+      return false;
+    }
+
+    if (!$config['misc']['allow_reserved_ip'] &&
+        match_reserved_ip_range($ip_and_mask[0])) {
+      return false;
+    }
 
     return filter_var($ip_and_mask[0], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) &&
       filter_var($ip_and_mask[1], FILTER_VALIDATE_INT);
   } else {
+    if (!$config['misc']['allow_private_ip'] &&
+        match_private_ip_range($ip)) {
+      return false;
+    }
+
+    if (!$config['misc']['allow_reserved_ip'] &&
+        match_reserved_ip_range($ip)) {
+      return false;
+    }
+
     return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
   }
 }
@@ -55,12 +115,28 @@ function match_ipv4($ip, $ip_only = true) {
  *                 otherwise.
  */
 function match_ipv6($ip, $ip_only = true) {
+  global $config;
+
+  if (empty($ip)) {
+    return false;
+  }
+
   if (strrpos($ip, '/') && !$ip_only)  {
     $ip_and_mask = explode('/', $ip, 2);
+
+    if (!$config['misc']['allow_private_ip'] &&
+        match_private_ip_range($ip_and_mask[0])) {
+      return false;
+    }
 
     return filter_var($ip_and_mask[0], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) &&
       filter_var($ip_and_mask[1], FILTER_VALIDATE_INT);
   } else {
+    if (!$config['misc']['allow_private_ip'] &&
+        match_private_ip_range($ip)) {
+      return false;
+    }
+
     return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
   }
 }
@@ -73,6 +149,10 @@ function match_ipv6($ip, $ip_only = true) {
  */
 function match_fqdn($fqdn) {
   $regex = '/(?=^.{4,255}$)(^((?!-)[a-zA-Z0-9-]{1,63}(?<!-)\.)+[a-zA-Z]{2,63}$)/';
+
+  if (empty($fqdn)) {
+    return false;
+  }
 
   if ((preg_match($regex, $fqdn) === false) ||
       (preg_match($regex, $fqdn) === 0)) {
@@ -101,6 +181,10 @@ function match_as($as) {
     'options' => array('min_range' => 4200000000, 'max_range' => 4294967294)
   );
 
+  if (empty($as)) {
+    return false;
+  }
+
   if (!filter_var($as, FILTER_VALIDATE_INT, $options_wide_range)) {
     return false;
   }
@@ -119,6 +203,10 @@ function match_as($as) {
 }
 
 function match_aspath_regex($aspath_regex) {
+  if (empty($aspath_regex)) {
+    return false;
+  }
+
   // TODO: validate a regex with a regex?
   return true;
 }

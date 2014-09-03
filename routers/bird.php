@@ -47,7 +47,7 @@ final class Bird extends Router {
           $commands[] = $birdc6.' \'show route where bgp_path ~ [= '.
             $parameters.' =]\'';
         } else {
-          throw new Exception('The parameter is not an AS-Path regular expression like ".*XXXX YYYY.*".');
+          throw new Exception('The parameter is not an AS-Path regular expression.');
         }
         break;
 

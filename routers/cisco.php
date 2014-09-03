@@ -42,7 +42,7 @@ final class Cisco extends Router {
           $commands[] = 'show bgp ipv4 unicast quote-regexp "'.$parameters.'"';
           $commands[] = 'show bgp ipv6 unicast quote-regexp "'.$parameters.'"';
         } else {
-          throw new Exception('The parameter is not an AS-Path regular expression like ".*XXXX YYYY.*".');
+          throw new Exception('The parameter is not an AS-Path regular expression.');
         }
         break;
 

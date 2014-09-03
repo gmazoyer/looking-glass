@@ -46,7 +46,7 @@ final class Juniper extends Router {
           $commands[] = 'show route aspath-regex "'.$parameters.
             '" protocol bgp table inet6.0';
         } else {
-          throw new Exception('The parameter is not an AS-Path regular expression like ".*XXXX YYYY.*".');
+          throw new Exception('The parameter is not an AS-Path regular expression.');
         }
         break;
 

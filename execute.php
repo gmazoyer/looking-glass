@@ -78,9 +78,9 @@ if (isset($_POST['doc']) && !empty($_POST['doc'])) {
 if (isset($_POST['query']) && !empty($_POST['query']) &&
     isset($_POST['routers']) && !empty($_POST['routers']) &&
     isset($_POST['parameters']) && !empty($_POST['parameters'])) {
-  $query = htmlspecialchars($_POST['query']);
-  $hostname = htmlspecialchars($_POST['routers']);
-  $parameters = htmlspecialchars($_POST['parameters']);
+  $query = trim($_POST['query']);
+  $hostname = trim($_POST['routers']);
+  $parameters = trim($_POST['parameters']);
 
   // Do the processing
   $router = Router::instance($hostname, $requester);
