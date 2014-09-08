@@ -52,14 +52,12 @@ abstract class Router {
     foreach (preg_split("/((\r?\n)|(\r\n?))/", $output) as $line) {
       $valid = true;
 
-      if (isset($config['filters'])) {
-        foreach ($config['filters'] as $filter) {
-          // Line has been marked as invalid
-          // Or filtered based on the configuration
-          if (!$valid || (preg_match($filter, $line) === 1)) {
-            $valid = false;
-            break;
-          }
+      foreach ($config['filters'] as $filter) {
+        // Line has been marked as invalid
+        // Or filtered based on the configuration
+        if (!$valid || (preg_match($filter, $line) === 1)) {
+          $valid = false;
+          break;
         }
       }
 
