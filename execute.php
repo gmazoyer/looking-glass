@@ -30,39 +30,6 @@ if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
   $requester = $_SERVER['REMOTE_ADDR'];
 }
 
-function process_output($output) {
-  global $config;
-
-  $return = '';
-
-  foreach (preg_split("/((\r?\n)|(\r\n?))/", $output) as $line) {
-    // Get rid of empty lines
-    if (empty($line)) {
-      continue;
-    }
-
-    $valid = true;
-
-    if (isset($config['filters'])) {
-      foreach ($config['filters'] as $filter) {
-        // Line has been marked as invalid
-        // Or filtered based on the configuration
-        if (!$valid || (preg_match($filter, $line) === 1)) {
-          $valid = false;
-          break;
-        }
-      }
-    }
-
-    if ($valid) {
-      // The line is valid, print it
-      $return .= $line."\n";
-    }
-  }
-
-  return $return;
-}
-
 // Obvious spam
 if (!isset($_POST['dontlook']) || !empty($_POST['dontlook'])) {
   log_to_file('Spam detected from '.$requester.'.');
@@ -93,7 +60,7 @@ if (isset($_POST['query']) && !empty($_POST['query']) &&
 
   if (isset($output)) {
     // Display the result of the command
-    $data = array('result' => process_output($output));
+    $data = array('result' => $output);
   } else {
     // Display the error
     $data = array('error' => $error);

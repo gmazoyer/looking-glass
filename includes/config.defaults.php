@@ -23,6 +23,9 @@ $config = array(
     'order' => array('routers', 'commands', 'parameters', 'buttons')
   ),
 
+  // Filters
+  'filters' => array(),
+
   // Misc
   'misc' => array(
     // Logs file when commands will be written

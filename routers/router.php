@@ -39,6 +39,39 @@ abstract class Router {
     $this->requester = $requester;
   }
 
+  private function process_output($output) {
+    global $config;
+
+    // No filters defined
+    if (count($config['filters']) < 1) {
+      return preg_replace('/(?:\n|\r\n|\r)$/D', '', $output);
+    }
+
+    $filtered = '';
+
+    foreach (preg_split("/((\r?\n)|(\r\n?))/", $output) as $line) {
+      $valid = true;
+
+      if (isset($config['filters'])) {
+        foreach ($config['filters'] as $filter) {
+          // Line has been marked as invalid
+          // Or filtered based on the configuration
+          if (!$valid || (preg_match($filter, $line) === 1)) {
+            $valid = false;
+            break;
+          }
+        }
+      }
+
+     if ($valid) {
+        // The line is valid, print it
+        $filtered .= $line."\n";
+      }
+    }
+
+    return preg_replace('/(?:\n|\r\n|\r)$/D', '', $filtered);
+  }
+
   protected abstract function build_commands($command, $parameters);
 
   public function send_command($command, $parameters) {
@@ -55,8 +88,9 @@ abstract class Router {
 
       foreach ($commands as $selected) {
         $data .= '<p><kbd>Command: '.$selected.'</kdb></p>';
-        $data .= '<pre class="pre-scrollable">'.$auth->send_command($selected).
-          '</pre>';
+        $data .= '<pre class="pre-scrollable">';
+        $data .= $this->process_output($auth->send_command($selected));
+        $data .= '</pre>';
         log_to_file('[client: '.$this->requester.'] '.$this->config['host'].
           '> '.$selected);
       }
