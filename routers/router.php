@@ -29,21 +29,21 @@ require_once 'includes/utils.php';
 require_once 'auth/authentication.php';
 
 abstract class Router {
+  protected $global_config;
   protected $config;
   protected $id;
   protected $requester;
 
-  public function __construct($config, $id, $requester) {
+  public function __construct($global_config, $config, $id, $requester) {
+    $this->global_config = $global_config;
     $this->config = $config;
     $this->id = $id;
     $this->requester = $requester;
   }
 
   private function sanitize_output($output) {
-    global $config;
-
     // No filters defined
-    if (count($config['filters']) < 1) {
+    if (count($this->global_config['filters']) < 1) {
       return preg_replace('/(?:\n|\r\n|\r)$/D', '', $output);
     }
 
@@ -52,7 +52,7 @@ abstract class Router {
     foreach (preg_split("/((\r?\n)|(\r\n?))/", $output) as $line) {
       $valid = true;
 
-      foreach ($config['filters'] as $filter) {
+      foreach ($this->global_config['filters'] as $filter) {
         // Line has been marked as invalid
         // Or filtered based on the configuration
         if (!$valid || (preg_match($filter, $line) === 1)) {
@@ -97,8 +97,10 @@ abstract class Router {
 
         $data .= $this->format_output($selected, $output);
 
-        log_to_file('[client: '.$this->requester.'] '.$this->config['host'].
-          '> '.$selected);
+        $log = str_replace(array('%D', '%R', '%H', '%C'),
+          array(date('Y-m-d H:i:s'), $this->requester, $this->config['host'],
+          $selected), $this->global_config['logs']['format']);
+        log_to_file($log);
       }
     } catch (Exception $e) {
       throw $e;
@@ -114,19 +116,19 @@ abstract class Router {
 
     switch (strtolower($router_config['type'])) {
       case 'bird':
-        return new Bird($router_config, $id, $requester);
+        return new Bird($config, $router_config, $id, $requester);
 
       case 'cisco':
       case 'ios':
-        return new Cisco($router_config, $id, $requester);
+        return new Cisco($config, $router_config, $id, $requester);
 
       case 'juniper':
       case 'junos':
-        return new Juniper($router_config, $id, $requester);
+        return new Juniper($config, $router_config, $id, $requester);
 
       case 'quagga':
       case 'zebra':
-        return new Quagga($router_config, $id, $requester);
+        return new Quagga($config, $router_config, $id, $requester);
 
       default:
         print 'Unknown router type "'.$router_config['type'].'"."';

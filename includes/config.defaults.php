@@ -26,10 +26,17 @@ $config = array(
   // Filters
   'filters' => array(),
 
+  // Logs
+  'logs' => array(
+    // Logs file when commands will be written
+    'file' => '/var/log/looking-glass.log',
+    // Format for each logged command (%D is for the time, %R is for the
+    // requester IP address, %H is for the host and %C is for the command)
+    'format' => '[%D] [client: %R] %H > %C'
+  ),
+
   // Misc
   'misc' => array(
-    // Logs file when commands will be written
-    'logs' => '/var/log/looking-glass.log',
     // Allow private ASN
     'allow_private_asn' => false,
     // Allow RFC1918 IPv4 and FD/FC IPv6 as parameters

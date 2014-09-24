@@ -271,8 +271,8 @@ function fqdn_to_ip_address($fqdn) {
 function log_to_file($log) {
   global $config;
 
-  $log = '['.date("Y-m-d H:i:s").'] '.$log."\n";
-  file_put_contents($config['misc']['logs'], $log, FILE_APPEND | LOCK_EX);
+  $log .= "\n";
+  file_put_contents($config['logs']['file'], $log, FILE_APPEND | LOCK_EX);
 }
 
 // End of utils.php
