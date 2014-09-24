@@ -39,7 +39,7 @@ abstract class Router {
     $this->requester = $requester;
   }
 
-  private function process_output($output) {
+  private function sanitize_output($output) {
     global $config;
 
     // No filters defined
@@ -70,6 +70,13 @@ abstract class Router {
     return preg_replace('/(?:\n|\r\n|\r)$/D', '', $filtered);
   }
 
+  protected function format_output($command, $output) {
+    $displayable  = '<p><kbd>Command: '.$command.'</kdb></p>';
+    $displayable .= '<pre class="pre-scrollable">'.$output.'</pre>';
+
+    return $displayable;
+  }
+
   protected abstract function build_commands($command, $parameters);
 
   public function send_command($command, $parameters) {
@@ -85,10 +92,11 @@ abstract class Router {
       $data = '';
 
       foreach ($commands as $selected) {
-        $data .= '<p><kbd>Command: '.$selected.'</kdb></p>';
-        $data .= '<pre class="pre-scrollable">';
-        $data .= $this->process_output($auth->send_command($selected));
-        $data .= '</pre>';
+        $output = $auth->send_command($selected);
+        $output = $this->sanitize_output($output);
+
+        $data .= $this->format_output($selected, $output);
+
         log_to_file('[client: '.$this->requester.'] '.$this->config['host'].
           '> '.$selected);
       }
