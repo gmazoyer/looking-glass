@@ -28,7 +28,7 @@ $config = array(
 
   // Logs
   'logs' => array(
-    // Logs file when commands will be written
+    // Logs file where commands will be written
     'file' => '/var/log/looking-glass.log',
     // Format for each logged command (%D is for the time, %R is for the
     // requester IP address, %H is for the host and %C is for the command)

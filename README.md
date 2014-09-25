@@ -37,6 +37,12 @@ Copy the configuration **config.php.example** file to create a **config.php**
 file. It contains all the values (PHP variables) used to customize the looking
 glass.
 
+## Documentation
+
+An up-to-date (hopefully) documentation is available in the **docs/**
+directory. It gives enough details to setup the looking glass, to configure it
+and to prepare your routers.
+
 ## License
 
 Looking Glass is released under the terms of the GNU GPLv3. Please read the
