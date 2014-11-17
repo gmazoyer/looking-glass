@@ -19,8 +19,8 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-require_once 'router.php';
-require_once 'includes/utils.php';
+require_once('router.php');
+require_once('includes/utils.php');
 
 final class Quagga extends Router {
   protected function build_commands($command, $parameters) {

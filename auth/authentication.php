@@ -21,8 +21,8 @@
 
 ini_set('include_path', ini_get('include_path').':./libs/phpseclib-0.3.7');
 
-require_once 'ssh.php';
-require_once 'telnet.php';
+require_once('ssh.php');
+require_once('telnet.php');
 
 /**
  * This class needs to be extended by every class implementing an

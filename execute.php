@@ -19,9 +19,9 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-require_once 'includes/config.defaults.php';
-require_once 'config.php';
-require_once 'routers/router.php';
+require_once('includes/config.defaults.php');
+require_once('config.php');
+require_once('routers/router.php');
 
 // From where the user *really* comes from.
 if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
@@ -39,7 +39,7 @@ if (!isset($_POST['dontlook']) || !empty($_POST['dontlook'])) {
 // Just asked for the documentation
 if (isset($_POST['doc']) && !empty($_POST['doc'])) {
   $query = htmlspecialchars($_POST['doc']);
-  print json_encode($config['doc'][$query]);
+  print(json_encode($config['doc'][$query]));
 }
 
 if (isset($_POST['query']) && !empty($_POST['query']) &&
@@ -66,7 +66,7 @@ if (isset($_POST['query']) && !empty($_POST['query']) &&
     $data = array('error' => $error);
   }
 
-  print json_encode($data);
+  print(json_encode($data));
 }
 
 // End of execute.php
