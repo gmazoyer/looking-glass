@@ -100,8 +100,8 @@ final class LookingGlass {
     if ($this->frontpage['show_title']) {
       print('<h1>'.htmlentities($this->frontpage['title']).'</h1><br />');
     }
-    if (isset($this->frontpage['image'])) {
-      print('<img src="'.$this->frontpage['image'].'" alt="logo" />');
+    if ($this->frontpage['image'] != null) {
+      print('<img src="'.$this->frontpage['image'].'" alt="Logo" />');
     }
     print('</div>');
     print('</a>');
@@ -167,12 +167,12 @@ final class LookingGlass {
       }
     }
 
-    if (isset($this->frontpage['disclaimer'])) {
+    if ($this->frontpage['disclaimer'] != null) {
       print($this->frontpage['disclaimer']);
       print('<br /><br />');
     }
 
-    if (isset($this->contact) && !empty($this->contact)) {
+    if (($this->contact['name'] != null) && ($this->contact['mail'] != null)) {
       print('Contact:&nbsp;');
       print('<a href="mailto:'.$this->contact['mail'].'">'.
         htmlentities($this->contact['name']).'</a>');

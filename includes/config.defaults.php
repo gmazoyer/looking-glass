@@ -15,12 +15,26 @@ $config = array(
     'custom_bootstrap_theme' => false,
     // CSS to use
     'css' => 'css/style.css',
+    // Title
+    'title' => 'Looking Glass',
+    // Image (null for no image)
+    'image' => null,
+    // Disclaimer (null for no disclaimer)
+    'disclaimer' => 'Disclaimer example',
     // Display the title
     'show_title' => true,
     // Show visitor IP address
     'show_visitor_ip' => true,
     // Frontpage order you can use: routers, commands, parameters, buttons
     'order' => array('routers', 'commands', 'parameters', 'buttons')
+  ),
+
+  // Contact (both null for no contact)
+  'contact' => array(
+    // Name of the contact
+    'name' => 'Example Support',
+    // Email of the contact
+    'mail' => 'support@example.com'
   ),
 
   // Filters

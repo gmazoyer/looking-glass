@@ -7,6 +7,7 @@
  */
 
 // People to contact
+// Set both to null to not display any contact information
 $config['contact']['name'] = 'Example Support';
 $config['contact']['mail'] = 'support@example.com';
 
@@ -17,6 +18,7 @@ $config['frontpage']['title'] = 'Looking Glass';
 // Logo to display (remove it to not display any logo)
 $config['frontpage']['image'] = 'logo.png';
 // Disclaimer to inform people using the looking glass
+// Set it to null to not display a disclaimer
 $config['frontpage']['disclaimer'] = 'This is a disclaimer!';
 
 // Things to remove from the output (PHP compatible regex)
