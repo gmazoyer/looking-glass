@@ -19,7 +19,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-ini_set('include_path', ini_get('include_path').':./libs/phpseclib-0.3.7');
+ini_set('include_path', ini_get('include_path').':./libs/phpseclib-0.3.9');
 
 require_once('ssh.php');
 require_once('telnet.php');
