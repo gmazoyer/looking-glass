@@ -23,12 +23,14 @@ require_once('includes/config.defaults.php');
 require_once('config.php');
 
 final class LookingGlass {
+  private $release;
   private $frontpage;
   private $contact;
   private $misc;
   private $routers;
 
   function __construct($config) {
+    $this->release = $config['release'];
     $this->frontpage = $config['frontpage'];
     $this->contact = $config['contact'];
     $this->misc = $config['misc'];
@@ -179,7 +181,7 @@ final class LookingGlass {
     }
 
     print('<br /><br />');
-    print('<span class="origin">Powered by <a href="https://github.com/respawner/looking-glass" title="Looking Glass Project">Looking Glass</a></span>');
+    print('<span class="origin">Powered by <a href="https://github.com/respawner/looking-glass" title="Looking Glass Project">Looking Glass '.$this->release['version'].'</a></span>');
     print('</p>');
     print('</div>');
   }

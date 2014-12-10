@@ -7,6 +7,12 @@
 
 $config = array(
 
+  // Release configuration
+  'release' => array(
+    'version' => '1.0.0',
+    'codename' => 'Convergence'
+  ),
+
   // Frontpage configuration
   'frontpage' => array(
     // Use Bootstrap theme
