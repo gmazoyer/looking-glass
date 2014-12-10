@@ -38,6 +38,8 @@ $config['routers']['router1']['pass'] = 'readonlypassword';
 $config['routers']['router1']['auth'] = 'ssh-password';
 // The router type (can be cisco, ios, juniper or junos)
 $config['routers']['router1']['type'] = 'juniper';
+// The router source interface to be used
+$config['routers']['router1']['source-interface-id'] = 'lo0';
 // The router description to be displayed in the router list
 $config['routers']['router1']['desc'] = 'Example\'s Router 1';
 
@@ -54,6 +56,8 @@ $config['routers']['router2']['pass'] = 'mypassphrase';
 $config['routers']['router2']['auth'] = 'ssh-key';
 // The router type (can be cisco, ios, juniper or junos)
 $config['routers']['router2']['type'] = 'juniper';
+// The router source interface to be used
+$config['routers']['router2']['source-interface-id'] = 'lo0';
 // The router description to be displayed in the router list
 $config['routers']['router2']['desc'] = 'Example\'s Router 2';
 
@@ -68,6 +72,8 @@ $config['routers']['router3']['pass'] = 'birduserpassword';
 $config['routers']['router3']['auth'] = 'ssh-password';
 // The router type (can only be bird)
 $config['routers']['router3']['type'] = 'bird';
+// The router source address to be used
+$config['routers']['router3']['source-interface-id'] = '192.168.1.1';
 // The router description to be displayed in the router list
 $config['routers']['router3']['desc'] = 'Example\'s Router 3';
 

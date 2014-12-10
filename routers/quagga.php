@@ -58,10 +58,23 @@ final class Quagga extends Router {
         break;
 
       case 'ping':
+        $append = null;
+        if (isset($this->config['source-interface-id'])) {
+          $append = ' -I '.$this->config['source-interface-id'];
+        }
+
         if (match_ipv4($parameters)) {
-          $commands[] = 'ping -A -c 10 '.$parameters;
+          $ping = 'ping -A -c 10 '.$parameters;
+          if ($append != null) {
+            $ping .= $append;
+          }
+          $commands[] = $ping;
         } else if (match_ipv6($parameters)) {
-          $commands[] = 'ping6 -A -c 10 '.$parameters;
+          $ping = 'ping6 -A -c 10 '.$parameters;
+          if ($append != null) {
+            $ping .= $append;
+          }
+          $commands[] = $ping;
         } else if (match_fqdn($parameters)) {
           $ip_address = fqdn_to_ip_address($parameters);
 
@@ -70,9 +83,17 @@ final class Quagga extends Router {
           }
 
           if (match_ipv4($ip_address)) {
-            $commands[] = 'ping -A -c 10 '.$parameters;
+            $ping = 'ping -A -c 10 '.$parameters;
+            if ($append != null) {
+              $ping .= $append;
+            }
+            $commands[] = $ping;
           } else if (match_ipv6($ip_address)) {
-            $commands[] = 'ping6 -A -c 10 '.$parameters;
+            $ping = 'ping6 -A -c 10 '.$parameters;
+            if ($append != null) {
+              $ping .= $append;
+            }
+            $commands[] = $ping;
           }
         } else {
           throw new Exception('The parameter is not an IPv4/IPv6 address.');
@@ -80,10 +101,23 @@ final class Quagga extends Router {
         break;
 
       case 'traceroute':
+        $append = null;
+        if (isset($this->config['source-interface-id'])) {
+          $append = ' -s '.$this->config['source-interface-id'];
+        }
+
         if (match_ipv4($parameters)) {
-          $commands[] = 'traceroute -4 -A -q1 -N32 -w1 -m15 '.$parameters;
+          $traceroute = 'traceroute -4 -A -q1 -N32 -w1 -m15 '.$parameters;
+          if ($append != null) {
+            $traceroute .= $append;
+          }
+          $commands[] .= $traceroute;
         } else if (match_ipv6($parameters)) {
-          $commands[] = 'traceroute -6 -A -q1 -N32 -w1 -m15 '.$parameters;
+          $traceroute = 'traceroute -6 -A -q1 -N32 -w1 -m15 '.$parameters;
+          if ($append != null) {
+            $traceroute .= $append;
+          }
+          $commands[] = $traceroute;
         } else if (match_fqdn($parameters)) {
           $ip_address = fqdn_to_ip_address($parameters);
 
@@ -92,9 +126,17 @@ final class Quagga extends Router {
           }
 
           if (match_ipv4($ip_address)) {
-            $commands[] = 'traceroute -4 -A -q1 -N32 -w1 -m15 '.$parameters;
+            $traceroute = 'traceroute -4 -A -q1 -N32 -w1 -m15 '.$parameters;
+            if ($append != null) {
+              $traceroute .= $append;
+            }
+            $commands[] .= $traceroute;
           } else if (match_ipv6($ip_address)) {
-            $commands[] = 'traceroute -6 -A -q1 -N32 -w1 -m15 '.$parameters;
+            $traceroute = 'traceroute -6 -A -q1 -N32 -w1 -m15 '.$parameters;
+            if ($append != null) {
+              $traceroute .= $append;
+            }
+            $commands[] = $traceroute;
           }
         } else {
           throw new Exception('The parameter is not an IPv4/IPv6 address.');

@@ -107,6 +107,19 @@ $config['routers']['router1']['type'] = 'juniper';
 The router type can be Juniper, Cisco, Quagga or BIRD. You can take a look at
 the specific documentation for your router.
 
+It is also highly recommended to specify a source interface ID to be used by
+the router when it will try to ping or traceroute a destination. This is done
+with:
+
+```php
+$config['routers']['router1']['source-interface-id'] = 'lo0';
+```
+for Cisco and Juniper routers (change lo0 with your interface), and with:
+```php
+$config['routers']['router1']['source-interface-id'] = '192.168.1.1';
+```
+for BIRD and Quagga routers (use your own IP address).
+
 After that you need to set the authentication information for the looking
 glass to be able to log into the router. For this you select a type of
 authentication and then supply the needed information.

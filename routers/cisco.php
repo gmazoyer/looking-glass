@@ -57,7 +57,11 @@ final class Cisco extends Router {
 
       case 'ping':
         if (match_ipv4($parameters) || match_ipv6($parameters) || match_fqdn($parameters)) {
-          $commands[] = 'ping '.$parameters.' repeat 10';
+          $ping = 'ping '.$parameters.' repeat 10';
+          if (isset($this->config['source-interface-id'])) {
+            $ping .= ' source '.$this->config['source-interface-id'];
+          }
+          $commands[] = $ping;
         } else {
           throw new Exception('The parameter is not an IPv4/IPv6 address.');
         }
@@ -65,7 +69,11 @@ final class Cisco extends Router {
 
       case 'traceroute':
         if (match_ipv4($parameters) || match_ipv6($parameters) || match_fqdn($parameters)) {
-          $commands[] = 'traceroute '.$parameters;
+          $traceroute = 'traceroute '.$parameters;
+          if (isset($this->config['source-interface-id'])) {
+            $traceroute .= ' source '.$this->config['source-interface-id'];
+          }
+          $commands[] = $traceroute;
         } else {
           throw new Exception('The parameter is not an IPv4/IPv6 address.');
         }
