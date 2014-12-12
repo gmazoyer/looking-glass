@@ -23,6 +23,72 @@ require_once('router.php');
 require_once('includes/utils.php');
 
 final class Bird extends Router {
+  protected function build_ping($destination) {
+    $ping = null;
+
+    if (match_fqdn($destination)) {
+      $fqdn = $destination;
+      $destination = fqdn_to_ip_address($fqdn);
+
+      if (!$destination) {
+        throw new Exception('No A or AAAA record found for '.$fqdn);
+      }
+    }
+
+    if (match_ipv4($destination)) {
+      $ping = 'ping -A -c 10 '.$destination;
+    } else if (match_ipv6($destination)) {
+      $ping = 'ping6 -A -c 10 '.$destination;
+    } else {
+      throw new Exception('The parameter is not an IPv4/IPv6 address or a FQDN.');
+    }
+
+    if (($ping != null) && $this->has_source_interface_id()) {
+      if (match_ipv4($destination) &&
+          ($this->get_source_interface_id('ipv4') != null)) {
+        $ping .= ' -I '.$this->get_source_interface_id('ipv4');
+      } else if (match_ipv6($destination) &&
+          ($this->get_source_interface_id('ipv6') != null)) {
+        $ping .= ' -I '.$this->get_source_interface_id('ipv6');
+      }
+    }
+
+    return $ping;
+  }
+
+  protected function build_traceroute($destination) {
+    $traceroute = null;
+
+    if (match_fqdn($destination)) {
+      $fqdn = $destination;
+      $destination = fqdn_to_ip_address($fqdn);
+
+      if (!$destination) {
+        throw new Exception('No A or AAAA record found for '.$fqdn);
+      }
+    }
+
+    if (match_ipv4($destination)) {
+      $traceroute = 'traceroute -4 -A -q1 -N32 -w1 -m15 '.$destination;
+    } else if (match_ipv6($destination)) {
+      $traceroute = 'traceroute -6 -A -q1 -N32 -w1 -m15 '.$destination;
+    } else {
+      throw new Exception('The parameter is not an IPv4/IPv6 address or a FQDN.');
+    }
+
+    if (($traceroute != null) && $this->has_source_interface_id()) {
+      if (match_ipv4($destination) &&
+          ($this->get_source_interface_id('ipv4') != null)) {
+        $traceroute .= ' -s '.$this->get_source_interface_id('ipv4');
+      } else if (match_ipv6($destination) &&
+          ($this->get_source_interface_id('ipv6') != null)) {
+        $traceroute .= ' -s '.$this->get_source_interface_id('ipv6');
+      }
+    }
+
+    return $traceroute;
+  }
+
   protected function build_commands($command, $parameters) {
     $commands = array();
 
@@ -63,88 +129,18 @@ final class Bird extends Router {
         break;
 
       case 'ping':
-        $append = null;
-        if (isset($this->config['source-interface-id'])) {
-          $append = ' -I '.$this->config['source-interface-id'];
-        }
-
-        if (match_ipv4($parameters)) {
-          $ping = 'ping -A -c 10 '.$parameters;
-          if ($append != null) {
-            $ping .= $append;
-          }
-          $commands[] = $ping;
-        } else if (match_ipv6($parameters)) {
-          $ping = 'ping6 -A -c 10 '.$parameters;
-          if ($append != null) {
-            $ping .= $append;
-          }
-          $commands[] = $ping;
-        } else if (match_fqdn($parameters)) {
-          $ip_address = fqdn_to_ip_address($parameters);
-
-          if (!$ip_address) {
-            throw new Exception('No A or AAAA record found for '.$parameters);
-          }
-
-          if (match_ipv4($ip_address)) {
-            $ping = 'ping -A -c 10 '.$parameters;
-            if ($append != null) {
-              $ping .= $append;
-            }
-            $commands[] = $ping;
-          } else if (match_ipv6($ip_address)) {
-            $ping = 'ping6 -A -c 10 '.$parameters;
-            if ($append != null) {
-              $ping .= $append;
-            }
-            $commands[] = $ping;
-          }
-        } else {
-          throw new Exception('The parameter is not an IPv4/IPv6 address.');
+        try {
+          $commands[] = $this->build_ping($parameters);
+        } catch (Exception $e) {
+          throw $e;
         }
         break;
 
       case 'traceroute':
-        $append = null;
-        if (isset($this->config['source-interface-id'])) {
-          $append = ' -s '.$this->config['source-interface-id'];
-        }
-
-        if (match_ipv4($parameters)) {
-          $traceroute = 'traceroute -4 -A -q1 -N32 -w1 -m15 '.$parameters;
-          if ($append != null) {
-            $traceroute .= $append;
-          }
-          $commands[] = $traceroute;
-        } else if (match_ipv6($parameters)) {
-          $traceroute = 'traceroute -6 -A -q1 -N32 -w1 -m15 '.$parameters;
-          if ($append != null) {
-            $traceroute .= $append;
-          }
-          $commands[] = $traceroute;
-        } else if (match_fqdn($parameters)) {
-          $ip_address = fqdn_to_ip_address($parameters);
-
-          if (!$ip_address) {
-            throw new Exception('No A or AAAA record found for '.$parameters);
-          }
-
-          if (match_ipv4($ip_address)) {
-            $traceroute = 'traceroute -4 -A -q1 -N32 -w1 -m15 '.$parameters;
-            if ($append != null) {
-              $traceroute .= $append;
-            }
-            $commands[] = $traceroute;
-          } else if (match_ipv6($ip_address)) {
-            $traceroute = 'traceroute -6 -A -q1 -N32 -w1 -m15 '.$parameters;
-            if ($append != null) {
-              $traceroute .= $append;
-            }
-            $commands[] = $traceroute;
-          }
-        } else {
-          throw new Exception('The parameter is not an IPv4/IPv6 address.');
+        try {
+          $commands[] = $this->build_traceroute($parameters);
+        } catch (Exception $e) {
+          throw $e;
         }
         break;
 

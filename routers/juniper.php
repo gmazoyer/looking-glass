@@ -23,6 +23,41 @@ require_once('router.php');
 require_once('includes/utils.php');
 
 final class Juniper extends Router {
+  protected function build_ping($destination) {
+    $ping = null;
+
+    if (match_ipv4($destination) || match_ipv6($destination) ||
+        match_fqdn($destination)) {
+      $ping = 'ping count 10 rapid '.$destination;
+    } else {
+      throw new Exception('The parameter is not an IPv4/IPv6 address or a FQDN.');
+    }
+
+    if (($ping != null) && $this->has_source_interface_id()) {
+      $ping .= ' interface '.$this->get_source_interface_id();
+    }
+
+    return $ping;
+  }
+
+  protected function build_traceroute($destination) {
+    $traceroute = null;
+
+    if (match_ipv4($destination)) {
+      $traceroute = 'traceroute as-number-lookup '.$destination;
+    } else if (match_ipv6($destination) || match_fqdn($destination)) {
+      $traceroute = 'traceroute '.$destination;
+    } else {
+      throw new Exception('The parameter is not an IPv4/IPv6 address or a FQDN.');
+    }
+
+    if (($traceroute != null) && $this->has_source_interface_id()) {
+      $traceroute .= ' interface '.$this->get_source_interface_id();
+    }
+
+    return $traceroute;
+  }
+
   protected function build_commands($command, $parameters) {
     $commands = array();
 
@@ -62,38 +97,18 @@ final class Juniper extends Router {
         break;
 
       case 'ping':
-        if (match_ipv4($parameters) || match_ipv6($parameters) ||
-          match_fqdn($parameters)) {
-          $ping = 'ping count 10 rapid '.$parameters;
-          if (isset($this->config['source-interface-id'])) {
-            $ping .= ' interface '.$this->config['source-interface-id'];
-          }
-          $commands[] = $ping;
-        } else {
-          throw new Exception('The parameter is not an IPv4/IPv6 address or a FQDN.');
+        try {
+          $commands[] = $this->build_ping($parameters);
+        } catch (Exception $e) {
+          throw $e;
         }
         break;
 
       case 'traceroute':
-        $append = null;
-        if (isset($this->config['source-interface-id'])) {
-          $append = ' interface '.$this->config['source-interface-id'];
-        }
-
-        if (match_ipv4($parameters)) {
-          $traceroute = 'traceroute as-number-lookup '.$parameters;
-          if ($append != null) {
-            $traceroute .= $append;
-          }
-          $commands[] = $traceroute;
-        } else if (match_ipv6($parameters) || match_fqdn($parameters)) {
-          $traceroute = 'traceroute '.$parameters;
-          if ($append != null) {
-            $traceroute .= $append;
-          }
-          $commands[] = $traceroute;
-        } else {
-          throw new Exception('The parameter is not an IPv4/IPv6 address or a FQDN.');
+        try {
+          $commands[] = $this->build_traceroute($parameters);
+        } catch (Exception $e) {
+          throw $e;
         }
         break;
 

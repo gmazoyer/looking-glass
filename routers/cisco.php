@@ -23,6 +23,40 @@ require_once('router.php');
 require_once('includes/utils.php');
 
 final class Cisco extends Router {
+  protected function build_ping($destination) {
+    $ping = null;
+
+    if (match_ipv4($destination) || match_ipv6($destination) ||
+        match_fqdn($destination)) {
+      $ping = 'ping '.$destination.' repeat 10';
+    } else {
+      throw new Exception('The parameter is not an IPv4/IPv6 address or a FQDN.');
+    }
+
+    if (($ping != null) && $this->has_source_interface_id()) {
+      $ping .= ' source '.$this->get_source_interface_id();
+    }
+
+    return $ping;
+  }
+
+  protected function build_traceroute($destination) {
+    $traceroute = null;
+
+    if (match_ipv4($destination) || match_ipv6($destination) ||
+        match_fqdn($destination)) {
+      $traceroute = 'traceroute '.$destination;
+    } else {
+      throw new Exception('The parameter is not an IPv4/IPv6 address or a FQDN.');
+    }
+
+    if (($traceroute != null) && $this->has_source_interface_id()) {
+      $traceroute .= ' source '.$this->get_source_interface_id();
+    }
+
+    return $traceroute;
+  }
+
   protected function build_commands($command, $parameters) {
     $commands = array();
 
@@ -56,26 +90,18 @@ final class Cisco extends Router {
         break;
 
       case 'ping':
-        if (match_ipv4($parameters) || match_ipv6($parameters) || match_fqdn($parameters)) {
-          $ping = 'ping '.$parameters.' repeat 10';
-          if (isset($this->config['source-interface-id'])) {
-            $ping .= ' source '.$this->config['source-interface-id'];
-          }
-          $commands[] = $ping;
-        } else {
-          throw new Exception('The parameter is not an IPv4/IPv6 address.');
+        try {
+          $commands[] = $this->build_ping($parameters);
+        } catch (Exception $e) {
+          throw $e;
         }
         break;
 
       case 'traceroute':
-        if (match_ipv4($parameters) || match_ipv6($parameters) || match_fqdn($parameters)) {
-          $traceroute = 'traceroute '.$parameters;
-          if (isset($this->config['source-interface-id'])) {
-            $traceroute .= ' source '.$this->config['source-interface-id'];
-          }
-          $commands[] = $traceroute;
-        } else {
-          throw new Exception('The parameter is not an IPv4/IPv6 address.');
+        try {
+          $commands[] = $this->build_traceroute($parameters);
+        } catch (Exception $e) {
+          throw $e;
         }
         break;
 

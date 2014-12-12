@@ -77,6 +77,37 @@ abstract class Router {
     return $displayable;
   }
 
+  protected function has_source_interface_id() {
+    return isset($this->config['source-interface-id']);
+  }
+
+  protected function get_source_interface_id($ip_version = null) {
+    // No source interface ID specified
+    if (!$this->has_source_interface_id()) {
+      return null;
+    }
+
+    $source_interface_id = $this->config['source-interface-id'];
+
+    // Generic interface ID (interface name)
+    if (!is_array($source_interface_id)) {
+      return $source_interface_id;
+    }
+
+    // Composed interface ID (IPv4 and IPv6 address)
+    if (($ip_version == null) || ($ip_version == 'ipv4')) {
+      return $source_interface_id['ipv4'];
+    } else if ($ip_version == 'ipv6') {
+      return $source_interface_id['ipv6'];
+    }
+
+    return null;
+  }
+
+  protected abstract function build_ping($destination);
+
+  protected abstract function build_traceroute($destination);
+
   protected abstract function build_commands($command, $parameters);
 
   public function send_command($command, $parameters) {
