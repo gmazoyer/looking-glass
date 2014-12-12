@@ -44,8 +44,23 @@ final class Cisco extends Router {
     $traceroute = null;
 
     if (match_ipv4($destination) || match_ipv6($destination) ||
-        match_fqdn($destination)) {
+        (match_fqdn($destination) && !$this->has_source_interface_id())) {
       $traceroute = 'traceroute '.$destination;
+    } else if (match_fqdn($destination)) {
+      $fqdn = $destination;
+      $destination = fqdn_to_ip_address($fqdn);
+
+      if (!$destination) {
+        throw new Exception('No A or AAAA record found for '.$fqdn);
+      }
+
+      if (match_ipv4($destination)) {
+        $traceroute = 'traceroute ip '.$fqdn;
+      } else if (match_ipv6($destination)) {
+        $traceroute = 'traceroute ip6 '.$fqdn;
+      } else {
+        throw new Exception('The parameter does not resolve to an IPv4/IPv6 address.');
+      }
     } else {
       throw new Exception('The parameter is not an IPv4/IPv6 address or a FQDN.');
     }

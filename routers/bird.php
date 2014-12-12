@@ -36,11 +36,11 @@ final class Bird extends Router {
     }
 
     if (match_ipv4($destination)) {
-      $ping = 'ping -A -c 10 '.$destination;
+      $ping = 'ping -A -c 10 '.$fqdn;
     } else if (match_ipv6($destination)) {
-      $ping = 'ping6 -A -c 10 '.$destination;
+      $ping = 'ping6 -A -c 10 '.$fqdn;
     } else {
-      throw new Exception('The parameter is not an IPv4/IPv6 address or a FQDN.');
+      throw new Exception('The parameter does not resolve to an IPv4/IPv6 address.');
     }
 
     if (($ping != null) && $this->has_source_interface_id()) {
@@ -69,11 +69,11 @@ final class Bird extends Router {
     }
 
     if (match_ipv4($destination)) {
-      $traceroute = 'traceroute -4 -A -q1 -N32 -w1 -m15 '.$destination;
+      $traceroute = 'traceroute -4 -A -q1 -N32 -w1 -m15 '.$fqdn;
     } else if (match_ipv6($destination)) {
-      $traceroute = 'traceroute -6 -A -q1 -N32 -w1 -m15 '.$destination;
+      $traceroute = 'traceroute -6 -A -q1 -N32 -w1 -m15 '.$fqdn;
     } else {
-      throw new Exception('The parameter is not an IPv4/IPv6 address or a FQDN.');
+      throw new Exception('The parameter does not resolve to an IPv4/IPv6 address.');
     }
 
     if (($traceroute != null) && $this->has_source_interface_id()) {
