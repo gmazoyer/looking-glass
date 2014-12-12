@@ -57,7 +57,7 @@ final class Cisco extends Router {
       if (match_ipv4($destination)) {
         $traceroute = 'traceroute ip '.$fqdn;
       } else if (match_ipv6($destination)) {
-        $traceroute = 'traceroute ip6 '.$fqdn;
+        $traceroute = 'traceroute ipv6 '.$fqdn;
       } else {
         throw new Exception('The parameter does not resolve to an IPv4/IPv6 address.');
       }
