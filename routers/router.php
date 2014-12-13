@@ -71,7 +71,9 @@ abstract class Router {
   }
 
   protected function format_output($command, $output) {
-    $displayable  = '<p><kbd>Command: '.$command.'</kdb></p>';
+    if ($this->global_config['output']['show_command']) {
+      $displayable  = '<p><kbd>Command: '.$command.'</kdb></p>';
+    }
     $displayable .= '<pre class="pre-scrollable">'.$output.'</pre>';
 
     return $displayable;

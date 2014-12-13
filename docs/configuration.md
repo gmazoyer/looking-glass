@@ -155,6 +155,13 @@ $config['routers']['router1']['auth'] = 'ssh-key';
 ```
 The passphrase option is not needed if the key is not passphrase protected.
 
+### Output
+
+```php
+$config['output']['show_command'] = true;
+```
+Defines if the command used to get the output should be displayed or not.
+
 ### Logs
 
 ```php

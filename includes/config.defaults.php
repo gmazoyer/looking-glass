@@ -43,6 +43,12 @@ $config = array(
     'mail' => 'support@example.com'
   ),
 
+  // Output control
+  'output' => array(
+    // Show or hide command in output
+    'show_command' => true
+  ),
+
   // Filters
   'filters' => array(),
 
