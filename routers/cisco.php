@@ -57,7 +57,7 @@ final class Cisco extends Router {
       if (match_ipv4($destination)) {
         $traceroute = 'traceroute ip '.$fqdn;
       } else if (match_ipv6($destination)) {
-        $traceroute = 'traceroute ipv6 '.$fqdn;
+        $traceroute = 'traceroute '.$fqdn;
       } else {
         throw new Exception('The parameter does not resolve to an IPv4/IPv6 address.');
       }
@@ -65,7 +65,8 @@ final class Cisco extends Router {
       throw new Exception('The parameter is not an IPv4/IPv6 address or a FQDN.');
     }
 
-    if (($traceroute != null) && $this->has_source_interface_id()) {
+    if (($traceroute != null) && $this->has_source_interface_id() &&
+        !match_ipv6($destination)) {
       $traceroute .= ' source '.$this->get_source_interface_id();
     }
 
