@@ -97,7 +97,9 @@ final class LookingGlass {
   }
 
   private function render_header() {
-    print('<a href="." title="Home">');
+    if ($this->frontpage['header_link'] != null) {
+      print('<a href="'.$this->frontpage['header_link'].'" title="Home">');
+    }
     print('<div class="header_bar">');
     if ($this->frontpage['show_title']) {
       print('<h1>'.htmlentities($this->frontpage['title']).'</h1><br />');
@@ -106,7 +108,9 @@ final class LookingGlass {
       print('<img src="'.$this->frontpage['image'].'" alt="Logo" />');
     }
     print('</div>');
-    print('</a>');
+    if ($this->frontpage['header_link'] != null) {
+      print('</a>');
+    }
   }
 
   private function render_content() {

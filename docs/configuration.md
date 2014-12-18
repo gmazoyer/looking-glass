@@ -48,6 +48,12 @@ Sets the image (logo) that should be displayed. If set to null no image will
 be shown.
 
 ```php
+$config['frontpage']['header_link'] = null;
+```
+Sets the link used in the header of the page. If set to null no link will be
+used and the header will not be clickable.
+
+```php
 $config['frontpage']['disclaimer'] = 'Disclaimer example';
 ```
 Sets the disclaimer that should displayed. If set to null no disclaimer will

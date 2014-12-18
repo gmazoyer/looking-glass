@@ -25,6 +25,8 @@ $config = array(
     'title' => 'Looking Glass',
     // Image (null for no image)
     'image' => null,
+    // Link for the title/image
+    'header_link' => null,
     // Disclaimer (null for no disclaimer)
     'disclaimer' => 'Disclaimer example',
     // Display the title
