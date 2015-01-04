@@ -164,7 +164,7 @@ abstract class Router {
         return new Quagga($config, $router_config, $id, $requester);
 
       default:
-        print 'Unknown router type "'.$router_config['type'].'".';
+        print('Unknown router type "'.$router_config['type'].'".');
         return null;
     }
   }
