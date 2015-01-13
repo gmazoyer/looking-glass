@@ -65,8 +65,8 @@ final class LookingGlass {
     print('<option value="bgp" selected="selected">show route IP_ADDRESS</option>');
     print('<option value="as-path-regex">show route as-path-regex AS_PATH_REGEX</option>');
     print('<option value="as">show route AS</option>');
-    print('<option value="ping">ping IP_ADDRESS</option>');
-    print('<option value="traceroute">traceroute IP_ADDRESS</option>');
+    print('<option value="ping">ping IP_ADDRESS|FQDN</option>');
+    print('<option value="traceroute">traceroute IP_ADDRESS|FQDN</option>');
     print('</select>');
     print('</div>');
   }

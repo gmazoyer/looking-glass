@@ -96,13 +96,13 @@ $config = array(
     ),
     // Documentation for the 'ping' query
     'ping' => array(
-      'command' => 'ping IP_ADDRESS',
+      'command' => 'ping IP_ADDRESS|FQDN',
       'description' => 'Send 10 pings to the given destination.',
       'parameter' => 'The parameter must be an IPv4/IPv6 address (without mask) or a fully qualified domain name.<br />RFC1918 addresses, IPv6 starting with FD or FC, and IPv4 reserved ranges (0.0.0.0/8, 169.254.0.0/16, 192.0.2.0/24 and 224.0.0.0/4) may be refused.<br /><br />Example of valid arguments:<br /><ul><li>8.8.8.8</li><li>2001:db8:1337::42</li><li>example.com</li></ul>'
     ),
     // Documentation for the 'traceroute' query
     'traceroute' => array(
-      'command' =>'traceroute IP_ADDRESS',
+      'command' =>'traceroute IP_ADDRESS|FQDN',
       'description' => 'Display the path to a given destination.',
       'parameter' => 'The parameter must be an IPv4/IPv6 address (without mask) or a fully qualified domain name.<br />RFC1918 addresses, IPv6 starting with FD or FC, and IPv4 reserved ranges (0.0.0.0/8, 169.254.0.0/16, 192.0.2.0/24 and 224.0.0.0/4) may be refused.<br /><br />Example of valid arguments:<br /><ul><li>8.8.8.8</li><li>2001:db8:1337::42</li><li>example.com</li></ul>'
     )
