@@ -52,8 +52,8 @@ $config = array(
     'show_title' => true,
     // Show visitor IP address
     'show_visitor_ip' => true,
-    // Frontpage order you can use: routers, commands, parameters, buttons
-    'order' => array('routers', 'commands', 'parameters', 'buttons')
+    // Frontpage order you can use: routers, commands, parameter, buttons
+    'order' => array('routers', 'commands', 'parameter', 'buttons')
   ),
 
   // Contact (both null for no contact)

@@ -70,7 +70,7 @@ $config['frontpage']['show_visitor_ip'] = true;
 Defines if the visitor IP address should be displayed.
 
 ```php
-$config['frontpage']['order'] = array('routers', 'commands', 'parameters', 'buttons');
+$config['frontpage']['order'] = array('routers', 'commands', 'parameter', 'buttons');
 ```
 Sets the order of the sections that are displayed.
 
