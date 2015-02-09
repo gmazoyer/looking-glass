@@ -71,11 +71,11 @@ final class LookingGlass {
     print('</div>');
   }
 
-  private function render_parameters() {
+  private function render_parameter() {
     print('<div class="form-group">');
     print('<label for="input-param">Parameter</label>');
     print('<div class="input-group">');
-    print('<input class="form-control" name="parameters" id="input-param" autofocus />');
+    print('<input class="form-control" name="parameter" id="input-param" autofocus />');
     print('<div class="input-group-btn">');
     print('<button type="button" class="btn btn-info" data-toggle="modal" data-target="#help">');
     print('<span class="glyphicon glyphicon-question-sign"></span> Help');
@@ -131,8 +131,8 @@ final class LookingGlass {
           $this->render_commands();
           break;
 
-        case 'parameters':
-          $this->render_parameters();
+        case 'parameter':
+          $this->render_parameter();
           break;
 
         case 'buttons':

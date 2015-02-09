@@ -110,11 +110,11 @@ abstract class Router {
 
   protected abstract function build_traceroute($destination);
 
-  protected abstract function build_commands($command, $parameters);
+  protected abstract function build_commands($command, $parameter);
 
-  public function send_command($command, $parameters) {
+  public function send_command($command, $parameter) {
     try {
-      $commands = $this->build_commands($command, $parameters);
+      $commands = $this->build_commands($command, $parameter);
     } catch (Exception $e) {
       throw $e;
     }

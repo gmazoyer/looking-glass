@@ -91,35 +91,35 @@ final class Quagga extends Router {
     return $traceroute;
   }
 
-  protected function build_commands($command, $parameters) {
+  protected function build_commands($command, $parameter) {
     $commands = array();
 
     $vtysh = 'vtysh -c "';
 
     switch ($command) {
       case 'bgp':
-        if (match_ipv4($parameters, false)) {
-          $commands[] = $vtysh.'show bgp ipv4 unicast '.$parameters.'"';
+        if (match_ipv4($parameter, false)) {
+          $commands[] = $vtysh.'show bgp ipv4 unicast '.$parameter.'"';
         } else if (match_ipv6($parameters, false)) {
-          $commands[] = $vtysh.'show bgp ipv6 unicast '.$parameters.'"';
+          $commands[] = $vtysh.'show bgp ipv6 unicast '.$parameter.'"';
         } else {
           throw new Exception('The parameter is not an IPv4/IPv6 address.');
         }
         break;
 
       case 'as-path-regex':
-        if (match_aspath_regex($parameters)) {
-          $commands[] = $vtysh.'show ip bgp regexp '.$parameters.'"';
-          $commands[] = $vtysh.'show ipv6 bgp regexp '.$parameters.'"';
+        if (match_aspath_regex($parameter)) {
+          $commands[] = $vtysh.'show ip bgp regexp '.$parameter.'"';
+          $commands[] = $vtysh.'show ipv6 bgp regexp '.$parameter.'"';
         } else {
           throw new Exception('The parameter is not an AS-Path regular expression.');
         }
         break;
 
       case 'as':
-        if (match_as($parameters)) {
-          $commands[] = $vtysh.'show ip bgp regexp ^'.$parameters.'_'.'"';
-          $commands[] = $vtysh.'show ipv6 bgp regexp ^'.$parameters.'_'.'"';
+        if (match_as($parameter)) {
+          $commands[] = $vtysh.'show ip bgp regexp ^'.$parameter.'_'.'"';
+          $commands[] = $vtysh.'show ipv6 bgp regexp ^'.$parameter.'_'.'"';
         } else {
           throw new Exception('The parameter is not an AS number.');
         }
@@ -127,7 +127,7 @@ final class Quagga extends Router {
 
       case 'ping':
         try {
-          $commands[] = $this->build_ping($parameters);
+          $commands[] = $this->build_ping($parameter);
         } catch (Exception $e) {
           throw $e;
         }
@@ -135,7 +135,7 @@ final class Quagga extends Router {
 
       case 'traceroute':
         try {
-          $commands[] = $this->build_traceroute($parameters);
+          $commands[] = $this->build_traceroute($parameter);
         } catch (Exception $e) {
           throw $e;
         }

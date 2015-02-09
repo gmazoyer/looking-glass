@@ -73,33 +73,33 @@ final class Cisco extends Router {
     return $traceroute;
   }
 
-  protected function build_commands($command, $parameters) {
+  protected function build_commands($command, $parameter) {
     $commands = array();
 
     switch ($command) {
       case 'bgp':
-        if (match_ipv4($parameters, false)) {
-          $commands[] = 'show bgp ipv4 unicast '.$parameters;
-        } else if (match_ipv6($parameters, false)) {
-          $commands[] = 'show bgp ipv6 unicast '.$parameters;
+        if (match_ipv4($parameter, false)) {
+          $commands[] = 'show bgp ipv4 unicast '.$parameter;
+        } else if (match_ipv6($parameter, false)) {
+          $commands[] = 'show bgp ipv6 unicast '.$parameter;
         } else {
           throw new Exception('The parameter is not an IPv4/IPv6 address.');
         }
         break;
 
       case 'as-path-regex':
-        if (match_aspath_regex($parameters)) {
-          $commands[] = 'show bgp ipv4 unicast quote-regexp "'.$parameters.'"';
-          $commands[] = 'show bgp ipv6 unicast quote-regexp "'.$parameters.'"';
+        if (match_aspath_regex($parameter)) {
+          $commands[] = 'show bgp ipv4 unicast quote-regexp "'.$parameter.'"';
+          $commands[] = 'show bgp ipv6 unicast quote-regexp "'.$parameter.'"';
         } else {
           throw new Exception('The parameter is not an AS-Path regular expression.');
         }
         break;
 
       case 'as':
-        if (match_as($parameters)) {
-          $commands[] = 'show bgp ipv4 unicast quote-regexp "^'.$parameters.'_"';
-          $commands[] = 'show bgp ipv6 unicast quote-regexp "^'.$parameters.'_"';
+        if (match_as($parameter)) {
+          $commands[] = 'show bgp ipv4 unicast quote-regexp "^'.$parameter.'_"';
+          $commands[] = 'show bgp ipv6 unicast quote-regexp "^'.$parameter.'_"';
         } else {
           throw new Exception('The parameter is not an AS number.');
         }
@@ -107,7 +107,7 @@ final class Cisco extends Router {
 
       case 'ping':
         try {
-          $commands[] = $this->build_ping($parameters);
+          $commands[] = $this->build_ping($parameter);
         } catch (Exception $e) {
           throw $e;
         }
@@ -115,7 +115,7 @@ final class Cisco extends Router {
 
       case 'traceroute':
         try {
-          $commands[] = $this->build_traceroute($parameters);
+          $commands[] = $this->build_traceroute($parameter);
         } catch (Exception $e) {
           throw $e;
         }

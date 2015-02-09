@@ -58,16 +58,16 @@ final class Juniper extends Router {
     return $traceroute;
   }
 
-  protected function build_commands($command, $parameters) {
+  protected function build_commands($command, $parameter) {
     $commands = array();
 
     switch ($command) {
       case 'bgp':
-        if (match_ipv4($parameters, false)) {
-          $commands[] = 'show route '.$parameters.
+        if (match_ipv4($parameter, false)) {
+          $commands[] = 'show route '.$parameter.
             ' protocol bgp table inet.0 active-path';
         } else if (match_ipv6($parameters, false)) {
-          $commands[] = 'show route '.$parameters.
+          $commands[] = 'show route '.$parameter.
             ' protocol bgp table inet6.0 active-path';
         } else {
           throw new Exception('The parameter is not an IPv4/IPv6 address.');
@@ -75,10 +75,10 @@ final class Juniper extends Router {
         break;
 
       case 'as-path-regex':
-        if (match_aspath_regex($parameters)) {
-          $commands[] = 'show route aspath-regex "'.$parameters.
+        if (match_aspath_regex($parameter)) {
+          $commands[] = 'show route aspath-regex "'.$parameter.
             '" protocol bgp table inet.0';
-          $commands[] = 'show route aspath-regex "'.$parameters.
+          $commands[] = 'show route aspath-regex "'.$parameter.
             '" protocol bgp table inet6.0';
         } else {
           throw new Exception('The parameter is not an AS-Path regular expression.');
@@ -86,10 +86,10 @@ final class Juniper extends Router {
         break;
 
       case 'as':
-        if (match_as($parameters)) {
-          $commands[] = 'show route aspath-regex "^'.$parameters.
+        if (match_as($parameter)) {
+          $commands[] = 'show route aspath-regex "^'.$parameter.
             ' .*" protocol bgp table inet.0';
-          $commands[] = 'show route aspath-regex "^'.$parameters.
+          $commands[] = 'show route aspath-regex "^'.$parameter.
             ' .*" protocol bgp table inet6.0';
         } else {
           throw new Exception('The parameter is not an AS number.');
@@ -98,7 +98,7 @@ final class Juniper extends Router {
 
       case 'ping':
         try {
-          $commands[] = $this->build_ping($parameters);
+          $commands[] = $this->build_ping($parameter);
         } catch (Exception $e) {
           throw $e;
         }
@@ -106,7 +106,7 @@ final class Juniper extends Router {
 
       case 'traceroute':
         try {
-          $commands[] = $this->build_traceroute($parameters);
+          $commands[] = $this->build_traceroute($parameter);
         } catch (Exception $e) {
           throw $e;
         }

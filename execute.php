@@ -44,16 +44,16 @@ if (isset($_POST['doc']) && !empty($_POST['doc'])) {
 
 if (isset($_POST['query']) && !empty($_POST['query']) &&
     isset($_POST['routers']) && !empty($_POST['routers']) &&
-    isset($_POST['parameters']) && !empty($_POST['parameters'])) {
+    isset($_POST['parameter']) && !empty($_POST['parameter'])) {
   $query = trim($_POST['query']);
   $hostname = trim($_POST['routers']);
-  $parameters = trim($_POST['parameters']);
+  $parameter = trim($_POST['parameter']);
 
   // Do the processing
   $router = Router::instance($hostname, $requester);
 
   try {
-    $output = $router->send_command($query, $parameters);
+    $output = $router->send_command($query, $parameter);
   } catch (Exception $e) {
     $error = $e->getMessage();
   }
