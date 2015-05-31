@@ -111,7 +111,15 @@ interact with it.
 $config['routers']['router1']['type'] = 'juniper';
 ```
 The router type can be Juniper, Cisco, Quagga or BIRD. You can take a look at
-the specific documentation for your router.
+the specific documentation for your router. Possible values are:
+
+  * juniper
+  * junos
+  * cisco
+  * ios
+  * bird
+  * quagga
+  * zebra
 
 It is also highly recommended to specify a source interface ID to be used by
 the router when it will try to ping or traceroute a destination. This is done
