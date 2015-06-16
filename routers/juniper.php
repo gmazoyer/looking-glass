@@ -66,7 +66,7 @@ final class Juniper extends Router {
         if (match_ipv4($parameter, false)) {
           $commands[] = 'show route '.$parameter.
             ' protocol bgp table inet.0 active-path';
-        } else if (match_ipv6($parameters, false)) {
+        } else if (match_ipv6($parameter, false)) {
           $commands[] = 'show route '.$parameter.
             ' protocol bgp table inet6.0 active-path';
         } else {
