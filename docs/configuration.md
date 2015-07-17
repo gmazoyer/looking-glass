@@ -213,6 +213,41 @@ $config['misc']['allow_reserved_ip'] = true;
 If set to true, allows reserved the use of IPv4 addresses (0.0.0.0/8,
 169.254.0.0/16, 192.0.2.0/24 and 224.0.0.0/4) as parameters.
 
+### Tools
+
+The tools that are used by this software are **ping** and **traceroute** for
+routers based on BIRD and Quagga. However some people might want to be able to
+customize the way these tools are used.
+
+```php
+$config['tools']['ping_options'] = '-A -c 10';
+```
+This variable is a string with all ping options to be used.
+
+```php
+$config['tools']['ping_source_option'] = '-I';
+```
+This variable is a string giving the option to source a ping from an IP
+address. It should probably not be changed.
+
+```php
+$config['tools']['traceroute4'] = 'traceroute -4';
+$config['tools']['traceroute6'] = 'traceroute -6';
+```
+These variables give the binary with the option to be used to do a traceroute.
+
+```php
+$config['tools']['traceroute_options'] = '-A -q1 -N32 -w1 -m15';
+```
+This variables is a string with all traceroute options to be used.
+
+```php
+$config['tools']['traceroute_source_option'] = '-s';
+```
+This vairiable is a string giving the option to source a traceroute from an IP
+address. it should probably not be changed unless when using another tool to
+traceroute an destination IP.
+
 ### Documentation
 
 The documentation configuration should probably not be modified but here

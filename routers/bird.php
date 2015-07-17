@@ -36,9 +36,11 @@ final class Bird extends Router {
     }
 
     if (match_ipv4($destination)) {
-      $ping = 'ping -A -c 10 '.(isset($fqdn) ? $fqdn : $destination);
+      $ping = 'ping '.$this->global_config['tools']['ping_options'].' '.
+        (isset($fqdn) ? $fqdn : $destination);
     } else if (match_ipv6($destination)) {
-      $ping = 'ping6 -A -c 10 '.(isset($fqdn) ? $fqdn : $destination);
+      $ping = 'ping6 '.$this->global_config['tools']['ping_options'].' '.
+        (isset($fqdn) ? $fqdn : $destination);
     } else {
       throw new Exception('The parameter does not resolve to an IPv4/IPv6 address.');
     }
@@ -46,10 +48,12 @@ final class Bird extends Router {
     if (($ping != null) && $this->has_source_interface_id()) {
       if (match_ipv4($destination) &&
           ($this->get_source_interface_id('ipv4') != null)) {
-        $ping .= ' -I '.$this->get_source_interface_id('ipv4');
+        $ping .= ' '.$this->global_config['tools']['ping_source_option'].' '.
+          $this->get_source_interface_id('ipv4');
       } else if (match_ipv6($destination) &&
           ($this->get_source_interface_id('ipv6') != null)) {
-        $ping .= ' -I '.$this->get_source_interface_id('ipv6');
+        $ping .= ' '.$this->global_config['tools']['ping_source_option'].' '.
+          $this->get_source_interface_id('ipv6');
       }
     }
 
@@ -69,10 +73,12 @@ final class Bird extends Router {
     }
 
     if (match_ipv4($destination)) {
-      $traceroute = 'traceroute -4 -A -q1 -N32 -w1 -m15 '.
+      $traceroute = $this->global_config['tools']['traceroute4'].' '.
+        $this->global_config['tools']['traceroute_options'].' '.
         (isset($fqdn) ? $fqdn : $destination);
     } else if (match_ipv6($destination)) {
-      $traceroute = 'traceroute -6 -A -q1 -N32 -w1 -m15 '.
+      $traceroute = $this->global_config['tools']['traceroute6'].' '.
+        $this->global_config['tools']['traceroute_options'].' '.
         (isset($fqdn) ? $fqdn : $destination);
     } else {
       throw new Exception('The parameter does not resolve to an IPv4/IPv6 address.');
@@ -81,10 +87,14 @@ final class Bird extends Router {
     if (($traceroute != null) && $this->has_source_interface_id()) {
       if (match_ipv4($destination) &&
           ($this->get_source_interface_id('ipv4') != null)) {
-        $traceroute .= ' -s '.$this->get_source_interface_id('ipv4');
+        $traceroute .= ' '.
+          $this->global_config['tools']['traceroute_source_option'].' '.
+          $this->get_source_interface_id('ipv4');
       } else if (match_ipv6($destination) &&
           ($this->get_source_interface_id('ipv6') != null)) {
-        $traceroute .= ' -s '.$this->get_source_interface_id('ipv6');
+        $traceroute .= ' '.
+          $this->global_config['tools']['traceroute_source_option'].' '.
+          $this->get_source_interface_id('ipv6');
       }
     }
 

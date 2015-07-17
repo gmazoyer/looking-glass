@@ -93,6 +93,23 @@ $config = array(
     'allow_reserved_ip' => true
   ),
 
+  // Tools used for some processing
+  'tools' => array(
+    // Options to be used when pinging from a UNIX host (case of BIRD
+    // and Quagga)
+    'ping_options' => '-A -c 10',
+    // Source option to use when pinging
+    'ping_source_option' => '-I',
+    // Traceroute tool to be used (can be traceroute or mtr)
+    'traceroute4' => 'traceroute -4',
+    'traceroute6' => 'traceroute -6',
+    // Options to be used when tracerouting from a UNIX host (case of BIRD
+    // and Quagga)
+    'traceroute_options' => '-A -q1 -N32 -w1 -m15',
+    // Source option to use when tracerouting
+    'traceroute_source_option' => '-s'
+  ),
+
   // Documentation (must be HTML)
   'doc' => array(
     // Documentation for the 'show route' query
