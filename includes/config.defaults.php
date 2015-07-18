@@ -100,7 +100,7 @@ $config = array(
     'ping_options' => '-A -c 10',
     // Source option to use when pinging
     'ping_source_option' => '-I',
-    // Traceroute tool to be used (can be traceroute or mtr)
+    // Traceroute tool to be used
     'traceroute4' => 'traceroute -4',
     'traceroute6' => 'traceroute -6',
     // Options to be used when tracerouting from a UNIX host (case of BIRD

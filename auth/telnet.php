@@ -32,7 +32,7 @@ final class Telnet extends Authentication {
 
   protected function check_config() {
     if (!isset($this->config['user']) || !isset($this->config['pass'])) {
-      throw new Exception('User and password required for telnet.');
+      throw new Exception('Router authentication configuration incomplete.');
     }
   }
 

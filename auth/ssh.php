@@ -35,13 +35,13 @@ final class SSH extends Authentication {
   protected function check_config() {
     if ($this->config['auth'] == 'ssh-password') {
       if (!isset($this->config['user']) || !isset($this->config['pass'])) {
-        throw new Exception('User and password required for ssh-password.');
+        throw new Exception('Router authentication configuration incomplete.');
       }
     }
 
     if ($this->config['auth'] == 'ssh-key') {
       if (!isset($this->config['user']) || !isset($this->config['private_key'])) {
-        throw new Exception('User and private key required for ssh-key.');
+        throw new Exception('Router authentication configuration incomplete.');
       }
     }
   }
@@ -62,11 +62,11 @@ final class SSH extends Authentication {
 
       $success = $this->connection->login($this->config['user'], $key);
     } else {
-      throw new Exception('Unknown type of connection for SSH.');
+      throw new Exception('Unknown type of connection.');
     }
 
     if (!$success) {
-      throw new Exception('SSH authentication failed.');
+      throw new Exception('Cannot connect to router.');
     }
   }
 
