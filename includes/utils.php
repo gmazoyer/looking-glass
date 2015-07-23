@@ -142,24 +142,25 @@ function match_ipv6($ip, $ip_only = true) {
 }
 
 /**
- * Test if a given parameter is a valid FQDN or not.
+ * Test if a given parameter is a valid hostname or not.
  *
- * @param  string  $fqdn the parameter to test.
- * @return boolean true if the parameter matches a valid FQDN, false otherwise.
+ * See: http://stackoverflow.com/a/4694816
+ *      http://stackoverflow.com/a/2183140
+ * for references.
+ *
+ * @param  string  $hostname the parameter to test.
+ * @return boolean true if the parameter matches a valid hostname, false
+ *                      otherwise.
  */
-function match_fqdn($fqdn) {
-  $regex = '/(?=^.{4,255}$)(^((?!-)[a-zA-Z0-9-]{1,63}(?<!-)\.)+[a-zA-Z]{2,63}$)/';
-
-  if (empty($fqdn)) {
-    return false;
-  }
-
-  if ((preg_match($regex, $fqdn) === false) ||
-      (preg_match($regex, $fqdn) === 0)) {
-    return false;
-  } else {
-    return true;
-  }
+function match_hostname($hostname) {
+  return (
+    // Valid characters check
+    preg_match('/^(_?[a-z\d](-*[_a-z\d])*)(\.(_?[a-z\d](-*[_a-z\d])*))*$/i', $hostname)
+    // Length check
+    && preg_match('/^.{1,253}$/', $hostname)
+    // Length of each label check
+    && preg_match('/^[^\.]{1,63}(\.[^\.]{1,63})*$/', $hostname)
+  );
 }
 
 /**
@@ -212,19 +213,20 @@ function match_aspath_regex($aspath_regex) {
 }
 
 /**
- * For a given FQDN try to find the corresponding IPv4 or IPv6 address.
+ * For a given hostname try to find the corresponding IPv4 or IPv6 address.
  *
- * If there is multiple addresses attached to the same FQDN it will give the
- * first IPv4 or IPv6 found.
+ * If there is multiple addresses attached to the same hostname it will give
+ * the first IPv4 or IPv6 found.
  *
- * If the FQDN have both IPv4 and IPv6 addresses it will give the first IPv6
- * address found.
+ * If the hostname have both IPv4 and IPv6 addresses it will give the first
+ * IPv6 address found.
  *
- * @param  string $fqdn the FQDN to use to search in the DNS databases.
+ * @param  string $hostname the hostname to use to search in the DNS
+ *                          databases.
  * @return string an IPv4 or IPv6 address based on the DNS records.
  */
-function fqdn_to_ip_address($fqdn) {
-  $dns_record = dns_get_record($fqdn, DNS_A + DNS_AAAA);
+function hostname_to_ip_address($hostname) {
+  $dns_record = dns_get_record($hostname, DNS_A + DNS_AAAA);
 
   // No DNS record found
   if (!$dns_record) {

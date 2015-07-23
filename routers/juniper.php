@@ -27,10 +27,10 @@ final class Juniper extends Router {
     $ping = null;
 
     if (match_ipv4($destination) || match_ipv6($destination) ||
-        match_fqdn($destination)) {
+        match_hostname($destination)) {
       $ping = 'ping count 10 rapid '.$destination;
     } else {
-      throw new Exception('The parameter is not an IPv4/IPv6 address or a FQDN.');
+      throw new Exception('The parameter is not an IPv4/IPv6 address or a hostname.');
     }
 
     if (($ping != null) && $this->has_source_interface_id()) {
@@ -45,10 +45,10 @@ final class Juniper extends Router {
 
     if (match_ipv4($destination)) {
       $traceroute = 'traceroute as-number-lookup '.$destination;
-    } else if (match_ipv6($destination) || match_fqdn($destination)) {
+    } else if (match_ipv6($destination) || match_hostname($destination)) {
       $traceroute = 'traceroute '.$destination;
     } else {
-      throw new Exception('The parameter is not an IPv4/IPv6 address or a FQDN.');
+      throw new Exception('The parameter is not an IPv4/IPv6 address or a hostname.');
     }
 
     if (($traceroute != null) && $this->has_source_interface_id()) {

@@ -26,21 +26,21 @@ final class Bird extends Router {
   protected function build_ping($destination) {
     $ping = null;
 
-    if (match_fqdn($destination)) {
-      $fqdn = $destination;
-      $destination = fqdn_to_ip_address($fqdn);
+    if (match_hostname($destination)) {
+      $hostname = $destination;
+      $destination = hostname_to_ip_address($hostname);
 
       if (!$destination) {
-        throw new Exception('No A or AAAA record found for '.$fqdn);
+        throw new Exception('No A or AAAA record found for '.$hostname);
       }
     }
 
     if (match_ipv4($destination)) {
       $ping = 'ping '.$this->global_config['tools']['ping_options'].' '.
-        (isset($fqdn) ? $fqdn : $destination);
+        (isset($hostname) ? $hostname : $destination);
     } else if (match_ipv6($destination)) {
       $ping = 'ping6 '.$this->global_config['tools']['ping_options'].' '.
-        (isset($fqdn) ? $fqdn : $destination);
+        (isset($hostname) ? $hostname : $destination);
     } else {
       throw new Exception('The parameter does not resolve to an IPv4/IPv6 address.');
     }
@@ -63,23 +63,23 @@ final class Bird extends Router {
   protected function build_traceroute($destination) {
     $traceroute = null;
 
-    if (match_fqdn($destination)) {
-      $fqdn = $destination;
-      $destination = fqdn_to_ip_address($fqdn);
+    if (match_hostname($destination)) {
+      $hostname = $destination;
+      $destination = hostname_to_ip_address($hostname);
 
       if (!$destination) {
-        throw new Exception('No A or AAAA record found for '.$fqdn);
+        throw new Exception('No A or AAAA record found for '.$hostname);
       }
     }
 
     if (match_ipv4($destination)) {
       $traceroute = $this->global_config['tools']['traceroute4'].' '.
         $this->global_config['tools']['traceroute_options'].' '.
-        (isset($fqdn) ? $fqdn : $destination);
+        (isset($hostname) ? $hostname : $destination);
     } else if (match_ipv6($destination)) {
       $traceroute = $this->global_config['tools']['traceroute6'].' '.
         $this->global_config['tools']['traceroute_options'].' '.
-        (isset($fqdn) ? $fqdn : $destination);
+        (isset($hostname) ? $hostname : $destination);
     } else {
       throw new Exception('The parameter does not resolve to an IPv4/IPv6 address.');
     }

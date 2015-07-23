@@ -27,10 +27,10 @@ final class Cisco extends Router {
     $ping = null;
 
     if (match_ipv4($destination) || match_ipv6($destination) ||
-        match_fqdn($destination)) {
+        match_hostname($destination)) {
       $ping = 'ping '.$destination.' repeat 10';
     } else {
-      throw new Exception('The parameter is not an IPv4/IPv6 address or a FQDN.');
+      throw new Exception('The parameter is not an IPv4/IPv6 address or a hostname.');
     }
 
     if (($ping != null) && $this->has_source_interface_id()) {
@@ -44,25 +44,25 @@ final class Cisco extends Router {
     $traceroute = null;
 
     if (match_ipv4($destination) || match_ipv6($destination) ||
-        (match_fqdn($destination) && !$this->has_source_interface_id())) {
+        (match_hostname($destination) && !$this->has_source_interface_id())) {
       $traceroute = 'traceroute '.$destination;
-    } else if (match_fqdn($destination)) {
-      $fqdn = $destination;
-      $destination = fqdn_to_ip_address($fqdn);
+    } else if (match_hostname($destination)) {
+      $hostname = $destination;
+      $destination = hostname_to_ip_address($hostname);
 
       if (!$destination) {
-        throw new Exception('No A or AAAA record found for '.$fqdn);
+        throw new Exception('No A or AAAA record found for '.$hostname);
       }
 
       if (match_ipv4($destination)) {
-        $traceroute = 'traceroute ip '.(isset($fqdn) ? $fqdn : $destination);
+        $traceroute = 'traceroute ip '.(isset($hostname) ? $hostname : $destination);
       } else if (match_ipv6($destination)) {
-        $traceroute = 'traceroute ipv6 '.(isset($fqdn) ? $fqdn : $destination);
+        $traceroute = 'traceroute ipv6 '.(isset($hostname) ? $hostname : $destination);
       } else {
         throw new Exception('The parameter does not resolve to an IPv4/IPv6 address.');
       }
     } else {
-      throw new Exception('The parameter is not an IPv4/IPv6 address or a FQDN.');
+      throw new Exception('The parameter is not an IPv4/IPv6 address or a hostname.');
     }
 
     if (($traceroute != null) && $this->has_source_interface_id() &&
