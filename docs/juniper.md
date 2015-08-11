@@ -1,6 +1,6 @@
-# Looking Glass: Juniper JunOS configuration and tips.
+# Looking Glass: Juniper JUNOS configuration and tips.
 
-Juniper JunOS support is rather straightforward with JunOS versions from the
+Juniper JUNOS support is rather straightforward with JUNOS versions from the
 last decade and afterwards.
 
 ## Security and user access
@@ -9,20 +9,33 @@ As security by least privilege is quite efficient, using a restricted user to
 execute the commands is advised.
 
 A super-user access is not necessary, a read-only user is not sufficient
-though. The best role for the user that will be used by the looking glass is
-the operator class.
-
-It is still possible to define a user with access to specific commands. This
-case will not be covered (at least for now).
+though. The operator class would be good enough. It is better to define a new
+class with access to specific commands to restrict the looking glass user to
+what it actually needs (no more, no less).
 
 ## Configuration: User Class
 
 Log in your Juniper router and get in CLI mode if necessary, type the
-following commands:
+following commands to create a new class for looking glass users:
 
 ```
 [edit]
-user@router# set system login user <username> class operator
+user@router# set system login class looking-glass permissions view-configuration
+[edit]
+user@router# set system login class looking-glass allow-commands "(show)|(ping)|(traceroute)"
+[edit]
+user@router# set system login class looking-glass deny-commands "(clear)|(file)|(file show)|(help)|(load)|(monitor)|(op)|(request)|(save)|(set)|(start)|(test)"
+[edit]
+user@router# set system login class looking-glass allow-configuration show
+[edit]
+user@router# set system login class looking-glass deny-configuration all
+```
+
+Now a new user can be created with the brand new **looking-glass** class:
+
+```
+[edit]
+user@router# set system login user <username> class looking-glass
 ```
 
 For security purpose, it is highly recommended to use an authentication
@@ -46,11 +59,18 @@ You can then check your commit and save the configuration if everything seems
 to be ok.
 
 ```
-[edit]
 user@router# show | compare
 [edit system login]
++    class looking-glass {
++        permissions view-configuration;
++        allow-commands "(show)|(ping)|(traceroute)";
++        deny-commands "(clear)|(file)|(file show)|(help)|(load)|(monitor)|(op)|(request)|(save)|(set)|(start)|(test)";
++        allow-configuration show;
++        deny-configuration all;
++    }
+[edit system login]
 +    user lg {
-+        class operator;
++        class looking-glass;
 +        authentication {
 +            ...
 +        }
@@ -58,8 +78,6 @@ user@router# show | compare
 
 [edit]
 user@router# commit check
-[edit]
-user@router# commit confirmed 1
 [edit]
 user@router# commit
 ```
