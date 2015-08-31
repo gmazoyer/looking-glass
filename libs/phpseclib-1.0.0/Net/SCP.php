@@ -17,7 +17,7 @@
  *    if (!$ssh->login('username', 'password')) {
  *        exit('bad login');
  *    }
-
+ *
  *    $scp = new Net_SCP($ssh);
  *    $scp->put('abcd', str_repeat('x', 1024*1024));
  * ?>
@@ -303,7 +303,7 @@ class Net_SCP
             case NET_SCP_SSH1:
                 $data = pack('CNa*', NET_SSH1_CMSG_STDIN_DATA, strlen($data), $data);
                 $this->ssh->_send_binary_packet($data);
-         }
+        }
     }
 
     /**
@@ -339,7 +339,7 @@ class Net_SCP
                             return false;
                     }
                 }
-         }
+        }
     }
 
     /**
@@ -355,6 +355,6 @@ class Net_SCP
                 break;
             case NET_SCP_SSH1:
                 $this->ssh->disconnect();
-         }
+        }
     }
 }
