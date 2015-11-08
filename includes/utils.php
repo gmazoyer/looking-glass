@@ -154,7 +154,7 @@ function match_ipv6($ip, $ip_only = true) {
  */
 function match_hostname($hostname) {
   // That's an IP address so it is not a valid hostname.
-  if (match_ipv4($hostame) || match_ipv6($hostname)) {
+  if (match_ipv4($hostname) || match_ipv6($hostname)) {
     return false;
   }
 
