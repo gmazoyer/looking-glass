@@ -261,7 +261,7 @@ function hostname_to_ip_address($hostname) {
     }
 
     foreach ($dns_record as $record) {
-      if ($record['type'] == 'AAA') {
+      if ($record['type'] == 'A') {
         return $record['ipv4'];
       }
     }
