@@ -153,6 +153,11 @@ function match_ipv6($ip, $ip_only = true) {
  *                      otherwise.
  */
 function match_hostname($hostname) {
+  // That's an IP address so it is not a valid hostname.
+  if (match_ipv4($hostame) || match_ipv6($hostname)) {
+    return false;
+  }
+
   return (
     // Valid characters check
     preg_match('/^(_?[a-z\d](-*[_a-z\d])*)(\.(_?[a-z\d](-*[_a-z\d])*))*$/i', $hostname)
