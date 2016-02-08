@@ -62,8 +62,8 @@ if (!class_exists('Crypt_Base')) {
 
 /**#@+
  * @access public
- * @see Crypt_RC2::encrypt()
- * @see Crypt_RC2::decrypt()
+ * @see self::encrypt()
+ * @see self::decrypt()
  */
 /**
  * Encrypt / decrypt using the Counter mode.
@@ -111,7 +111,7 @@ class Crypt_RC2 extends Crypt_Base
      * Block Length of the cipher
      *
      * @see Crypt_Base::block_size
-     * @var Integer
+     * @var int
      * @access private
      */
     var $block_size = 8;
@@ -120,8 +120,8 @@ class Crypt_RC2 extends Crypt_Base
      * The Key
      *
      * @see Crypt_Base::key
-     * @see setKey()
-     * @var String
+     * @see self::setKey()
+     * @var string
      * @access private
      */
     var $key;
@@ -130,29 +130,37 @@ class Crypt_RC2 extends Crypt_Base
      * The Original (unpadded) Key
      *
      * @see Crypt_Base::key
-     * @see setKey()
-     * @see encrypt()
-     * @see decrypt()
-     * @var String
+     * @see self::setKey()
+     * @see self::encrypt()
+     * @see self::decrypt()
+     * @var string
      * @access private
      */
     var $orig_key;
 
     /**
-     * The default password key_size used by setPassword()
+     * Don't truncate / null pad key
      *
-     * @see Crypt_Base::password_key_size
-     * @see Crypt_Base::setPassword()
-     * @var Integer
+     * @see Crypt_Base::_clearBuffers()
+     * @var bool
      * @access private
      */
-    var $password_key_size = 16; // = 128 bits
+    var $skip_key_adjustment = true;
+
+    /**
+     * Key Length (in bytes)
+     *
+     * @see Crypt_RC2::setKeyLength()
+     * @var int
+     * @access private
+     */
+    var $key_length = 16; // = 128 bits
 
     /**
      * The namespace used by the cipher for its constants.
      *
      * @see Crypt_Base::const_namespace
-     * @var String
+     * @var string
      * @access private
      */
     var $const_namespace = 'RC2';
@@ -161,7 +169,7 @@ class Crypt_RC2 extends Crypt_Base
      * The mcrypt specific name of the cipher
      *
      * @see Crypt_Base::cipher_name_mcrypt
-     * @var String
+     * @var string
      * @access private
      */
     var $cipher_name_mcrypt = 'rc2';
@@ -170,7 +178,7 @@ class Crypt_RC2 extends Crypt_Base
      * Optimizing value while CFB-encrypting
      *
      * @see Crypt_Base::cfb_init_len
-     * @var Integer
+     * @var int
      * @access private
      */
     var $cfb_init_len = 500;
@@ -178,9 +186,9 @@ class Crypt_RC2 extends Crypt_Base
     /**
      * The key length in bits.
      *
-     * @see Crypt_RC2::setKeyLength()
-     * @see Crypt_RC2::setKey()
-     * @var Integer
+     * @see self::setKeyLength()
+     * @see self::setKey()
+     * @var int
      * @access private
      * @internal Should be in range [1..1024].
      * @internal Changing this value after setting the key has no effect.
@@ -190,9 +198,9 @@ class Crypt_RC2 extends Crypt_Base
     /**
      * The key length in bits.
      *
-     * @see Crypt_RC2::isValidEnine()
-     * @see Crypt_RC2::setKey()
-     * @var Integer
+     * @see self::isValidEnine()
+     * @see self::setKey()
+     * @var int
      * @access private
      * @internal Should be in range [1..1024].
      */
@@ -201,8 +209,8 @@ class Crypt_RC2 extends Crypt_Base
     /**
      * The Key Schedule
      *
-     * @see Crypt_RC2::_setupKey()
-     * @var Array
+     * @see self::_setupKey()
+     * @var array
      * @access private
      */
     var $keys;
@@ -211,8 +219,8 @@ class Crypt_RC2 extends Crypt_Base
      * Key expansion randomization table.
      * Twice the same 256-value sequence to save a modulus in key expansion.
      *
-     * @see Crypt_RC2::setKey()
-     * @var Array
+     * @see self::setKey()
+     * @var array
      * @access private
      */
     var $pitable = array(
@@ -285,8 +293,8 @@ class Crypt_RC2 extends Crypt_Base
     /**
      * Inverse key expansion randomization table.
      *
-     * @see Crypt_RC2::setKey()
-     * @var Array
+     * @see self::setKey()
+     * @var array
      * @access private
      */
     var $invpitable = array(
@@ -344,7 +352,7 @@ class Crypt_RC2 extends Crypt_Base
      * If not explicitly set, CRYPT_RC2_MODE_CBC will be used.
      *
      * @see Crypt_Base::Crypt_Base()
-     * @param optional Integer $mode
+     * @param int $mode
      * @access public
      */
     function Crypt_RC2($mode = CRYPT_RC2_MODE_CBC)
@@ -358,15 +366,15 @@ class Crypt_RC2 extends Crypt_Base
      * This is mainly just a wrapper to set things up for Crypt_Base::isValidEngine()
      *
      * @see Crypt_Base::Crypt_Base()
-     * @param Integer $engine
+     * @param int $engine
      * @access public
-     * @return Boolean
+     * @return bool
      */
     function isValidEngine($engine)
     {
         switch ($engine) {
             case CRYPT_ENGINE_OPENSSL:
-                if ($this->current_key_length != 128 || strlen($this->orig_key) != 16) {
+                if ($this->current_key_length != 128 || strlen($this->orig_key) < 16) {
                     return false;
                 }
                 $this->cipher_name_openssl_ecb = 'rc2-ecb';
@@ -377,20 +385,31 @@ class Crypt_RC2 extends Crypt_Base
     }
 
     /**
-     * Sets the key length
+     * Sets the key length.
      *
      * Valid key lengths are 1 to 1024.
      * Calling this function after setting the key has no effect until the next
      *  Crypt_RC2::setKey() call.
      *
      * @access public
-     * @param Integer $length in bits
+     * @param int $length in bits
      */
     function setKeyLength($length)
     {
         if ($length >= 1 && $length <= 1024) {
             $this->default_key_length = $length;
         }
+    }
+
+    /**
+     * Returns the current key length
+     *
+     * @access public
+     * @return int
+     */
+    function getKeyLength()
+    {
+        return $this->current_key_length;
     }
 
     /**
@@ -406,8 +425,8 @@ class Crypt_RC2 extends Crypt_Base
      *
      * @see Crypt_Base::setKey()
      * @access public
-     * @param String $key
-     * @param Integer $t1 optional Effective key length in bits.
+     * @param string $key
+     * @param int $t1 optional Effective key length in bits.
      */
     function setKey($key, $t1 = 0)
     {
@@ -448,6 +467,7 @@ class Crypt_RC2 extends Crypt_Base
         // Prepare the key for mcrypt.
         $l[0] = $this->invpitable[$l[0]];
         array_unshift($l, 'C*');
+
         parent::setKey(call_user_func_array('pack', $l));
     }
 
@@ -456,10 +476,10 @@ class Crypt_RC2 extends Crypt_Base
      *
      * Mostly a wrapper for Crypt_Base::encrypt, with some additional OpenSSL handling code
      *
-     * @see decrypt()
+     * @see self::decrypt()
      * @access public
-     * @param String $plaintext
-     * @return String $ciphertext
+     * @param string $plaintext
+     * @return string $ciphertext
      */
     function encrypt($plaintext)
     {
@@ -479,10 +499,10 @@ class Crypt_RC2 extends Crypt_Base
      *
      * Mostly a wrapper for Crypt_Base::decrypt, with some additional OpenSSL handling code
      *
-     * @see encrypt()
+     * @see self::encrypt()
      * @access public
-     * @param String $ciphertext
-     * @return String $plaintext
+     * @param string $ciphertext
+     * @return string $plaintext
      */
     function decrypt($ciphertext)
     {
@@ -503,8 +523,8 @@ class Crypt_RC2 extends Crypt_Base
      * @see Crypt_Base::_encryptBlock()
      * @see Crypt_Base::encrypt()
      * @access private
-     * @param String $in
-     * @return String
+     * @param string $in
+     * @return string
      */
     function _encryptBlock($in)
     {
@@ -548,8 +568,8 @@ class Crypt_RC2 extends Crypt_Base
      * @see Crypt_Base::_decryptBlock()
      * @see Crypt_Base::decrypt()
      * @access private
-     * @param String $in
-     * @return String
+     * @param string $in
+     * @return string
      */
     function _decryptBlock($in)
     {
@@ -637,7 +657,7 @@ class Crypt_RC2 extends Crypt_Base
         // for the mixing rounds, for better inline crypt performance [~20% faster].
         // But for memory reason we have to limit those ultra-optimized $lambda_functions to an amount of 10.
         // (Currently, for Crypt_RC2, one generated $lambda_function cost on php5.5@32bit ~60kb unfreeable mem and ~100kb on php5.5@64bit)
-        $gen_hi_opt_code = (bool)( count($lambda_functions) < 10 );
+        $gen_hi_opt_code = (bool)(count($lambda_functions) < 10);
 
         // Generation of a uniqe hash for our generated code
         $code_hash = "Crypt_RC2, {$this->mode}";
