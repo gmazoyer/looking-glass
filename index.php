@@ -237,7 +237,7 @@ final class LookingGlass {
     $this->render_footer();
     $this->render_help_modal();
     print('</body>');
-    print('<script src="libs/jquery-2.1.4.min.js"></script>');
+    print('<script src="libs/jquery-2.2.0.min.js"></script>');
     print('<script src="libs/bootstrap-3.3.6/js/bootstrap.min.js"></script>');
     print('<script src="js/looking-glass.js"></script>');
     print('</html>');
