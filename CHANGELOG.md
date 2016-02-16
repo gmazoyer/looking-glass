@@ -1,5 +1,13 @@
 # Changelog
 
+## Version 1.2.0 | Convergence (New features release) | 2016-02-16
+
+  * Second feature release of 1.X.Y branch
+  * New configuration options to customize ping and traceroute commands for
+    BIRD and Quagga
+  * Rework hostname parameter check
+  * Embeds Bootstrap 3.3.6, jQuery 2.2.0 and phpseclib 1.0.1
+
 ## Version 1.1.0 | Convergence (New features release) | 2014-12-23
 
   * First feature release of 1.X.Y branch
