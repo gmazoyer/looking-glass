@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.2.1 | Convergence (Security fix release) | 2016-02-18
+
+  * First security fix release of 1.X.Y branch
+  * Treat AS path regex input as invalid if containing ; or " characters
+
 ## Version 1.2.0 | Convergence (New features release) | 2016-02-16
 
   * Second feature release of 1.X.Y branch
