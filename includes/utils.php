@@ -209,7 +209,19 @@ function match_as($as) {
 }
 
 function match_aspath_regex($aspath_regex) {
+  // Empty AS path regex
   if (empty($aspath_regex)) {
+    return false;
+  }
+
+  // AS path containing a ; (not a valid character)
+  if (strpos($aspath_regex, ';') !== false) {
+    return false;
+  }
+
+  // AS path containing a " (not a valid character, the string is automatically
+  // quoted if needed)
+  if (strpos($aspath_regex, '"') !== false) {
     return false;
   }
 
