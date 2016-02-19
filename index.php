@@ -86,12 +86,10 @@ final class LookingGlass {
   }
 
   private function render_buttons() {
-    print('<div class="confirm btn-group btn-group-justified">');
-    print('<div class="btn-group">');
-    print('<button class="btn btn-primary" id="send" type="submit">Enter</button>');
-    print('</div>');
-    print('<div class="btn-group">');
-    print('<button class="btn btn-danger" id="clear" type="reset">Reset</button>');
+    print('<div class="confirm btn-group">');
+    print('<div class="col-md-12 btn-group">');
+    print('<button class="col-md-6 btn btn-primary" id="send" type="submit">Enter</button>');
+    print('<button class="col-md-6 btn btn-danger" id="clear" type="reset">Reset</button>');
     print('</div>');
     print('</div>');
   }
