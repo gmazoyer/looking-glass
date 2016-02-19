@@ -21,7 +21,7 @@
     and Quagga
   * Add option to hide the issued command from the output
   * Add option to configure the link used by the header (default is no link)
-  * Embeds Bootstrap 3.3.1, JQuery 2.1.3 and phpseclib 0.3.9
+  * Embeds Bootstrap 3.3.1, jQuery 2.1.3 and phpseclib 0.3.9
 
 For more details about the new configuration options take a loot at the
 documentation.
@@ -32,5 +32,5 @@ documentation.
   * Support for BIRD, Cisco, Juniper, Quagga
   * Routes, AS, ping and traceroute related commands
   * Requires at least PHP 5.2
-  * Embeds Bootstrap 3.3.1, JQuery 2.1.1 and phpseclib 0.3.7
+  * Embeds Bootstrap 3.3.1, jQuery 2.1.1 and phpseclib 0.3.7
 

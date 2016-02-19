@@ -61,6 +61,6 @@ users if you want me to.
 
 ## Thanks
 
-  * [Bootstrap](http://getbootstrap.com/) and [JQuery](http://jquery.com/) for
+  * [Bootstrap](http://getbootstrap.com/) and [jQuery](http://jquery.com/) for
     making CSS and Javascript less painful for people like me.
   * [Romain Boissat](https://chroot-me.in/) for all his great ideas, bug reports and contributions.
