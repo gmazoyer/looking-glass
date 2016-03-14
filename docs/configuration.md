@@ -58,7 +58,7 @@ $config['frontpage']['peering_policy_file'] = null;
 ```
 Sets the path to the peering policy file. If set to null no peering policy
 will be able to be shown. The peering policy file must be located in a
-readable location and must contain only HTML formatted text.
+readable location and must contain HTML formatted text.
 
 ```php
 $config['frontpage']['disclaimer'] = 'Disclaimer example';
