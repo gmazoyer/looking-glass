@@ -46,6 +46,8 @@ $config = array(
     'image' => null,
     // Link for the title/image
     'header_link' => null,
+    // Peering Policy file (null for no peering policy)
+    'peering_policy_file' => null,
     // Disclaimer (null for no disclaimer)
     'disclaimer' => 'Disclaimer example',
     // Display the title

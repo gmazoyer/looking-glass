@@ -54,6 +54,13 @@ Sets the link used in the header of the page. If set to null no link will be
 used and the header will not be clickable.
 
 ```php
+$config['frontpage']['peering_policy_file'] = null;
+```
+Sets the path to the peering policy file. If set to null no peering policy
+will be able to be shown. The peering policy file must be located in a
+readable location and must contain only HTML formatted text.
+
+```php
 $config['frontpage']['disclaimer'] = 'Disclaimer example';
 ```
 Sets the disclaimer that should displayed. If set to null no disclaimer will

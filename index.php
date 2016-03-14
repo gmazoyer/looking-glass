@@ -171,12 +171,17 @@ final class LookingGlass {
       }
     }
 
-    if ($this->frontpage['disclaimer'] != null) {
+    if ($this->frontpage['disclaimer']) {
       print($this->frontpage['disclaimer']);
       print('<br /><br />');
     }
 
-    if (($this->contact['name'] != null) && ($this->contact['mail'] != null)) {
+    if ($this->frontpage['peering_policy_file']) {
+      print('<button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#peering-policy"><span class="glyphicon glyphicon-list-alt"></span> Peering Policy</button>');
+      print('<br/><br/>');
+    }
+
+    if ($this->contact['name'] && $this->contact['mail']) {
       print('Contact:&nbsp;');
       print('<a href="mailto:'.$this->contact['mail'].'">'.
         htmlentities($this->contact['name']).'</a>');
@@ -185,6 +190,33 @@ final class LookingGlass {
     print('<br /><br />');
     print('<span class="origin">Powered by <a href="https://github.com/respawner/looking-glass" title="Looking Glass Project">Looking Glass '.$this->release['version'].'</a></span>');
     print('</p>');
+    print('</div>');
+  }
+
+  private function render_peering_policy_modal() {
+    print('<div id="peering-policy" class="modal fade">');
+    print('<div class="modal-dialog">');
+    print('<div class="modal-content">');
+    print('<div class="modal-header">');
+    print('<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
+    print('<h4 class="modal-title">Peering Policy</h4>');
+    print('</div>');
+    print('<div class="modal-body">');
+    if (!file_exists($this->frontpage['peering_policy_file'])) {
+      print('The peering policy file ('.
+        $this->frontpage['peering_policy_file'].') does not exist.');
+    } else if (!is_readable($this->frontpage['peering_policy_file'])) {
+      print('The peering policy file ('.
+        $this->frontpage['peering_policy_file'].') is not readable.');
+    } else {
+      include($this->frontpage['peering_policy_file']);
+    }
+    print('</div>');
+    print('<div class="modal-footer">');
+    print('<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
+    print('</div>');
+    print('</div>');
+    print('</div>');
     print('</div>');
   }
 
@@ -234,6 +266,9 @@ final class LookingGlass {
     $this->render_content();
     $this->render_footer();
     $this->render_help_modal();
+    if ($this->frontpage['peering_policy_file']) {
+      $this->render_peering_policy_modal();
+    }
     print('</body>');
     print('<script src="libs/jquery-2.2.0.min.js"></script>');
     print('<script src="libs/bootstrap-3.3.6/js/bootstrap.min.js"></script>');
