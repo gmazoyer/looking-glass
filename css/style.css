@@ -54,7 +54,7 @@ body {
   margin-left:      auto;
   margin-right:     auto;
 }
-#description-help, #parameter-help {
+#description-help, #parameter-help, #peering-policy {
   font-size:        1.3em;
 }
 kbd {
