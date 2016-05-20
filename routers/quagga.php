@@ -31,29 +31,29 @@ final class Quagga extends Router {
       $destination = hostname_to_ip_address($hostname);
 
       if (!$destination) {
-        throw new Exception('No A or AAAA record found for '.$hostname);
+        throw new Exception('No AAAA or A record found for '.$hostname);
       }
     }
 
-    if (match_ipv4($destination)) {
-      $ping = 'ping '.$this->global_config['tools']['ping_options'].' '.
-        (isset($hostname) ? $hostname : $destination);
-    } else if (match_ipv6($destination)) {
+    if (match_ipv6($destination)) {
       $ping = 'ping6 '.$this->global_config['tools']['ping_options'].' '.
         (isset($hostname) ? $hostname : $destination);
+    } else if (match_ipv4($destination)) {
+      $ping = 'ping '.$this->global_config['tools']['ping_options'].' '.
+        (isset($hostname) ? $hostname : $destination);
     } else {
-      throw new Exception('The parameter does not resolve to an IPv4/IPv6 address.');
+      throw new Exception('The parameter does not resolve to an IPv6/IPv4 address.');
     }
 
     if (($ping != null) && $this->has_source_interface_id()) {
-      if (match_ipv4($destination) &&
-          ($this->get_source_interface_id('ipv4') != null)) {
-        $ping .= ' '.$this->global_config['tools']['ping_source_option'].' '.
-          $this->get_source_interface_id('ipv4');
-      } else if (match_ipv6($destination) &&
+      if (match_ipv6($destination) &&
           ($this->get_source_interface_id('ipv6') != null)) {
         $ping .= ' '.$this->global_config['tools']['ping_source_option'].' '.
           $this->get_source_interface_id('ipv6');
+      } else if (match_ipv4($destination) &&
+          ($this->get_source_interface_id('ipv4') != null)) {
+        $ping .= ' '.$this->global_config['tools']['ping_source_option'].' '.
+          $this->get_source_interface_id('ipv4');
       }
     }
 
@@ -68,33 +68,33 @@ final class Quagga extends Router {
       $destination = hostname_to_ip_address($hostname);
 
       if (!$destination) {
-        throw new Exception('No A or AAAA record found for '.$hostname);
+        throw new Exception('No AAAA or A record found for '.$hostname);
       }
     }
 
-    if (match_ipv4($destination)) {
-      $traceroute = $this->global_config['tools']['traceroute4'].' '.
-        $this->global_config['tools']['traceroute_options'].' '.
-        (isset($hostname) ? $hostname : $destination);
-    } else if (match_ipv6($destination)) {
+    if (match_ipv6($destination)) {
       $traceroute = $this->global_config['tools']['traceroute6'].' '.
         $this->global_config['tools']['traceroute_options'].' '.
         (isset($hostname) ? $hostname : $destination);
+    } else if (match_ipv4($destination)) {
+      $traceroute = $this->global_config['tools']['traceroute4'].' '.
+        $this->global_config['tools']['traceroute_options'].' '.
+        (isset($hostname) ? $hostname : $destination);
     } else {
-      throw new Exception('The parameter does not resolve to an IPv4/IPv6 address.');
+      throw new Exception('The parameter does not resolve to an IPv6/IPv4 address.');
     }
 
     if (($traceroute != null) && $this->has_source_interface_id()) {
-      if (match_ipv4($destination) &&
-          ($this->get_source_interface_id('ipv4') != null)) {
-        $traceroute .= ' '.
-          $this->global_config['tools']['traceroute_source_option'].' '.
-          $this->get_source_interface_id('ipv4');
-      } else if (match_ipv6($destination) &&
+      if (match_ipv6($destination) &&
           ($this->get_source_interface_id('ipv6') != null)) {
         $traceroute .= ' '.
           $this->global_config['tools']['traceroute_source_option'].' '.
           $this->get_source_interface_id('ipv6');
+      } else if (match_ipv4($destination) &&
+          ($this->get_source_interface_id('ipv4') != null)) {
+        $traceroute .= ' '.
+          $this->global_config['tools']['traceroute_source_option'].' '.
+          $this->get_source_interface_id('ipv4');
       }
     }
 
@@ -108,10 +108,10 @@ final class Quagga extends Router {
 
     switch ($command) {
       case 'bgp':
-        if (match_ipv4($parameter, false)) {
-          $commands[] = $vtysh.'show bgp ipv4 unicast '.$parameter.'"';
-        } else if (match_ipv6($parameter, false)) {
+        if (match_ipv6($parameter, false)) {
           $commands[] = $vtysh.'show bgp ipv6 unicast '.$parameter.'"';
+        } else if (match_ipv4($parameter, false)) {
+          $commands[] = $vtysh.'show bgp ipv4 unicast '.$parameter.'"';
         } else {
           throw new Exception('The parameter is not an IPv4/IPv6 address.');
         }
@@ -119,8 +119,8 @@ final class Quagga extends Router {
 
       case 'as-path-regex':
         if (match_aspath_regex($parameter)) {
-          $commands[] = $vtysh.'show ip bgp regexp '.$parameter.'"';
           $commands[] = $vtysh.'show ipv6 bgp regexp '.$parameter.'"';
+          $commands[] = $vtysh.'show ip bgp regexp '.$parameter.'"';
         } else {
           throw new Exception('The parameter is not an AS-Path regular expression.');
         }
@@ -128,8 +128,8 @@ final class Quagga extends Router {
 
       case 'as':
         if (match_as($parameter)) {
-          $commands[] = $vtysh.'show ip bgp regexp ^'.$parameter.'_'.'"';
           $commands[] = $vtysh.'show ipv6 bgp regexp ^'.$parameter.'_'.'"';
+          $commands[] = $vtysh.'show ip bgp regexp ^'.$parameter.'_'.'"';
         } else {
           throw new Exception('The parameter is not an AS number.');
         }

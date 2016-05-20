@@ -56,6 +56,44 @@ function match_reserved_ip_range($ip) {
 }
 
 /**
+ * Test if a given parameter is an IPv6 or not.
+ *
+ * @param  string  $ip      the parameter to test.
+ * @param  boolean $ip_only optional parameter, if omitted or set to true, it
+ *                          will ensure that the first parameter is an IPv6
+ *                          address without mask, if set to false the IP/MASK
+ *                          form is considered as valid.
+ * @return boolean true if the parameter matches an IPv6 address, false
+ *                 otherwise.
+ */
+function match_ipv6($ip, $ip_only = true) {
+  global $config;
+
+  if (empty($ip)) {
+    return false;
+  }
+
+  if (strrpos($ip, '/') && !$ip_only)  {
+    $ip_and_mask = explode('/', $ip, 2);
+
+    if (!$config['misc']['allow_private_ip'] &&
+        match_private_ip_range($ip_and_mask[0])) {
+      return false;
+    }
+
+    return filter_var($ip_and_mask[0], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) &&
+      filter_var($ip_and_mask[1], FILTER_VALIDATE_INT);
+  } else {
+    if (!$config['misc']['allow_private_ip'] &&
+        match_private_ip_range($ip)) {
+      return false;
+    }
+
+    return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+  }
+}
+
+/**
  * Test if a given parameter is an IPv4 or not.
  *
  * @param  string  $ip      the parameter to test.
@@ -100,44 +138,6 @@ function match_ipv4($ip, $ip_only = true) {
     }
 
     return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
-  }
-}
-
-/**
- * Test if a given parameter is an IPv6 or not.
- *
- * @param  string  $ip      the parameter to test.
- * @param  boolean $ip_only optional parameter, if omitted or set to true, it
- *                          will ensure that the first parameter is an IPv6
- *                          address without mask, if set to false the IP/MASK
- *                          form is considered as valid.
- * @return boolean true if the parameter matches an IPv6 address, false
- *                 otherwise.
- */
-function match_ipv6($ip, $ip_only = true) {
-  global $config;
-
-  if (empty($ip)) {
-    return false;
-  }
-
-  if (strrpos($ip, '/') && !$ip_only)  {
-    $ip_and_mask = explode('/', $ip, 2);
-
-    if (!$config['misc']['allow_private_ip'] &&
-        match_private_ip_range($ip_and_mask[0])) {
-      return false;
-    }
-
-    return filter_var($ip_and_mask[0], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) &&
-      filter_var($ip_and_mask[1], FILTER_VALIDATE_INT);
-  } else {
-    if (!$config['misc']['allow_private_ip'] &&
-        match_private_ip_range($ip)) {
-      return false;
-    }
-
-    return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
   }
 }
 
@@ -230,20 +230,20 @@ function match_aspath_regex($aspath_regex) {
 }
 
 /**
- * For a given hostname try to find the corresponding IPv4 or IPv6 address.
+ * For a given hostname try to find the corresponding IPv6 or IPv4 address.
  *
  * If there is multiple addresses attached to the same hostname it will give
- * the first IPv4 or IPv6 found.
+ * the first IPv6 or IPv4 found.
  *
- * If the hostname have both IPv4 and IPv6 addresses it will give the first
+ * If the hostname have both IPv6 and IPv4 addresses it will give the first
  * IPv6 address found.
  *
  * @param  string $hostname the hostname to use to search in the DNS
  *                          databases.
- * @return string an IPv4 or IPv6 address based on the DNS records.
+ * @return string an IPv6 or IPv4 address based on the DNS records.
  */
 function hostname_to_ip_address($hostname) {
-  $dns_record = dns_get_record($hostname, DNS_A + DNS_AAAA);
+  $dns_record = dns_get_record($hostname, DNS_AAAA + DNS_A);
 
   // No DNS record found
   if (!$dns_record) {

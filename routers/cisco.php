@@ -26,11 +26,11 @@ final class Cisco extends Router {
   protected function build_ping($destination) {
     $ping = null;
 
-    if (match_ipv4($destination) || match_ipv6($destination) ||
+    if (match_ipv6($destination) || match_ipv4($destination) ||
         match_hostname($destination)) {
       $ping = 'ping '.$destination.' repeat 10';
     } else {
-      throw new Exception('The parameter is not an IPv4/IPv6 address or a hostname.');
+      throw new Exception('The parameter is not an IPv6/IPv4 address or a hostname.');
     }
 
     if (($ping != null) && $this->has_source_interface_id()) {
@@ -43,7 +43,7 @@ final class Cisco extends Router {
   protected function build_traceroute($destination) {
     $traceroute = null;
 
-    if (match_ipv4($destination) || match_ipv6($destination) ||
+    if (match_ipv6($destination) || match_ipv4($destination) ||
         (match_hostname($destination) && !$this->has_source_interface_id())) {
       $traceroute = 'traceroute '.$destination;
     } else if (match_hostname($destination)) {
@@ -51,18 +51,18 @@ final class Cisco extends Router {
       $destination = hostname_to_ip_address($hostname);
 
       if (!$destination) {
-        throw new Exception('No A or AAAA record found for '.$hostname);
+        throw new Exception('No AAAA or A record found for '.$hostname);
       }
 
-      if (match_ipv4($destination)) {
-        $traceroute = 'traceroute ip '.(isset($hostname) ? $hostname : $destination);
-      } else if (match_ipv6($destination)) {
+      if (match_ipv6($destination)) {
         $traceroute = 'traceroute ipv6 '.(isset($hostname) ? $hostname : $destination);
+      } else if (match_ipv4($destination)) {
+        $traceroute = 'traceroute ip '.(isset($hostname) ? $hostname : $destination);
       } else {
-        throw new Exception('The parameter does not resolve to an IPv4/IPv6 address.');
+        throw new Exception('The parameter does not resolve to an IPv6/IPv4 address.');
       }
     } else {
-      throw new Exception('The parameter is not an IPv4/IPv6 address or a hostname.');
+      throw new Exception('The parameter is not an IPv6/IPv4 address or a hostname.');
     }
 
     if (($traceroute != null) && $this->has_source_interface_id() &&
@@ -78,19 +78,19 @@ final class Cisco extends Router {
 
     switch ($command) {
       case 'bgp':
-        if (match_ipv4($parameter, false)) {
-          $commands[] = 'show bgp ipv4 unicast '.$parameter;
-        } else if (match_ipv6($parameter, false)) {
+        if (match_ipv6($parameter, false)) {
           $commands[] = 'show bgp ipv6 unicast '.$parameter;
+        } else if (match_ipv4($parameter, false)) {
+          $commands[] = 'show bgp ipv4 unicast '.$parameter;
         } else {
-          throw new Exception('The parameter is not an IPv4/IPv6 address.');
+          throw new Exception('The parameter is not an IPv6/IPv4 address.');
         }
         break;
 
       case 'as-path-regex':
         if (match_aspath_regex($parameter)) {
-          $commands[] = 'show bgp ipv4 unicast quote-regexp "'.$parameter.'"';
           $commands[] = 'show bgp ipv6 unicast quote-regexp "'.$parameter.'"';
+          $commands[] = 'show bgp ipv4 unicast quote-regexp "'.$parameter.'"';
         } else {
           throw new Exception('The parameter is not an AS-Path regular expression.');
         }
@@ -98,8 +98,8 @@ final class Cisco extends Router {
 
       case 'as':
         if (match_as($parameter)) {
-          $commands[] = 'show bgp ipv4 unicast quote-regexp "^'.$parameter.'_"';
           $commands[] = 'show bgp ipv6 unicast quote-regexp "^'.$parameter.'_"';
+          $commands[] = 'show bgp ipv4 unicast quote-regexp "^'.$parameter.'_"';
         } else {
           throw new Exception('The parameter is not an AS number.');
         }
