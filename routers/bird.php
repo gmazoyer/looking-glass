@@ -31,7 +31,7 @@ final class Bird extends Router {
       $destination = hostname_to_ip_address($hostname);
 
       if (!$destination) {
-        throw new Exception('No A or AAAA record found for '.$hostname);
+        throw new Exception('No AAAA or A record found for '.$hostname);
       }
     }
 
