@@ -270,7 +270,7 @@ final class LookingGlass {
       $this->render_peering_policy_modal();
     }
     print('</body>');
-    print('<script src="libs/jquery-2.2.3.min.js"></script>');
+    print('<script src="libs/jquery-2.2.4.min.js"></script>');
     print('<script src="libs/bootstrap-3.3.6/js/bootstrap.min.js"></script>');
     print('<script src="js/looking-glass.js"></script>');
     print('</html>');
