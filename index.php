@@ -2,7 +2,7 @@
 
 /*
  * Looking Glass - An easy to deploy Looking Glass
- * Copyright (C) 2014-2015 Guillaume Mazoyer <gmazoyer@gravitons.in>
+ * Copyright (C) 2014-2016 Guillaume Mazoyer <gmazoyer@gravitons.in>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,7 +100,7 @@ final class LookingGlass {
     }
     print('<div class="header_bar">');
     if ($this->frontpage['show_title']) {
-      print('<h1>'.htmlentities($this->frontpage['title']).'</h1><br />');
+      print('<h1>'.htmlentities($this->frontpage['title']).'</h1><br>');
     }
     if ($this->frontpage['image']) {
       print('<img src="'.$this->frontpage['image'].'" alt="Logo" />');
@@ -112,6 +112,17 @@ final class LookingGlass {
   }
 
   private function render_content() {
+    if ($this->misc['disable_ipv6'] && $this->misc['disable_ipv4']) {
+      print('<div class="content">');
+      print('<strong>Configuration error!</strong><br>');
+      print('It looks like you have disabled IPv6 and IPv4. Do you want to do any networking someday?<br>');
+      print('Please enable IPv6 or IPv4 (or even both) by using the following lines in your configuration:<br><br>');
+      print('<pre>$config[\'misc\'][\'disable_ipv6\'] = false;</pre>');
+      print('<pre>$config[\'misc\'][\'disable_ipv4\'] = false;</pre>');
+      print('</div>');
+      return;
+    }
+
     print('<div class="alert alert-danger alert-dismissable" id="error">');
     print('<button type="button" class="close" aria-hidden="true">&times;</button>');
     print('<strong>Error!</strong>&nbsp;<span id="error-text"></span>');
@@ -165,20 +176,20 @@ final class LookingGlass {
 
     if ($this->frontpage['show_visitor_ip']) {
       if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-        print('Your IP address: '.htmlentities($_SERVER['HTTP_X_FORWARDED_FOR']).'<br />');
+        print('Your IP address: '.htmlentities($_SERVER['HTTP_X_FORWARDED_FOR']).'<br>');
       } else {
-        print('Your IP address: '.htmlentities($_SERVER['REMOTE_ADDR']).'<br />');
+        print('Your IP address: '.htmlentities($_SERVER['REMOTE_ADDR']).'<br>');
       }
     }
 
     if ($this->frontpage['disclaimer']) {
       print($this->frontpage['disclaimer']);
-      print('<br /><br />');
+      print('<br><br>');
     }
 
     if ($this->frontpage['peering_policy_file']) {
       print('<button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#peering-policy"><span class="glyphicon glyphicon-list-alt"></span> Peering Policy</button>');
-      print('<br/><br/>');
+      print('<br><br>');
     }
 
     if ($this->contact['name'] && $this->contact['mail']) {
@@ -187,7 +198,7 @@ final class LookingGlass {
         htmlentities($this->contact['name']).'</a>');
     }
 
-    print('<br /><br />');
+    print('<br><br>');
     print('<span class="origin">Powered by <a href="https://github.com/respawner/looking-glass" title="Looking Glass Project">Looking Glass '.$this->release['version'].'</a></span>');
     print('</p>');
     print('</div>');

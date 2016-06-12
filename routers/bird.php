@@ -2,7 +2,7 @@
 
 /*
  * Looking Glass - An easy to deploy Looking Glass
- * Copyright (C) 2014-2015 Guillaume Mazoyer <gmazoyer@gravitons.in>
+ * Copyright (C) 2014-2016 Guillaume Mazoyer <gmazoyer@gravitons.in>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ final class Bird extends Router {
       $destination = hostname_to_ip_address($hostname);
 
       if (!$destination) {
-        throw new Exception('No AAAA or A record found for '.$hostname);
+        throw new Exception('No record found for '.$hostname);
       }
     }
 
@@ -42,7 +42,7 @@ final class Bird extends Router {
       $ping = 'ping '.$this->global_config['tools']['ping_options'].' '.
         (isset($hostname) ? $hostname : $destination);
     } else {
-      throw new Exception('The parameter does not resolve to an IPv6/IPv4 address.');
+      throw new Exception('The parameter does not resolve to an IP address.');
     }
 
     if (($ping != null) && $this->has_source_interface_id()) {
@@ -68,7 +68,7 @@ final class Bird extends Router {
       $destination = hostname_to_ip_address($hostname);
 
       if (!$destination) {
-        throw new Exception('No AAAA or A record found for '.$hostname);
+        throw new Exception('No record found for '.$hostname);
       }
     }
 
@@ -81,20 +81,20 @@ final class Bird extends Router {
         $this->global_config['tools']['traceroute_options'].' '.
         (isset($hostname) ? $hostname : $destination);
     } else {
-      throw new Exception('The parameter does not resolve to an IPv6/IPv4 address.');
+      throw new Exception('The parameter does not resolve to an IP address.');
     }
 
     if (($traceroute != null) && $this->has_source_interface_id()) {
-      if (match_ipv4($destination) &&
-          ($this->get_source_interface_id('ipv4') != null)) {
-        $traceroute .= ' '.
-          $this->global_config['tools']['traceroute_source_option'].' '.
-          $this->get_source_interface_id('ipv4');
-      } else if (match_ipv6($destination) &&
+      if (match_ipv6($destination) &&
           ($this->get_source_interface_id('ipv6') != null)) {
         $traceroute .= ' '.
           $this->global_config['tools']['traceroute_source_option'].' '.
           $this->get_source_interface_id('ipv6');
+      } else if (match_ipv4($destination) &&
+          ($this->get_source_interface_id('ipv4') != null)) {
+        $traceroute .= ' '.
+          $this->global_config['tools']['traceroute_source_option'].' '.
+          $this->get_source_interface_id('ipv4');
       }
     }
 
@@ -110,20 +110,32 @@ final class Bird extends Router {
     switch ($command) {
       case 'bgp':
         if (match_ipv6($parameter, false)) {
-          $commands[] = $birdc6.' \'show route for '.$parameter.'\'';
+          if ($this->global_config['misc']['disable_ipv6']) {
+            throw new Exception('IPv6 is disabled.');
+          } else {
+            $commands[] = $birdc6.' \'show route for '.$parameter.'\'';
+          }
         } else if (match_ipv4($parameter, false)) {
-          $commands[] = $birdc.' \'show route for '.$parameter.'\'';
+          if ($this->global_config['misc']['disable_ipv4']) {
+            throw new Exception('IPv4 is disabled.');
+          } else {
+            $commands[] = $birdc.' \'show route for '.$parameter.'\'';
+          }
         } else {
-          throw new Exception('The parameter is not an IPv6/IPv4 address.');
+          throw new Exception('The parameter is not an IP address.');
         }
         break;
 
       case 'as-path-regex':
         if (match_aspath_regex($parameter)) {
-          $commands[] = $birdc6.' \'show route where bgp_path ~ [= '.
-            $parameter.' =]\'';
-          $commands[] = $birdc.' \'show route where bgp_path ~ [= '.
-            $parameter.' =]\'';
+          if (!$this->global_config['misc']['disable_ipv6']) {
+            $commands[] = $birdc6.' \'show route where bgp_path ~ [= '.
+              $parameter.' =]\'';
+          }
+          if (!$this->global_config['misc']['disable_ipv4']) {
+            $commands[] = $birdc.' \'show route where bgp_path ~ [= '.
+              $parameter.' =]\'';
+          }
         } else {
           throw new Exception('The parameter is not an AS-Path regular expression.');
         }
@@ -131,10 +143,14 @@ final class Bird extends Router {
 
       case 'as':
         if (match_as($parameter)) {
-          $commands[] = $birdc6.' \'show route where bgp_path ~ [= '.
-            $parameter.' =]\'';
-          $commands[] = $birdc.' \'show route where bgp_path ~ [= '.
-            $parameter.' =]\'';
+          if (!$this->global_config['misc']['disable_ipv6']) {
+            $commands[] = $birdc6.' \'show route where bgp_path ~ [= '.
+              $parameter.' =]\'';
+          }
+          if (!$this->global_config['misc']['disable_ipv4']) {
+            $commands[] = $birdc.' \'show route where bgp_path ~ [= '.
+              $parameter.' =]\'';
+          }
         } else {
           throw new Exception('The parameter is not an AS number.');
         }

@@ -2,7 +2,7 @@
 
 /*
  * Looking Glass - An easy to deploy Looking Glass
- * Copyright (C) 2014-2015 Guillaume Mazoyer <gmazoyer@gravitons.in>
+ * Copyright (C) 2014-2016 Guillaume Mazoyer <gmazoyer@gravitons.in>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,7 +92,11 @@ $config = array(
     'allow_private_ip' => true,
     // Allow reserved IPv4 addresses (0.0.0.0/8, 169.254.0.0/16,
     // 192.0.2.0/24 and 224.0.0.0/4)
-    'allow_reserved_ip' => true
+    'allow_reserved_ip' => true,
+    // Disable IPv6
+    'disable_ipv6' => false,
+    // Disable IPv4
+    'disable_ipv4' => false
   ),
 
   // Tools used for some processing

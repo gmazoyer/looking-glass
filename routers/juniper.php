@@ -2,7 +2,7 @@
 
 /*
  * Looking Glass - An easy to deploy Looking Glass
- * Copyright (C) 2014-2015 Guillaume Mazoyer <gmazoyer@gravitons.in>
+ * Copyright (C) 2014-2016 Guillaume Mazoyer <gmazoyer@gravitons.in>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,11 +26,22 @@ final class Juniper extends Router {
   protected function build_ping($destination) {
     $ping = null;
 
-    if (match_ipv6($destination) || match_ipv4($destination) ||
-        match_hostname($destination)) {
+    if (match_hostname($destination)) {
       $ping = 'ping count 10 rapid '.$destination;
+    } else if (match_ipv6($destination)) {
+      if ($this->global_config['misc']['disable_ipv6']) {
+        throw new Exception('IPv6 is disabled.');
+      } else {
+        $ping = 'ping inet6 count 10 rapid '.$destination;
+      }
+    } else if (match_ipv4($destination)) {
+      if ($this->global_config['misc']['disable_ipv4']) {
+        throw new Exception('IPv4 is disabled.');
+      } else {
+        $ping = 'ping inet count 10 rapid '.$destination;
+      }
     } else {
-      throw new Exception('The parameter is not an IPv6/IPv4 address or a hostname.');
+      throw new Exception('The parameter is not an IP address or a hostname.');
     }
 
     if (($ping != null) && $this->has_source_interface_id()) {
@@ -43,12 +54,22 @@ final class Juniper extends Router {
   protected function build_traceroute($destination) {
     $traceroute = null;
 
-    if (match_ipv6($destination) || match_hostname($destination)) {
+    if (match_hostname($destination)) {
       $traceroute = 'traceroute '.$destination;
+    } else if (match_ipv6($destination)) {
+      if ($this->global_config['misc']['disable_ipv6']) {
+        throw new Exception('IPv6 is disabled.');
+      } else {
+        $traceroute = 'traceroute inet6 '.$destination;
+      }
     } else if (match_ipv4($destination)) {
-      $traceroute = 'traceroute as-number-lookup '.$destination;
+      if ($this->global_config['misc']['disable_ipv4']) {
+        throw new Exception('IPv4 is disabled.');
+      } else {
+        $traceroute = 'traceroute inet as-number-lookup '.$destination;
+      }
     } else {
-      throw new Exception('The parameter is not an IPv6/IPv4 address or a hostname.');
+      throw new Exception('The parameter is not an IP address or a hostname.');
     }
 
     if (($traceroute != null) && $this->has_source_interface_id()) {
@@ -64,22 +85,34 @@ final class Juniper extends Router {
     switch ($command) {
       case 'bgp':
         if (match_ipv6($parameter, false)) {
-          $commands[] = 'show route '.$parameter.
-            ' protocol bgp table inet6.0 active-path';
+          if ($this->global_config['misc']['disable_ipv6']) {
+            throw new Exception('IPv6 is disabled.');
+          } else {
+            $commands[] = 'show route '.$parameter.
+              ' protocol bgp table inet6.0 active-path';
+          }
         } else if (match_ipv4($parameter, false)) {
-          $commands[] = 'show route '.$parameter.
-            ' protocol bgp table inet.0 active-path';
+          if ($this->global_config['misc']['disable_ipv4']) {
+            throw new Exception('IPv4 is disabled.');
+          } else {
+            $commands[] = 'show route '.$parameter.
+              ' protocol bgp table inet.0 active-path';
+          }
         } else {
-          throw new Exception('The parameter is not an IPv6/IPv4 address.');
+          throw new Exception('The parameter is not an IP address.');
         }
         break;
 
       case 'as-path-regex':
         if (match_aspath_regex($parameter)) {
-          $commands[] = 'show route aspath-regex "'.$parameter.
-            '" protocol bgp table inet6.0';
-          $commands[] = 'show route aspath-regex "'.$parameter.
-            '" protocol bgp table inet.0';
+          if (!$this->global_config['misc']['disable_ipv6']) {
+            $commands[] = 'show route aspath-regex "'.$parameter.
+              '" protocol bgp table inet6.0';
+          }
+          if (!$this->global_config['misc']['disable_ipv4']) {
+            $commands[] = 'show route aspath-regex "'.$parameter.
+              '" protocol bgp table inet.0';
+          }
         } else {
           throw new Exception('The parameter is not an AS-Path regular expression.');
         }
@@ -87,10 +120,14 @@ final class Juniper extends Router {
 
       case 'as':
         if (match_as($parameter)) {
-          $commands[] = 'show route aspath-regex "^'.$parameter.
-            ' .*" protocol bgp table inet6.0';
-          $commands[] = 'show route aspath-regex "^'.$parameter.
-            ' .*" protocol bgp table inet.0';
+          if (!$this->global_config['misc']['disable_ipv6']) {
+            $commands[] = 'show route aspath-regex "^'.$parameter.
+              ' .*" protocol bgp table inet6.0';
+          }
+          if (!$this->global_config['misc']['disable_ipv4']) {
+            $commands[] = 'show route aspath-regex "^'.$parameter.
+              ' .*" protocol bgp table inet.0';
+          }
         } else {
           throw new Exception('The parameter is not an AS number.');
         }

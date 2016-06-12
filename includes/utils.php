@@ -2,7 +2,7 @@
 
 /*
  * Looking Glass - An easy to deploy Looking Glass
- * Copyright (C) 2014 Guillaume Mazoyer <gmazoyer@gravitons.in>
+ * Copyright (C) 2014-2016 Guillaume Mazoyer <gmazoyer@gravitons.in>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -243,7 +243,20 @@ function match_aspath_regex($aspath_regex) {
  * @return string an IPv6 or IPv4 address based on the DNS records.
  */
 function hostname_to_ip_address($hostname) {
-  $dns_record = dns_get_record($hostname, DNS_AAAA + DNS_A);
+  global $config;
+
+  $record_types = DNS_AAAA + DNS_A;
+
+  // IPv6 is disabled look for A records only
+  if ($config['misc']['disable_ipv6']) {
+    $record_types = DNS_A;
+  }
+  // IPv4 is disabled look for AAAA records only
+  if ($config['misc']['disabke_ipv4']) {
+    $record_types = DNS_AAAA;
+  }
+
+  $dns_record = dns_get_record($hostname, $record_types);
 
   // No DNS record found
   if (!$dns_record) {
@@ -265,7 +278,6 @@ function hostname_to_ip_address($hostname) {
 
   // Several records found
   if ($records_nb > 1) {
-    // TODO: this could probably be more optimal
     foreach ($dns_record as $record) {
       if ($record['type'] == 'AAAA') {
         return $record['ipv6'];
