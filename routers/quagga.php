@@ -109,17 +109,9 @@ final class Quagga extends Router {
     switch ($command) {
       case 'bgp':
         if (match_ipv6($parameter, false)) {
-          if ($this->global_config['misc']['disable_ipv6']) {
-            throw new Exception('IPv6 is disabled.');
-          } else {
-            $commands[] = $vtysh.'show bgp ipv6 unicast '.$parameter.'"';
-          }
+          $commands[] = $vtysh.'show bgp ipv6 unicast '.$parameter.'"';
         } else if (match_ipv4($parameter, false)) {
-          if ($this->global_config['misc']['disable_ipv4']) {
-            throw new Exception('IPv4 is disabled.');
-          } else {
-            $commands[] = $vtysh.'show bgp ipv4 unicast '.$parameter.'"';
-          }
+          $commands[] = $vtysh.'show bgp ipv4 unicast '.$parameter.'"';
         } else {
           throw new Exception('The parameter is not an IP address.');
         }

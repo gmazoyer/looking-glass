@@ -22,6 +22,7 @@
 require_once('includes/config.defaults.php');
 require_once('config.php');
 require_once('routers/router.php');
+require_once('includes/utils.php');
 
 // From where the user *really* comes from.
 if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
@@ -51,6 +52,20 @@ if (isset($_POST['query']) && !empty($_POST['query']) &&
 
   // Do the processing
   $router = Router::instance($hostname, $requester);
+
+  // Check if parameter is an IPv6 and if IPv6 is disabled
+  if (match_ipv6($parameter) && $config['misc']['disable_ipv6']) {
+    $error = 'IPv6 has been disabled, you can only use IPv4.';
+    print(json_encode(array('error' => $error)));
+    return;
+  }
+
+  // Check if parameter is an IPv4 and if IPv4 is disabled
+  if (match_ipv4($parameter) && $config['misc']['disable_ipv4']) {
+    $error = 'IPv4 has been disabled, you can only use IPv6.';
+    print(json_encode(array('error' => $error)));
+    return;
+  }
 
   try {
     $output = $router->send_command($query, $parameter);

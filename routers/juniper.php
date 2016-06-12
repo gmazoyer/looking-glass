@@ -26,20 +26,9 @@ final class Juniper extends Router {
   protected function build_ping($destination) {
     $ping = null;
 
-    if (match_hostname($destination)) {
+    if (match_hostname($destination) || match_ipv6($destination) ||
+        match_ipv4($destination)) {
       $ping = 'ping count 10 rapid '.$destination;
-    } else if (match_ipv6($destination)) {
-      if ($this->global_config['misc']['disable_ipv6']) {
-        throw new Exception('IPv6 is disabled.');
-      } else {
-        $ping = 'ping inet6 count 10 rapid '.$destination;
-      }
-    } else if (match_ipv4($destination)) {
-      if ($this->global_config['misc']['disable_ipv4']) {
-        throw new Exception('IPv4 is disabled.');
-      } else {
-        $ping = 'ping inet count 10 rapid '.$destination;
-      }
     } else {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
@@ -54,20 +43,10 @@ final class Juniper extends Router {
   protected function build_traceroute($destination) {
     $traceroute = null;
 
-    if (match_hostname($destination)) {
+    if (match_hostname($destination) || match_ipv6($destination)) {
       $traceroute = 'traceroute '.$destination;
-    } else if (match_ipv6($destination)) {
-      if ($this->global_config['misc']['disable_ipv6']) {
-        throw new Exception('IPv6 is disabled.');
-      } else {
-        $traceroute = 'traceroute inet6 '.$destination;
-      }
     } else if (match_ipv4($destination)) {
-      if ($this->global_config['misc']['disable_ipv4']) {
-        throw new Exception('IPv4 is disabled.');
-      } else {
-        $traceroute = 'traceroute inet as-number-lookup '.$destination;
-      }
+      $traceroute = 'traceroute as-number-lookup '.$destination;
     } else {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
@@ -85,19 +64,11 @@ final class Juniper extends Router {
     switch ($command) {
       case 'bgp':
         if (match_ipv6($parameter, false)) {
-          if ($this->global_config['misc']['disable_ipv6']) {
-            throw new Exception('IPv6 is disabled.');
-          } else {
-            $commands[] = 'show route '.$parameter.
-              ' protocol bgp table inet6.0 active-path';
-          }
+          $commands[] = 'show route '.$parameter.
+            ' protocol bgp table inet6.0 active-path';
         } else if (match_ipv4($parameter, false)) {
-          if ($this->global_config['misc']['disable_ipv4']) {
-            throw new Exception('IPv4 is disabled.');
-          } else {
-            $commands[] = 'show route '.$parameter.
-              ' protocol bgp table inet.0 active-path';
-          }
+          $commands[] = 'show route '.$parameter.
+            ' protocol bgp table inet.0 active-path';
         } else {
           throw new Exception('The parameter is not an IP address.');
         }

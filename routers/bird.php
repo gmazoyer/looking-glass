@@ -110,17 +110,9 @@ final class Bird extends Router {
     switch ($command) {
       case 'bgp':
         if (match_ipv6($parameter, false)) {
-          if ($this->global_config['misc']['disable_ipv6']) {
-            throw new Exception('IPv6 is disabled.');
-          } else {
-            $commands[] = $birdc6.' \'show route for '.$parameter.'\'';
-          }
+          $commands[] = $birdc6.' \'show route for '.$parameter.'\'';
         } else if (match_ipv4($parameter, false)) {
-          if ($this->global_config['misc']['disable_ipv4']) {
-            throw new Exception('IPv4 is disabled.');
-          } else {
-            $commands[] = $birdc.' \'show route for '.$parameter.'\'';
-          }
+          $commands[] = $birdc.' \'show route for '.$parameter.'\'';
         } else {
           throw new Exception('The parameter is not an IP address.');
         }
