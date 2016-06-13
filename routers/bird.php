@@ -28,7 +28,7 @@ final class Bird extends Router {
 
     if (match_hostname($destination)) {
       $hostname = $destination;
-      $destination = hostname_to_ip_address($hostname);
+      $destination = hostname_to_ip_address($hostname, $this->config);
 
       if (!$destination) {
         throw new Exception('No record found for '.$hostname);
@@ -65,7 +65,7 @@ final class Bird extends Router {
 
     if (match_hostname($destination)) {
       $hostname = $destination;
-      $destination = hostname_to_ip_address($hostname);
+      $destination = hostname_to_ip_address($hostname, $this->config);
 
       if (!$destination) {
         throw new Exception('No record found for '.$hostname);

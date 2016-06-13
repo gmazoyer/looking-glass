@@ -242,17 +242,15 @@ function match_aspath_regex($aspath_regex) {
  *                          databases.
  * @return string an IPv6 or IPv4 address based on the DNS records.
  */
-function hostname_to_ip_address($hostname) {
-  global $config;
-
+function hostname_to_ip_address($hostname, $config = null) {
   $record_types = DNS_AAAA + DNS_A;
 
   // IPv6 is disabled look for A records only
-  if ($config['misc']['disable_ipv6']) {
+  if (($config != null) && $config['disable_ipv6']) {
     $record_types = DNS_A;
   }
   // IPv4 is disabled look for AAAA records only
-  if ($config['misc']['disabke_ipv4']) {
+  if (($config != null) && $config['disable_ipv4']) {
     $record_types = DNS_AAAA;
   }
 
