@@ -89,11 +89,11 @@ final class Cisco extends Router {
 
       case 'as-path-regex':
         if (match_aspath_regex($parameter)) {
-          if (!$this->global_config['misc']['disable_ipv6']) {
+          if (!$this->config['disable_ipv6']) {
             $commands[] = 'show bgp ipv6 unicast quote-regexp "'.$parameter.
               '"';
           }
-          if (!$this->global_config['misc']['disable_ipv4']) {
+          if (!$this->config['disable_ipv4']) {
             $commands[] = 'show bgp ipv4 unicast quote-regexp "'.$parameter.
               '"';
           }
@@ -104,11 +104,11 @@ final class Cisco extends Router {
 
       case 'as':
         if (match_as($parameter)) {
-          if (!$this->global_config['misc']['disable_ipv6']) {
+          if (!$this->config['disable_ipv6']) {
             $commands[] = 'show bgp ipv6 unicast quote-regexp "^'.$parameter.
               '_"';
           }
-          if (!$this->global_config['misc']['disable_ipv4']) {
+          if (!$this->config['disable_ipv4']) {
             $commands[] = 'show bgp ipv4 unicast quote-regexp "^'.$parameter.
               '_"';
           }

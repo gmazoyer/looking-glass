@@ -145,6 +145,17 @@ After that you need to set the authentication information for the looking
 glass to be able to log into the router. For this you select a type of
 authentication and then supply the needed information.
 
+```php
+$config['routers']['router1']['disable_ipv6'] = false;
+```
+If set to true, disable the use of IPv6 for the router.
+
+```php
+$config['routers']['router1']['disable_ipv4'] = false;
+```
+If set to true, disable the use of IPv4 for the router.
+
+
 #### Telnet
 
 ```php
@@ -219,16 +230,6 @@ $config['misc']['allow_reserved_ip'] = true;
 ```
 If set to true, allows reserved the use of IPv4 addresses (0.0.0.0/8,
 169.254.0.0/16, 192.0.2.0/24 and 224.0.0.0/4) as parameters.
-
-```php
-$config['misc']['disable_ipv6'] = false;
-```
-If set to true, disable the use of IPv6.
-
-```php
-$config['misc']['disable_ipv4'] = false;
-```
-If set to true, disable the use of IPv4.
 
 ### Tools
 

@@ -30,6 +30,8 @@ final class LookingGlass {
   private $routers;
 
   function __construct($config) {
+    set_defaults_for_routers($config);
+
     $this->release = $config['release'];
     $this->frontpage = $config['frontpage'];
     $this->contact = $config['contact'];
@@ -44,14 +46,24 @@ final class LookingGlass {
 
     $first = true;
     foreach (array_keys($this->routers) as $router) {
+      // IPv6 and IPv4 both disabled for the router, ignore it
+      if ($this->routers[$router]['disable_ipv6'] &&
+          $this->routers[$router]['disable_ipv4']) {
+        continue;
+      }
+
+      print('<option value="'.$router.'"');
       if ($first) {
         $first = false;
-        print('<option value="'.$router.'" selected="selected">'.
-          $this->routers[$router]['desc'].'</option>');
-      } else {
-        print('<option value="'.$router.'">'.$this->routers[$router]['desc'].
-          '</option>');
+        print(' selected="selected"');
       }
+      print('>'.$this->routers[$router]['desc']);
+      if ($this->routers[$router]['disable_ipv6']) {
+        print(' (IPv4 only)');
+      } else if ($this->routers[$router]['disable_ipv4']) {
+        print(' (IPv6 only)');
+      }
+      print('</option>');
     }
 
     print('</select>');
@@ -112,17 +124,6 @@ final class LookingGlass {
   }
 
   private function render_content() {
-    if ($this->misc['disable_ipv6'] && $this->misc['disable_ipv4']) {
-      print('<div class="content">');
-      print('<strong>Configuration error!</strong><br>');
-      print('It looks like you have disabled IPv6 and IPv4. Do you want to do any networking someday?<br>');
-      print('Please enable IPv6 or IPv4 (or even both) by using the following lines in your configuration:<br><br>');
-      print('<pre>$config[\'misc\'][\'disable_ipv6\'] = false;</pre>');
-      print('<pre>$config[\'misc\'][\'disable_ipv4\'] = false;</pre>');
-      print('</div>');
-      return;
-    }
-
     print('<div class="alert alert-danger alert-dismissable" id="error">');
     print('<button type="button" class="close" aria-hidden="true">&times;</button>');
     print('<strong>Error!</strong>&nbsp;<span id="error-text"></span>');

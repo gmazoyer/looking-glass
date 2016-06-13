@@ -120,11 +120,11 @@ final class Bird extends Router {
 
       case 'as-path-regex':
         if (match_aspath_regex($parameter)) {
-          if (!$this->global_config['misc']['disable_ipv6']) {
+          if (!$this->config['disable_ipv6']) {
             $commands[] = $birdc6.' \'show route where bgp_path ~ [= '.
               $parameter.' =]\'';
           }
-          if (!$this->global_config['misc']['disable_ipv4']) {
+          if (!$this->config['disable_ipv4']) {
             $commands[] = $birdc.' \'show route where bgp_path ~ [= '.
               $parameter.' =]\'';
           }
@@ -135,11 +135,11 @@ final class Bird extends Router {
 
       case 'as':
         if (match_as($parameter)) {
-          if (!$this->global_config['misc']['disable_ipv6']) {
+          if (!$this->config['disable_ipv6']) {
             $commands[] = $birdc6.' \'show route where bgp_path ~ [= '.
               $parameter.' =]\'';
           }
-          if (!$this->global_config['misc']['disable_ipv4']) {
+          if (!$this->config['disable_ipv4']) {
             $commands[] = $birdc.' \'show route where bgp_path ~ [= '.
               $parameter.' =]\'';
           }

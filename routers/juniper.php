@@ -76,11 +76,11 @@ final class Juniper extends Router {
 
       case 'as-path-regex':
         if (match_aspath_regex($parameter)) {
-          if (!$this->global_config['misc']['disable_ipv6']) {
+          if (!$this->config['disable_ipv6']) {
             $commands[] = 'show route aspath-regex "'.$parameter.
               '" protocol bgp table inet6.0';
           }
-          if (!$this->global_config['misc']['disable_ipv4']) {
+          if (!$this->config['disable_ipv4']) {
             $commands[] = 'show route aspath-regex "'.$parameter.
               '" protocol bgp table inet.0';
           }
@@ -91,11 +91,11 @@ final class Juniper extends Router {
 
       case 'as':
         if (match_as($parameter)) {
-          if (!$this->global_config['misc']['disable_ipv6']) {
+          if (!$this->config['disable_ipv6']) {
             $commands[] = 'show route aspath-regex "^'.$parameter.
               ' .*" protocol bgp table inet6.0';
           }
-          if (!$this->global_config['misc']['disable_ipv4']) {
+          if (!$this->config['disable_ipv4']) {
             $commands[] = 'show route aspath-regex "^'.$parameter.
               ' .*" protocol bgp table inet.0';
           }

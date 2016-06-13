@@ -119,10 +119,10 @@ final class Quagga extends Router {
 
       case 'as-path-regex':
         if (match_aspath_regex($parameter)) {
-          if (!$this->global_config['misc']['disable_ipv6']) {
+          if (!$this->config['disable_ipv6']) {
             $commands[] = $vtysh.'show ipv6 bgp regexp '.$parameter.'"';
           }
-          if (!$this->global_config['misc']['disable_ipv4']) {
+          if (!$this->config['disable_ipv4']) {
             $commands[] = $vtysh.'show ip bgp regexp '.$parameter.'"';
           }
         } else {
@@ -132,10 +132,10 @@ final class Quagga extends Router {
 
       case 'as':
         if (match_as($parameter)) {
-          if (!$this->global_config['misc']['disable_ipv6']) {
+          if (!$this->config['disable_ipv6']) {
             $commands[] = $vtysh.'show ipv6 bgp regexp ^'.$parameter.'_'.'"';
           }
-          if (!$this->global_config['misc']['disable_ipv4']) {
+          if (!$this->config['disable_ipv4']) {
             $commands[] = $vtysh.'show ip bgp regexp ^'.$parameter.'_'.'"';
           }
         } else {

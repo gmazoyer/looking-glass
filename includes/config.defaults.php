@@ -24,6 +24,22 @@
  * Make changes to the configuration array in config.php.
  */
 
+function set_defaults_for_routers(&$parsed_config) {
+  $router_defaults = array(
+    'disable_ipv6' => false,
+    'disable_ipv4' => false
+  );
+
+  // Loads defaults when key does not exist
+  foreach ($parsed_config['routers'] as &$router) {
+    foreach ($router_defaults as $key => $value) {
+      if (!array_key_exists($key, $router)) {
+        $router[$key] = $value;
+      }
+    }
+  }
+}
+
 $config = array(
 
   // Release configuration
@@ -92,11 +108,7 @@ $config = array(
     'allow_private_ip' => true,
     // Allow reserved IPv4 addresses (0.0.0.0/8, 169.254.0.0/16,
     // 192.0.2.0/24 and 224.0.0.0/4)
-    'allow_reserved_ip' => true,
-    // Disable IPv6
-    'disable_ipv6' => false,
-    // Disable IPv4
-    'disable_ipv4' => false
+    'allow_reserved_ip' => true
   ),
 
   // Tools used for some processing

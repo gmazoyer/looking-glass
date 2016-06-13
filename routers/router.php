@@ -112,6 +112,10 @@ abstract class Router {
 
   protected abstract function build_commands($command, $parameter);
 
+  public function get_config() {
+    return $this->config;
+  }
+
   public function send_command($command, $parameter) {
     try {
       $commands = $this->build_commands($command, $parameter);
