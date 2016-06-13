@@ -58,11 +58,6 @@ final class LookingGlass {
         print(' selected="selected"');
       }
       print('>'.$this->routers[$router]['desc']);
-      if ($this->routers[$router]['disable_ipv6']) {
-        print(' (IPv4 only)');
-      } else if ($this->routers[$router]['disable_ipv4']) {
-        print(' (IPv6 only)');
-      }
       print('</option>');
     }
 
