@@ -52,16 +52,17 @@ if (isset($_POST['query']) && !empty($_POST['query']) &&
 
   // Do the processing
   $router = Router::instance($hostname, $requester);
+  $router_config = $router->get_config();
 
   // Check if parameter is an IPv6 and if IPv6 is disabled
-  if (match_ipv6($parameter) && $router->get_config()['disable_ipv6']) {
+  if (match_ipv6($parameter) && $router_config['disable_ipv6']) {
     $error = 'IPv6 has been disabled for this router, you can only use IPv4.';
     print(json_encode(array('error' => $error)));
     return;
   }
 
   // Check if parameter is an IPv4 and if IPv4 is disabled
-  if (match_ipv4($parameter) && $router->get_config()['disable_ipv4']) {
+  if (match_ipv4($parameter) && $router_config['disable_ipv4']) {
     $error = 'IPv4 has been disabled for this router, you can only use IPv6.';
     print(json_encode(array('error' => $error)));
     return;
