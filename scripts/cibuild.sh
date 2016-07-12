@@ -12,7 +12,7 @@ START=$(date +%s)
 echo "$(info) starting build checks."
 
 # Syntax check all php files
-SYNTAX=$(find . -name "*.php" -type f -exec php --syntax-check {} \; > /dev/null)
+SYNTAX=$(find . -name "*.php" -type f -exec php --syntax-check {} \; 2>&1 > /dev/null)
 if [[ ! -z ${SYNTAX} ]]; then
   echo -e "${SYNTAX}"
   echo -e "\n$(info) detected one or more syntax errors, failing build."
