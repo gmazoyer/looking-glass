@@ -48,6 +48,7 @@ final class SSH extends Authentication {
 
   public function connect() {
     $this->connection = new Net_SSH2($this->config['host'], $this->port);
+    $this->connection->setTimeout($this->config['timeout']);
     $success = false;
 
     if ($this->config['auth'] == 'ssh-password') {

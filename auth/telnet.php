@@ -37,9 +37,11 @@ final class Telnet extends Authentication {
   }
 
   public function connect() {
-    $this->connection = fsockopen($this->config['host'], $this->port);
+    $this->connection = fsockopen($this->config['host'], $this->port, $errno,
+      $errstr, $this->config['timeout']);
     if (!$this->connection) {
-      throw new Exception('Cannot connect to router.');
+      throw new Exception('Cannot connect to router (code '.$errno.'['.
+        $errstr.']).');
     }
 
     fputs($this->connection, $this->config['user']."\r\n");

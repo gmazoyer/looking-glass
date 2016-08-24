@@ -26,6 +26,7 @@
 
 function set_defaults_for_routers(&$parsed_config) {
   $router_defaults = array(
+    'timeout' => 30,
     'disable_ipv6' => false,
     'disable_ipv4' => false
   );

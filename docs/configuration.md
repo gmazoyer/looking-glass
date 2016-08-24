@@ -155,6 +155,11 @@ $config['routers']['router1']['disable_ipv4'] = false;
 ```
 If set to true, disable the use of IPv4 for the router.
 
+```php
+$config['routers']['router1']['timeout'] = 30;
+```
+Used to set the timeout (in seconds) for the connection to the router. The
+default value is 30 seconds.
 
 #### Telnet
 
