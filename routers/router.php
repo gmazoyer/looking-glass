@@ -39,6 +39,17 @@ abstract class Router {
     $this->config = $config;
     $this->id = $id;
     $this->requester = $requester;
+
+    // Set defaults if not present
+    if (!isset($this->config['timeout'])) {
+      $this->config['timeout'] = 30;
+    }
+    if (!isset($this->config['disable_ipv6'])) {
+      $this->config['disable_ipv6'] = false;
+    }
+    if (!isset($this->config['disable_ipv4'])) {
+      $this->config['disable_ipv4'] = false;
+    }
   }
 
   private function sanitize_output($output) {
