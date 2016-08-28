@@ -1,5 +1,21 @@
 # Changelog
 
+## Version 1.3.0 | Convergence (New features release) | 2016-08-28
+
+  * Third feature release of 1.X.Y branch
+  * Add peering policy integration ; when using the configuration option that
+    link to a peering policy written in HTML, a small button will be displayed
+    below the main buttons allowing to display the policy in a modal
+  * Add configuration option to disable IPv6 or IPv4 for defined routers ;
+    using this option will limit the query to the enabled protocol version
+    (both versions of the protocol are enabled by default).
+  * Add configuration option to set the connection timeout for defined
+    routers ; it can be useful when a query takes a long time (ie traceroute
+    with hidden hosts in the path)
+  * Display IPv6 results before IPv4
+  * Small changes for UI buttons (should be better on mobile)
+  * Embeds Bootstrap 3.3.7, jQuery 3.1.0 and phpseclib 1.0.3
+
 ## Version 1.2.1 | Convergence (Security fix release) | 2016-02-18
 
   * First security fix release of 1.X.Y branch
