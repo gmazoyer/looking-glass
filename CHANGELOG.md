@@ -8,7 +8,7 @@
     below the main buttons allowing to display the policy in a modal
   * Add configuration option to disable IPv6 or IPv4 for defined routers ;
     using this option will limit the query to the enabled protocol version
-    (both versions of the protocol are enabled by default).
+    (both versions of the protocol are enabled by default)
   * Add configuration option to set the connection timeout for defined
     routers ; it can be useful when a query takes a long time (ie traceroute
     with hidden hosts in the path)

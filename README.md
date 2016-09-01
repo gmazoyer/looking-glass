@@ -37,7 +37,14 @@ future:
 
 Copy the configuration **config.php.example** file to create a **config.php**
 file. It contains all the values (PHP variables) used to customize the looking
-glass.
+glass. Details about configuration options are available in the
+[documentation](docs/configuration.md).
+
+## Docker
+
+If you want to run the looking glass inside a Docker container, a Dockerfile
+is provided in this repository. Some more details can be found
+[here](docs/docker.md).
 
 ## Documentation
 
