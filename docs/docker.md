@@ -30,7 +30,7 @@ running Docker. Here are few examples:
 ### With a configuration file
 
 ```sh
-docker run -p 80:80 -v $(pwd)/config.php:/var/www/html/config.php -v gmazoyer/looking-glass:latest
+docker run -p 80:80 -v $(pwd)/config.php:/var/www/html/config.php gmazoyer/looking-glass:latest
 ```
 
 ### With a custom CSS and logo
