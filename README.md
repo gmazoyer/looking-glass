@@ -43,7 +43,7 @@ glass. Details about configuration options are available in the
 ## Docker
 
 If you want to run the looking glass inside a Docker container, a Dockerfile
-is provided in this repository. Some more details can be found
+is provided in this repository. More details can be found
 [here](docs/docker.md).
 
 ## Documentation
