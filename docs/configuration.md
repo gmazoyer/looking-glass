@@ -117,11 +117,13 @@ interact with it.
 ```php
 $config['routers']['router1']['type'] = 'juniper';
 ```
-The router type can be Juniper, Cisco, Quagga or BIRD. You can take a look at
-the specific documentation for your router. Possible values are:
+The router type can be Juniper, Cisco (IOS or IOS-XR), Quagga or BIRD. You can
+take a look at the specific documentation for your router. Possible values
+are:
 
   * juniper **or** junos
   * cisco **or** ios
+  * ios-xr **or** iosxr
   * bird
   * quagga **or** zebra
 
@@ -132,14 +134,15 @@ with:
 ```php
 $config['routers']['router1']['source-interface-id'] = 'lo0';
 ```
-for Cisco and Juniper routers (change lo0 with your interface), and with:
+for Cisco (except IOS XR) and Juniper routers (change lo0 with your
+interface), and with:
 ```php
-$config['routers']['router1']['source-interface-id']['ipv4'] = '192.168.1.1';
 $config['routers']['router1']['source-interface-id']['ipv6'] = '2001:db8::1';
+$config['routers']['router1']['source-interface-id']['ipv4'] = '192.168.1.1';
 ```
-for BIRD and Quagga routers (use your own IP addresses). Omitting the IPv4 or
-the IPv6 version of the source address will result in the router trying to use
-the best IP address to contact the destination.
+for Cisco IOS XR, BIRD and Quagga routers (use your own IP addresses).
+Omitting the IPv6 or the IPv4 version of the source address will result in the
+router trying to use the best IP address to contact the destination.
 
 After that you need to set the authentication information for the looking
 glass to be able to log into the router. For this you select a type of
