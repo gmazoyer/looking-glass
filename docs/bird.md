@@ -70,7 +70,7 @@ and reload sshd:
 
 ## Debug
 
-Test the ssh connection from the server where the looking glass is installed:
+Test the SSH connection from the server where the looking glass is installed:
 
 `ssh -i lg-user-id_rsa.key lg@bird-router.example.com`
 

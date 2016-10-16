@@ -84,7 +84,7 @@ user@router# commit
 
 ## Debug
 
-Test the ssh/telnet connection from the server where the looking glass is
+Test the SSH/Telnet connection from the server where the looking glass is
 installed and you should see some outputs in your logs depending on your
 configuration.
 

@@ -97,7 +97,6 @@ Test the SSH connection from the server where the looking glass is installed
 and you should see some outputs in your logs. Be careful to potential SSH
 connections rate limit if you do heavy testing.
 
-
 ## References
 
   * [1] https://supportforums.cisco.com/document/61306/asr9000xr-using-task-groups-and-understanding-priv-levels-and-authorization
