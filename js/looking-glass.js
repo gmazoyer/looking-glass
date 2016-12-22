@@ -31,6 +31,9 @@ $(document).ready(function() {
 
     e.preventDefault();
 
+    // reset the parameter field if it was marked as error
+    $('#input-param').parent().removeClass('has-error');
+
     // reset the form and update the doc modal
     $(this).closest('form').get(0).reset();
     request_doc($('#query').val());
@@ -49,6 +52,11 @@ $(document).ready(function() {
   $('#query').on('change', function(e) {
     e.preventDefault();
     request_doc($('#query').val());
+  });
+
+  // if the field has been completed, turn it back to normal
+  $('#input-param').change(function() {
+    $('#input-param').parent().removeClass('has-error');
   });
 
   // send an ajax request that will get the info on the router
@@ -74,6 +82,7 @@ $(document).ready(function() {
       if (!response || (response.length === 0)) {
         // no parameter given
         $('#error-text').text('No parameter given.');
+        $('#input-param').focus().parent().addClass('has-error');
         $('.alert').slideDown();
       } else {
         var response = $.parseJSON(response);
