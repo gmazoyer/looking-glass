@@ -53,6 +53,8 @@ An up-to-date (hopefully) documentation is available in the **docs/**
 directory. It gives enough details to setup the looking glass, to configure it
 and to prepare your routers.
 
+You can also find it at [Read the Docs](http://looking-glass.readthedocs.io/en/latest/).
+
 ## License
 
 Looking Glass is released under the terms of the GNU GPLv3. Please read the
