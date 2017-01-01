@@ -1,0 +1,12 @@
+site_name: Looking Glass
+
+pages:
+  - 'Configuration':
+    - 'Configuration Settings': 'configuration.md'
+    - 'Routers Setups':
+      - 'BIRD': 'bird.md'
+      - 'Cisco': 'cisco.md'
+      - 'Cisco IOS XR': 'cisco_iosxr.md'
+      - 'Juniper': 'juniper.md'
+      - 'Quagga': 'quagga.md'
+  - 'Our Users': 'our_users.md'
