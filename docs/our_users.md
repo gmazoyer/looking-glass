@@ -7,3 +7,4 @@ small view of their networks.
   * [TRINAPS](https://www.trinaps.com/) - [Looking Glass](https://lg.trinaps.net/)
   * [GLaNET](https://glanet.org/)
   * [SysEleven GmbH](https://www.syseleven.de/)
+  * [BEAHOST](https://baehost.com/looking-glass/)
