@@ -46,7 +46,8 @@ $config = array(
   // Release configuration
   'release' => array(
     'version' => '1.3.0',
-    'codename' => 'Convergence'
+    'codename' => 'Convergence',
+    'repository' => 'https://github.com/respawner/looking-glass'
   ),
 
   // Frontpage configuration

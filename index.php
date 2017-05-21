@@ -195,7 +195,7 @@ final class LookingGlass {
     }
 
     print('<br><br>');
-    print('<span class="origin">Powered by <a href="https://github.com/respawner/looking-glass" title="Looking Glass Project">Looking Glass '.$this->release['version'].'</a></span>');
+    print('<span class="origin">Powered by <a href="'.$this->release['repository'].'" title="Looking Glass Project">Looking Glass '.$this->release['version'].'</a></span>');
     print('</p>');
     print('</div>');
   }
