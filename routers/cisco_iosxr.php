@@ -28,7 +28,7 @@ final class IOSXR extends Router {
 
     if (match_ipv6($destination) || match_ipv4($destination) ||
         (match_hostname($destination) && !$this->has_source_interface_id())) {
-      $ping = 'ping '.$destination. ' repeat 10';
+      $ping = 'ping '.$destination. ' count 10';
     } else if (match_hostname($destination)) {
       $hostname = $destination;
       $destination = hostname_to_ip_address($hostname, $this->config);
