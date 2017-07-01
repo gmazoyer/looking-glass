@@ -126,6 +126,7 @@ are:
   * ios-xr **or** iosxr
   * bird
   * quagga **or** zebra
+  * quagga-view [see quagga-view.md](quagga-view.md)
 
 It is also highly recommended to specify a source interface ID to be used by
 the router when it will try to ping or traceroute a destination. This is done
