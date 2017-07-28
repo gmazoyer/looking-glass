@@ -77,4 +77,28 @@ $config['routers']['router3']['source-interface-id'] = '192.168.1.1';
 // The router description to be displayed in the router list
 $config['routers']['router3']['desc'] = 'Example\'s Router 3';
 
+// Router based on OpenBGPd
+// The hostname or the IP address
+$config['routers']['router4']['host'] = 'r4.example.net';
+// The user to use to connect to the router
+$config['routers']['router4']['user'] = 'openbgpduser';
+// The password of the given user
+$config['routers']['router4']['pass'] = 'openbgpduserpassword';
+// The authentication mecanism to use (can be ssh-password or ssh-key)
+$config['routers']['router4']['auth'] = 'ssh-password';
+// The router type (can only be openbgpd)
+$config['routers']['router4']['type'] = 'openbgpd';
+// The router source address to be used
+$config['routers']['router4']['source-interface-id'] = '192.168.1.1';
+// The router description to be displayed in the router list
+$config['routers']['router4']['desc'] = 'OpenBGPd Router';
+
+// If running on *BSD, disable '-A' which is non-existent
+$config['tools']['ping_options'] = '-c 5';
+// If running on *BSD, disable '-N' which is non-existent
+$config['tools']['traceroute_options'] = '-A -q1 -w2 -m15';
+// If running on *BSD, there is no '-4' or '-6'
+$config['tools']['traceroute6'] = 'traceroute6';
+$config['tools']['traceroute4'] = 'traceroute';
+
 // End of config.php
