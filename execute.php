@@ -50,6 +50,92 @@ if (isset($_POST['query']) && !empty($_POST['query']) &&
   $hostname = trim($_POST['routers']);
   $parameter = trim($_POST['parameter']);
 
+  
+  /// Rate limit
+  $limit = 3; //limit command
+	$tiempo = 120; //time to limit commands
+	$comandos = 10; //total commands in execution
+
+	// connect to DB
+	try {
+		$dbh = new \PDO('sqlite:ratelimit.db');
+	} catch (PDOException $e) {
+
+		exit($e -> getMessage());
+	}
+
+	//comandos en ejecución
+	$q = $dbh -> prepare('SELECT * FROM Commands');
+	$q -> execute();
+	$row = $q -> fetch(\PDO::FETCH_ASSOC);
+	$enejecucion = (int)$row['hits'];
+	$ultimaejecucion = (int)$row['accessed'] + ($tiempo * 2);
+
+	// check for IP
+	$q = $dbh -> prepare('SELECT * FROM RateLimit WHERE ip = ?');
+	$q -> execute(array($requester));
+	$row = $q -> fetch(\PDO::FETCH_ASSOC);
+  
+	$time = time();
+
+	// if IP does not exist
+	if (!isset($row['ip'])) {
+		$q = $dbh -> prepare('INSERT INTO RateLimit (ip, hits, accessed) VALUES (?, ?, ?)');
+		$q -> execute(array($_SERVER['REMOTE_ADDR'], 1, $time));
+		return true;
+	}
+
+	$accessed = (int)$row['accessed'] + $tiempo;
+	$hits = (int)$row['hits'];
+
+	if ($ultimaejecucion < $time) {
+		$enejecucion = 0;
+		$q = $dbh -> prepare('UPDATE Commands SET hits = ?, accessed = ?');
+		$q -> execute(array(($enejecucion), time()));
+	}
+
+	if ($enejecucion >= $comandos) {
+		$error = 'Too many commands. Try again later...';
+		print(json_encode(array('error' => $error)));
+
+		if ($ultimaejecucion < $time) {
+			$enejecucion = 0;
+			$q = $dbh -> prepare('UPDATE Commands SET hits = ?, accessed = ?');
+			$q -> execute(array(($enejecucion), time()));
+		}
+
+		return;
+
+	} else {
+
+		if ($accessed > $time) {
+			if ($hits >= $limit) {
+				$reset = (int)(($accessed - $time) / 1);
+				if ($reset <= 1) {
+					$error = 'Rate limit exceeded. Try again in: 1 seconds';
+					print(json_encode(array('error' => $error)));
+					return;
+				}
+				$error = 'Rate limit exceeded. Try again in: ' . $reset . ' seconds';
+				print(json_encode(array('error' => $error)));
+				return;
+			}
+			$q = $dbh -> prepare('UPDATE RateLimit SET hits = ? WHERE ip = ?');
+			$q -> execute(array(($hits + 1), $_SERVER['REMOTE_ADDR']));
+
+			$q = $dbh -> prepare('UPDATE Commands SET hits = ?, accessed = ?');
+			$q -> execute(array(($enejecucion + 1), time()));
+
+		} else {
+			$q = $dbh -> prepare('UPDATE RateLimit SET hits = ?, accessed = ? WHERE ip = ?');
+			$q -> execute(array(1, time(), $_SERVER['REMOTE_ADDR']));
+
+			$q = $dbh -> prepare('UPDATE Commands SET hits = ?, accessed = ?');
+			$q -> execute(array(($enejecucion + 1), time()));
+		}
+	}
+
+  
   // Do the processing
   $router = Router::instance($hostname, $requester);
   $router_config = $router->get_config();
@@ -82,6 +168,19 @@ if (isset($_POST['query']) && !empty($_POST['query']) &&
     $data = array('error' => $error);
   }
 
+  ///// Rate limit finished commands
+	$q = $dbh -> prepare('SELECT * FROM Commands');
+	$q -> execute();
+	$row = $q -> fetch(\PDO::FETCH_ASSOC);
+	$enejecucion = (int)$row['hits'];
+	if ($enejecucion > 0) {
+		// update command
+		$q = $dbh -> prepare('UPDATE Commands SET hits = ?');
+		$q -> execute(array(($enejecucion - 1)));
+	}
+
+
+  
   print(json_encode($data));
 }
 
