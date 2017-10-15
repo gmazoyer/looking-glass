@@ -27,6 +27,7 @@ require_once('cisco_iosxr.php');
 require_once('juniper.php');
 require_once('openbgpd.php');
 require_once('quagga.php');
+require_once('vyatta.php');
 require_once('includes/utils.php');
 require_once('auth/authentication.php');
 
@@ -186,6 +187,11 @@ abstract class Router {
       case 'quagga':
       case 'zebra':
         return new Quagga($config, $router_config, $id, $requester);
+
+      case 'vyatta':
+      case 'vyos':
+      case 'edgeos':
+        return new Vyatta($config, $router_config, $id, $requester);
 
       default:
         print('Unknown router type "'.$router_config['type'].'".');
