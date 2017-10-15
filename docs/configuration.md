@@ -117,8 +117,9 @@ interact with it.
 ```php
 $config['routers']['router1']['type'] = 'juniper';
 ```
-The router type can be Juniper, Cisco (IOS or IOS-XR), Quagga, BIRD or
-OpenBGPd. You can take a look at the specific documentation for your router.
+The router type can be Juniper, Cisco (IOS or IOS-XR), Quagga, BIRD, OpenBGPd
+or Vyatta/VyOS/EdgeOS. You can take a look at the specific documentation for
+your router.
 Possible values are:
 
   * juniper **or** junos
@@ -127,6 +128,7 @@ Possible values are:
   * bird
   * quagga **or** zebra
   * openbgpd
+  * edgeos **or** vyatta **or** vyos
 
 It is also highly recommended to specify a source interface ID to be used by
 the router when it will try to ping or traceroute a destination. This is done
