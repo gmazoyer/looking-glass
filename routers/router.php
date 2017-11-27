@@ -190,7 +190,6 @@ abstract class Router {
         return new Quagga($config, $router_config, $id, $requester);
 
       case 'frr':
-      case 'zebra':
         return new Frr($config, $router_config, $id, $requester);
 
       case 'vyatta':
