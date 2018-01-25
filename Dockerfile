@@ -1,15 +1,14 @@
 FROM php:5.6-apache
 MAINTAINER Guillaume Mazoyer <gmazoyer@gravitons.in>
 
-# Need git
-RUN apt-get update && apt-get install -y git
-
 WORKDIR /var/www/html
 
-# Clone repository with given branch
-ARG BRANCH=master
-ARG URL=https://github.com/respawner/looking-glass.git
-RUN git clone --depth 1 $URL -b $BRANCH .
+# add custom php.ini
+COPY php.ini /usr/local/etc/php/
 
-# Get rid of git
-RUN apt-get purge -y --auto-remove git
+# copy code from local folder
+COPY ./ /var/www/html
+
+RUN touch /var/log/looking-glass.log && chmod 777 /var/log/looking-glass.log
+
+
