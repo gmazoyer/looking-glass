@@ -3,8 +3,8 @@ MAINTAINER Guillaume Mazoyer <gmazoyer@gravitons.in>
 
 WORKDIR /var/www/html
 
-# add custom php.ini
-COPY php.ini /usr/local/etc/php/
+# add timezone to php.ini
+RUN echo 'date.timezone = UTC' >> /usr/local/etc/php/php.ini
 
 # copy code from local folder
 COPY ./ /var/www/html
