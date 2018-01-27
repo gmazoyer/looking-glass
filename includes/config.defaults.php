@@ -52,8 +52,6 @@ $config = array(
 
   // Frontpage configuration
   'frontpage' => array(
-    // Use Bootstrap theme
-    'bootstrap_theme' => true,
     // Custom Bootstrap theme
     'custom_bootstrap_theme' => false,
     // CSS to use
