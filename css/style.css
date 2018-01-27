@@ -13,7 +13,6 @@ body {
 }
 .footer_bar {
   color:            #000000;
-  font-size:        1.2em;
   text-align:       center;
   width:            50%;
   margin-top:       1em;
@@ -49,7 +48,6 @@ body {
   margin-right:     auto;
 }
 #error {
-  font-size:        1.3em;
   width:            50%;
   margin-left:      auto;
   margin-right:     auto;
@@ -58,7 +56,6 @@ body {
   font-size:        1.3em;
 }
 kbd {
-  font-size:        1.3em;
   display:          block;
   width:            70%;
   margin-left:      auto;
@@ -71,6 +68,8 @@ pre {
   width:            70%;
   margin-left:      auto;
   margin-right:     auto;
+  padding-left:     1%;
+  padding-right:    1%;
 }
 a {
   color:            #000000;
