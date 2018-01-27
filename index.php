@@ -149,7 +149,7 @@ final class LookingGlass {
       }
     }
 
-    print('<input type="text" class="hidden" name="dontlook" placeholder="Don\'t look at me!" />');
+    print('<input type="text" class="d-none" name="dontlook" placeholder="Don\'t look at me!" />');
     print('</form>');
     print('</div>');
     print('<div class="loading">');
