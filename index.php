@@ -236,7 +236,7 @@ final class LookingGlass {
     print('<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>');
     print('</div>');
     print('<div class="modal-body">');
-    print('<h4>Command <small id="command-reminder"></small></h4>');
+    print('<h4>Command <span class="badge badge-dark"><small id="command-reminder"></small></span></h4>');
     print('<p id="description-help"></p>');
     print('<h4>Parameter</h4>');
     print('<p id="parameter-help"></p>');
