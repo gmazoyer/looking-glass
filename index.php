@@ -85,7 +85,7 @@ final class LookingGlass {
     print('<input class="form-control" name="parameter" id="input-param" autofocus />');
     print('<div class="input-group-btn">');
     print('<button type="button" class="btn btn-info" data-toggle="modal" data-target="#help">');
-    print('<span class="glyphicon glyphicon-question-sign"></span> Help');
+    print('<i class="fas fa-question-circle"></i> Help');
     print('</button>');
     print('</div>');
     print('</div>');
