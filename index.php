@@ -153,8 +153,8 @@ final class LookingGlass {
     print('</form>');
     print('</div>');
     print('<div class="loading">');
-    print('<div class="progress progress-striped active">');
-    print('<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">');
+    print('<div class="progress">');
+    print('<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">');
     print('</div>');
     print('</div>');
     print('</div>');
