@@ -205,7 +205,7 @@ final class LookingGlass {
     print('<div class="modal-dialog" role="document">');
     print('<div class="modal-content">');
     print('<div class="modal-header">');
-    print('<h4 class="modal-title">Peering Policy</h4>');
+    print('<h5 class="modal-title">Peering Policy</h5>');
     print('<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>');
     print('</div>');
     print('<div class="modal-body">');
@@ -232,7 +232,7 @@ final class LookingGlass {
     print('<div class="modal-dialog" role="document">');
     print('<div class="modal-content">');
     print('<div class="modal-header">');
-    print('<h4 class="modal-title">Help</h4>');
+    print('<h5 class="modal-title">Help</h5>');
     print('<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>');
     print('</div>');
     print('<div class="modal-body">');
