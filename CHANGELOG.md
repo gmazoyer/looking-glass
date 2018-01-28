@@ -1,5 +1,21 @@
 # Changelog
 
+## Version 2.0.0 | Established (New major release) | 2018-01-28
+
+  * First major release of 2.X.Y branch
+  * Introduce configuration changes
+  * Add support for Cisco IOS-XR
+  * Add basic support for OpenBGPd (thanks to ledeuns)
+  * Add support for Vyatta (thanks to mikenowak)
+  * Add support for FRRouting (thanks to pautiina)
+  * Focus and highlight the parameter field if it was omitted
+  * Official support for PHP 7.x
+  * Add a proper Dockerfile (thanks amtypaldos)
+  * Remove Bootstrap related configuration options
+  * Changes to user interface with Bootstrap 4
+  * Embeds Bootstrap 4.0.0, jQuery 3.3.1, Font Awesome 5.0.6 and phpseclib
+    1.0.9
+
 ## Version 1.3.0 | Convergence (New features release) | 2016-08-28
 
   * Third feature release of 1.X.Y branch
