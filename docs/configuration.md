@@ -21,12 +21,6 @@ that are set if the configuration is not overriden.
 ### Frontpage
 
 ```php
-$config['frontpage']['custom_bootstrap_theme'] = false;
-```
-Defines the path to a custom Bootstrap theme. If set to false, disable the
-custom Bootstrap theme.
-
-```php
 $config['frontpage']['css'] = 'css/style.css';
 ```
 Defines the path to the CSS file to use.
