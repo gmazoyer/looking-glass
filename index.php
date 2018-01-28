@@ -201,7 +201,7 @@ final class LookingGlass {
   }
 
   private function render_peering_policy_modal() {
-    print('<div id="peering-policy" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true>');
+    print('<div id="peering-policy" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">');
     print('<div class="modal-dialog" role="document">');
     print('<div class="modal-content">');
     print('<div class="modal-header">');
