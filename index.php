@@ -228,12 +228,12 @@ final class LookingGlass {
   }
 
   private function render_help_modal() {
-    print('<div id="help" class="modal fade">');
-    print('<div class="modal-dialog">');
+    print('<div id="help" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">');
+    print('<div class="modal-dialog" role="document">');
     print('<div class="modal-content">');
     print('<div class="modal-header">');
-    print('<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
     print('<h4 class="modal-title">Help</h4>');
+    print('<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>');
     print('</div>');
     print('<div class="modal-body">');
     print('<h4>Command <small id="command-reminder"></small></h4>');
@@ -242,7 +242,7 @@ final class LookingGlass {
     print('<p id="parameter-help"></p>');
     print('</div>');
     print('<div class="modal-footer">');
-    print('<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
+    print('<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>');
     print('</div>');
     print('</div>');
     print('</div>');
