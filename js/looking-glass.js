@@ -32,7 +32,7 @@ $(document).ready(function() {
     e.preventDefault();
 
     // reset the parameter field if it was marked as error
-    $('#input-param').parent().removeClass('is-invalid');
+    $('#input-param').removeClass('is-invalid');
 
     // reset the form and update the doc modal
     $(this).closest('form').get(0).reset();
@@ -56,7 +56,7 @@ $(document).ready(function() {
 
   // if the field has been completed, turn it back to normal
   $('#input-param').change(function() {
-    $('#input-param').parent().removeClass('is-invalid');
+    $('#input-param').removeClass('is-invalid');
   });
 
   // send an ajax request that will get the info on the router
@@ -82,7 +82,7 @@ $(document).ready(function() {
       if (!response || (response.length === 0)) {
         // no parameter given
         $('#error-text').text('No parameter given.');
-        $('#input-param').focus().parent().addClass('is-invalid');
+        $('#input-param').focus().addClass('is-invalid');
         $('.alert').slideDown();
       } else {
         var response = $.parseJSON(response);
