@@ -7,8 +7,10 @@ pages:
     - BIRD: bird.md
     - Cisco: cisco.md
     - Cisco IOS XR: cisco_iosxr.md
+    - FRRouting: frr.md
     - Juniper: juniper.md
     - Quagga: quagga.md
+    - Vyatta, VyOS, EdgeOS: vyatta.md
   - Our Users: our_users.md
 
 theme: readthedocs
