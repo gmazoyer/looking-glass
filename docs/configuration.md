@@ -70,6 +70,13 @@ $config['frontpage']['order'] = array('routers', 'commands', 'parameter', 'butto
 ```
 Sets the order of the sections that are displayed.
 
+```php
+$config['frontpage']['router_count'] = 5;
+```
+Sets the number of routers to show on the front page before the list scrolls. If
+set to a positive integer, then that number of routers will be shown, otherwise
+the list will show all routers.
+
 ### Contact
 
 ```php
