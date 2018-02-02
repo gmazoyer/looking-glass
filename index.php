@@ -42,7 +42,7 @@ final class LookingGlass {
   private function render_routers() {
     print('<div class="form-group">');
     print('<label for="routers">Router to use</label>');
-    print('<select size="5" class="form-control" name="routers" id="routers">');
+    print('<select size="'.$this->frontpage['router_count'].'" class="form-control" name="routers" id="routers">');
 
     $first = true;
     foreach (array_keys($this->routers) as $router) {

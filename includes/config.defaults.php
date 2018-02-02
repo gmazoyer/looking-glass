@@ -69,7 +69,9 @@ $config = array(
     // Show visitor IP address
     'show_visitor_ip' => true,
     // Frontpage order you can use: routers, commands, parameter, buttons
-    'order' => array('routers', 'commands', 'parameter', 'buttons')
+    'order' => array('routers', 'commands', 'parameter', 'buttons'),
+    // Number of routers to show on frontpage
+    'router_count' => 5
   ),
 
   // Contact (both null for no contact)
