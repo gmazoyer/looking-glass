@@ -50,7 +50,7 @@ final class LookingGlass {
   private function render_routers() {
     print('<div class="form-group">');
     print('<label for="routers">Router to use</label>');
-    print('<select size="'.router_count().'" class="form-control" name="routers" id="routers">');
+    print('<select size="'.$this->router_count().'" class="form-control" name="routers" id="routers">');
 
     $first = true;
     foreach (array_keys($this->routers) as $router) {
@@ -90,7 +90,7 @@ final class LookingGlass {
     print('<div class="form-group">');
     print('<label for="input-param">Parameter</label>');
     print('<div class="input-group">');
-    print('<input class="form-control" name="parameter" id="input-param" autofocus />');
+    erint('<input class="form-control" name="parameter" id="input-param" autofocus />');
     print('<div class="input-group-append">');
     print('<button type="button" class="btn btn-info" data-toggle="modal" data-target="#help">');
     print('<i class="fas fa-question-circle"></i> Help');
