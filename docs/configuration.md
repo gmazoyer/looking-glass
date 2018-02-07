@@ -113,14 +113,15 @@ interact with it.
 ```php
 $config['routers']['router1']['type'] = 'juniper';
 ```
-The router type can be Juniper, Cisco (IOS or IOS-XR), Quagga, BIRD, OpenBGPd
-or Vyatta/VyOS/EdgeOS. You can take a look at the specific documentation for
-your router.
+The router type can be Juniper, Cisco (IOS or IOS-XR), Extreme (NetIron), Quagga,
+BIRD, OpenBGPd or Vyatta/VyOS/EdgeOS. You can take a look at the specific
+documentation for your router.
 Possible values are:
 
   * juniper **or** junos
   * cisco **or** ios
   * ios-xr **or** iosxr
+  * extreme_netiron
   * bird
   * quagga **or** zebra
   * openbgpd
@@ -139,9 +140,9 @@ interface), and with:
 $config['routers']['router1']['source-interface-id']['ipv6'] = '2001:db8::1';
 $config['routers']['router1']['source-interface-id']['ipv4'] = '192.168.1.1';
 ```
-for Cisco IOS XR, BIRD and Quagga routers (use your own IP addresses).
-Omitting the IPv6 or the IPv4 version of the source address will result in the
-router trying to use the best IP address to contact the destination.
+for Cisco IOS XR, Extreme NetIron, BIRD and Quagga routers (use your own IP
+addresses). Omitting the IPv6 or the IPv4 version of the source address will
+result in the router trying to use the best IP address to contact the destination.
 
 After that you need to set the authentication information for the looking
 glass to be able to log into the router. For this you select a type of

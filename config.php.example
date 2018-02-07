@@ -24,6 +24,8 @@ $config['frontpage']['disclaimer'] = 'This is a disclaimer!';
 // Things to remove from the output (PHP compatible regex)
 $config['filters'][] = '/(client1|client2)/';
 $config['filters'][] = '/^NotToShow/';
+// If telnet is used in combination with extreme_netiron, uncomment the following filter
+//$config['filters'][] = '/([^\x20-\x7E]|User|Please|Disable|telnet|^\s*$)/';
 
 // Routers definitions
 
@@ -34,7 +36,7 @@ $config['routers']['router1']['host'] = 'r1.example.net';
 $config['routers']['router1']['user'] = 'readonlyuser';
 // The password of the given user
 $config['routers']['router1']['pass'] = 'readonlypassword';
-// The authentication mecanism to use (can be ssh-password or telnet)
+// The authentication mechanism to use (can be ssh-password or telnet)
 $config['routers']['router1']['auth'] = 'ssh-password';
 // The router type (can be cisco, ios, juniper or junos)
 $config['routers']['router1']['type'] = 'juniper';
@@ -52,7 +54,7 @@ $config['routers']['router2']['user'] = 'readonlyuser';
 $config['routers']['router2']['private_key'] = '/home/user/.ssh/key';
 // The passphrase of the key (optional if the key has no passphrase)
 $config['routers']['router2']['pass'] = 'mypassphrase';
-// The authentication mecanism to use (ssh-key for SSH based on keys)
+// The authentication mechanism to use (ssh-key for SSH based on keys)
 $config['routers']['router2']['auth'] = 'ssh-key';
 // The router type (can be cisco, ios, juniper or junos)
 $config['routers']['router2']['type'] = 'juniper';
@@ -68,7 +70,7 @@ $config['routers']['router3']['host'] = 'r3.example.net';
 $config['routers']['router3']['user'] = 'birduser';
 // The password of the given user
 $config['routers']['router3']['pass'] = 'birduserpassword';
-// The authentication mecanism to use (can be ssh-password or ssh-key)
+// The authentication mechanism to use (can be ssh-password or ssh-key)
 $config['routers']['router3']['auth'] = 'ssh-password';
 // The router type (can only be bird)
 $config['routers']['router3']['type'] = 'bird';
@@ -84,7 +86,7 @@ $config['routers']['router4']['host'] = 'r4.example.net';
 $config['routers']['router4']['user'] = 'openbgpduser';
 // The password of the given user
 $config['routers']['router4']['pass'] = 'openbgpduserpassword';
-// The authentication mecanism to use (can be ssh-password or ssh-key)
+// The authentication mechanism to use (can be ssh-password or ssh-key)
 $config['routers']['router4']['auth'] = 'ssh-password';
 // The router type (can only be openbgpd)
 $config['routers']['router4']['type'] = 'openbgpd';
@@ -92,6 +94,23 @@ $config['routers']['router4']['type'] = 'openbgpd';
 $config['routers']['router4']['source-interface-id'] = '192.168.1.1';
 // The router description to be displayed in the router list
 $config['routers']['router4']['desc'] = 'OpenBGPd Router';
+
+// Router based on Extreme NetIron
+// The hostname or the IP address
+$config['routers']['router5']['host'] = 'r5.example.net';
+// The user to use to connect to the router
+$config['routers']['router5']['user'] = 'readonlyuser';
+// The password of the given user
+$config['routers']['router5']['pass'] = 'readonlypassword';
+// The authentication mechanism to use (must be telnet)
+$config['routers']['router5']['auth'] = 'telnet';
+// The router type (can only be extreme_netiron)
+$config['routers']['router5']['type'] = 'extreme_netiron';
+// The router source interface to be used
+$config['routers']['router5']['source-interface-id']['ipv4'] = '192.168.1.1';
+$config['routers']['router5']['source-interface-id']['ipv6'] = '2001:db8::1';
+// The router description to be displayed in the router list
+$config['routers']['router5']['desc'] = 'Example\'s router 5';
 
 // If running on *BSD, disable '-A' which is non-existent
 $config['tools']['ping_options'] = '-c 5';
