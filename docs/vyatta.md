@@ -25,7 +25,7 @@ Firstly create a new user with the admin level privileges:
 set system login user <username> level admin
 ```
 
-For security purpose, it is highly recommended to use an authentication mecanism based on SSH public keys. For that you can use one of the following commands:
+For security purpose, it is highly recommended to use an authentication mechanism based on SSH public keys. For that you can use one of the following commands:
 
 ```
 [edit]

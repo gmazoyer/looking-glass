@@ -1,6 +1,6 @@
 # Looking Glass: Cisco IOS XR configuration and tips.
 
-Cisco IOS XR support is rather straightforward thanks to the tasks mecanism.
+Cisco IOS XR support is rather straightforward thanks to the tasks mechanism.
 
 ## Security and user access
 

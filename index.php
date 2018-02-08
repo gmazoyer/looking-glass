@@ -47,6 +47,18 @@ final class LookingGlass {
       return count($this->routers);
   }
 
+  private function command_count() {
+    if ($this->frontpage['command_count'] > 0)
+      return $this->frontpage['command_count'];
+    else
+      foreach (array_keys($this->doc) as $cmd) {
+        if (isset($this->doc[$cmd]['command'])) {
+          $command_count++;
+        }
+      }
+      return $command_count;
+  }
+
   private function render_routers() {
     print('<div class="form-group">');
     print('<label for="routers">Router to use</label>');
@@ -76,10 +88,12 @@ final class LookingGlass {
   private function render_commands() {
     print('<div class="form-group">');
     print('<label for="query">Command to issue</label>');
-    print('<select size="5" class="form-control" name="query" id="query">');
+    print('<select size="'.$this->command_count().'" class="form-control" name="query" id="query">');
     $selected = ' selected="selected"';
     foreach (array_keys($this->doc) as $cmd) {
-      print('<option value="'.$cmd.'"'.$selected.'>'.$this->doc[$cmd]['command'].'</option>');
+      if (isset($this->doc[$cmd]['command'])) {
+        print('<option value="'.$cmd.'"'.$selected.'>'.$this->doc[$cmd]['command'].'</option>');
+      }
       $selected = '';
     }
     print('</select>');

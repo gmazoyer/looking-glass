@@ -26,28 +26,28 @@ require_once('telnet.php');
 
 /**
  * This class needs to be extended by every class implementing an
- * authentication mecanism.
+ * authentication mechanism.
  *
- * It provides the basis to interact with an authentication mecanism.
+ * It provides the basis to interact with an authentication mechanism.
  *
- * When implementing an authentication mecanism, the subclass will need to
+ * When implementing an authentication mechanism, the subclass will need to
  * override several methods that define if the configuration is correct and
  * how to connect, disconnect and send a command to the host.
  */
 abstract class Authentication {
   /**
    * The configuration array containing information needed by the
-   * authentication mecanism.
+   * authentication mechanism.
    */
   protected $config;
 
   /**
-   * Build a new object to manipulate the authentication mecanism.
+   * Build a new object to manipulate the authentication mechanism.
    *
    * It will also check if the configuration is correct before doing the
    * instanciation.
    *
-   * @param array $config the configuration for the authentication mecanism.
+   * @param array $config the configuration for the authentication mechanism.
    */
   public function __construct($config) {
     $this->config = $config;
@@ -92,12 +92,12 @@ abstract class Authentication {
    * Method that decides which authentication method to instanciate based on a
    * given configuration.
    *
-   * Note: no instanciation of authentication mecanism class should be done
+   * Note: no instanciation of authentication mechanism class should be done
    * elsewhere than here.
    *
    * @param  array          $config the configuration for the authentication
-   *                                mecanism.
-   * @return Authentication the authentication mecanism to be used.
+   *                                mechanism.
+   * @return Authentication the authentication mechanism to be used.
    */
   public static final function instance($config) {
     switch ($config['auth']) {
@@ -109,7 +109,7 @@ abstract class Authentication {
         return new Telnet($config);
 
       default:
-        print('Unknown authentication mecanism "'.$config['auth'].'"."');
+        print('Unknown authentication mechanism "'.$config['auth'].'"."');
         return null;
     }
   }

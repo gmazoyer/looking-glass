@@ -50,6 +50,13 @@ if (isset($_POST['query']) && !empty($_POST['query']) &&
   $hostname = trim($_POST['routers']);
   $parameter = trim($_POST['parameter']);
 
+  // Check if query is disabled
+  if (!isset($config['doc'][$query]['command'])) {
+    $error = 'This query has been disabled in the configuration.';
+    print(json_encode(array('error' => $error)));
+    return;
+  }
+
   // Do the processing
   $router = Router::instance($hostname, $requester);
   $router_config = $router->get_config();
