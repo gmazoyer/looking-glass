@@ -24,6 +24,7 @@ require_once('config.php');
 require_once('bird.php');
 require_once('cisco.php');
 require_once('cisco_iosxr.php');
+require_once('extreme_netiron.php');
 require_once('juniper.php');
 require_once('openbgpd.php');
 require_once('quagga.php');
@@ -173,6 +174,9 @@ abstract class Router {
       case 'cisco':
       case 'ios':
         return new Cisco($config, $router_config, $id, $requester);
+
+      case 'extreme_netiron':
+        return new ExtremeNetIron($config, $router_config, $id, $requester);
 
       case 'ios-xr':
       case 'iosxr':
