@@ -71,7 +71,9 @@ $config = array(
     // Frontpage order you can use: routers, commands, parameter, buttons
     'order' => array('routers', 'commands', 'parameter', 'buttons'),
     // Number of routers to show on frontpage
-    'router_count' => 5
+    'router_count' => 5,
+    // Number of commands to show on frontpage (0 scales dynamically)
+    'command_count' => 0
   ),
 
   // Contact (both null for no contact)

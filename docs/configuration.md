@@ -75,7 +75,14 @@ $config['frontpage']['router_count'] = 5;
 ```
 Sets the number of routers to show on the front page before the list scrolls. If
 set to a positive integer, then that number of routers will be shown, otherwise
-the list will show all routers.
+the list will dynamically scale to show all routers (default is 5 routers).
+
+```php
+$config['frontpage']['command_count'] = 5;
+```
+Sets the number of commands to show on the front page before the list scrolls. If
+set to a positive integer, then that number of commands will be shown, otherwise
+the list will dynamically scale to show all commands (default is dynamic scaling).
 
 ### Contact
 
@@ -290,7 +297,7 @@ $config['doc']['ping']
 $config['doc']['traceroute']
 ```
 
-Each commands have a subset of options to configure the its title, its
+Each command has a subset of options to configure its title, its
 description summary and its detailed description. For example:
 
 ```php
@@ -299,4 +306,17 @@ $config['doc']['bgp']['description'] = '';
 $config['doc']['bgp']['parameter'] = '';
 ```
 
-See the defaults values for more details.
+See the default values for more details.
+
+## Disabling Commands
+
+The documentation configuration can also be used to disable commands by setting the
+title of the command to `null`. A disabled command will no longer show up in the user
+interface, and if an attacker tries to send a forged POST request with a disabled
+command to Looking Glass an error will be returned.
+
+For example, this piece of config would disable `as-path-regex` commands:
+
+```php
+$config['doc']['as-path-regex']['command'] = null;
+```

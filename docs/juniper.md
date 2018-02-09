@@ -39,7 +39,7 @@ user@router# set system login user <username> class looking-glass
 ```
 
 For security purpose, it is highly recommended to use an authentication
-mecanism based on SSH public keys. For that you can use one of the following
+mechanism based on SSH public keys. For that you can use one of the following
 commands:
 
 ```
