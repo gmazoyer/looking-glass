@@ -27,13 +27,13 @@ For now this looking glass is quite simple. Here you have some features:
   * Tweakable interface (title, logo, footer, elements order)
   * Log all commands in a file
   * Customizable output with regular expressions
+  * Configurable list of allowed commands
 
 And here is a list of what this looking glass should be able to do in the
 future:
 
   * Support more routers
   * Support of other types of authentication
-  * Configurable list of allowed commands
 
 ## Configuration
 
