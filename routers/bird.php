@@ -107,12 +107,18 @@ final class Bird extends Router {
     $birdc6 = 'birdc6';
     $birdc = 'birdc';
 
+    if ($this->config['bgp-detail']) {
+      $bgpdetail = ' all';
+    } else {
+      $bgpdetail = '';
+    }
+
     switch ($command) {
       case 'bgp':
         if (match_ipv6($parameter, false)) {
-          $commands[] = $birdc6.' \'show route for '.$parameter.'\'';
+          $commands[] = $birdc6.' \'show route for '.$parameter.$bgpdetail.'\'';
         } else if (match_ipv4($parameter, false)) {
-          $commands[] = $birdc.' \'show route for '.$parameter.'\'';
+          $commands[] = $birdc.' \'show route for '.$parameter.$bgpdetail.'\'';
         } else {
           throw new Exception('The parameter is not an IP address.');
         }
@@ -122,11 +128,11 @@ final class Bird extends Router {
         if (match_aspath_regex($parameter)) {
           if (!$this->config['disable_ipv6']) {
             $commands[] = $birdc6.' \'show route where bgp_path ~ [= '.
-              $parameter.' =]\'';
+              $parameter.' =]'.$bgpdetail.'\'';
           }
           if (!$this->config['disable_ipv4']) {
             $commands[] = $birdc.' \'show route where bgp_path ~ [= '.
-              $parameter.' =]\'';
+              $parameter.' =]'.$bgpdetail.'\'';
           }
         } else {
           throw new Exception('The parameter is not an AS-Path regular expression.');
@@ -137,11 +143,11 @@ final class Bird extends Router {
         if (match_as($parameter)) {
           if (!$this->config['disable_ipv6']) {
             $commands[] = $birdc6.' \'show route where bgp_path ~ [= '.
-              $parameter.' =]\'';
+              $parameter.' =]'.$bgpdetail.'\'';
           }
           if (!$this->config['disable_ipv4']) {
             $commands[] = $birdc.' \'show route where bgp_path ~ [= '.
-              $parameter.' =]\'';
+              $parameter.' =]'.$bgpdetail.'\'';
           }
         } else {
           throw new Exception('The parameter is not an AS number.');

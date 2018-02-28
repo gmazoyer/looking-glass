@@ -8,3 +8,4 @@ small view of their networks.
   * [GLaNET](https://glanet.org/)
   * [SysEleven GmbH](https://www.syseleven.de/)
   * [BAEHOST](https://baehost.com/) - [Looking Glass](https://baehost.com/looking-glass/)
+  * [i3D.net](https://www.i3d.net/) - [Looking Glass](https://noc.i3d.net/lg/)

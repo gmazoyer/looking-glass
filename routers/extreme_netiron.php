@@ -107,12 +107,18 @@ final class ExtremeNetIron extends Router {
   protected function build_commands($command, $parameter) {
     $commands = array();
 
+    if ($this->config['bgp-detail']) {
+      $bgpdetail = 'detail ';
+    } else {
+      $bgpdetail = '';
+    }
+
     switch ($command) {
       case 'bgp':
         if (match_ipv6($parameter, false)) {
-          $commands[] = "skip-page-display\r\nshow ipv6 bgp routes ".$parameter;
+          $commands[] = "skip-page-display\r\nshow ipv6 bgp routes ".$bgpdetail.$parameter;
         } else if (match_ipv4($parameter, false)) {
-          $commands[] = "skip-page-display\r\nshow ip bgp routes ".$parameter;
+          $commands[] = "skip-page-display\r\nshow ip bgp routes ".$bgpdetail.$parameter;
         } else {
           throw new Exception('The parameter is not an IP address.');
         }
@@ -121,11 +127,11 @@ final class ExtremeNetIron extends Router {
       case 'as-path-regex':
         if (match_aspath_regex($parameter)) {
           if (!$this->config['disable_ipv6']) {
-            $commands[] = "skip-page-display\r\nshow ipv6 bgp routes regular-expression \"".$parameter.
+            $commands[] = "skip-page-display\r\nshow ipv6 bgp routes ".$bgpdetail."regular-expression \"".$parameter.
               '"';
           }
           if (!$this->config['disable_ipv4']) {
-            $commands[] = "skip-page-display\r\nshow ip bgp routes regular-expression \"".$parameter.
+            $commands[] = "skip-page-display\r\nshow ip bgp routes ".$bgpdetail."regular-expression \"".$parameter.
               '"';
           }
         } else {
@@ -136,12 +142,12 @@ final class ExtremeNetIron extends Router {
       case 'as':
         if (match_as($parameter)) {
           if (!$this->config['disable_ipv6']) {
-            $commands[] = "skip-page-display\r\nshow ipv6 bgp routes regular-expression \"_".$parameter.
-              '$"';
+            $commands[] = "skip-page-display\r\nshow ipv6 bgp routes ".$bgpdetail."regular-expression \"^".$parameter.
+              '_"';
           }
           if (!$this->config['disable_ipv4']) {
-            $commands[] = "skip-page-display\r\nshow ip bgp routes regular-expression \"_".$parameter.
-              '$"';
+            $commands[] = "skip-page-display\r\nshow ip bgp routes ".$bgpdetail."regular-expression \"^".$parameter.
+              '_"';
           }
         } else {
           throw new Exception('The parameter is not an AS number.');

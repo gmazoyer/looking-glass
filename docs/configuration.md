@@ -121,7 +121,7 @@ interact with it.
 $config['routers']['router1']['type'] = 'juniper';
 ```
 The router type can be Juniper, Cisco (IOS or IOS-XR), Extreme (NetIron), Quagga,
-BIRD, OpenBGPd or Vyatta/VyOS/EdgeOS. You can take a look at the specific
+BIRD, OpenBGPd, Vyatta/VyOS/EdgeOS, or FRRouting. You can take a look at the specific
 documentation for your router.
 Possible values are:
 
@@ -133,6 +133,7 @@ Possible values are:
   * quagga **or** zebra
   * openbgpd
   * edgeos **or** vyatta **or** vyos
+  * frr
 
 It is also highly recommended to specify a source interface ID to be used by
 the router when it will try to ping or traceroute a destination. This is done
@@ -170,6 +171,21 @@ $config['routers']['router1']['timeout'] = 30;
 ```
 Used to set the timeout (in seconds) for the connection to the router. The
 default value is 30 seconds.
+
+```php
+$config['routers']['router1']['bgp-detail'] = false;
+```
+If set to true, and supported by the router, display BGP detail output which
+contains information such as BGP communities, MED, origin, etc. The default
+value is false.
+
+This parameter can be toggled on Juniper, Extreme (NetIron), BIRD, and
+OpenBGPd routers.
+
+Cisco (IOS or IOS-XR), Quagga, Vyatta/VyOS/EdgeOS, and FRRouting routers do not
+support toggleable BGP detail output and will always display BGP detail output
+for `bgp` commands, and will never display BGP detail output for `as` and
+`as-path-regex` commands.
 
 #### Telnet
 

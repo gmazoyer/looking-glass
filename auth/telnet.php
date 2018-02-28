@@ -67,8 +67,10 @@ final class Telnet extends Authentication {
   }
 
   public function disconnect() {
-    fclose($this->connection);
-    $this->connection = null;
+    if ($this->connection) {
+      fclose($this->connection);
+      $this->connection = null;
+    }
   }
 }
 

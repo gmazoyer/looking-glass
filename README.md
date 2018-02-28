@@ -19,8 +19,8 @@ execute some commands on routers. The output is sent back to the user.
 For now this looking glass is quite simple. Here you have some features:
 
   * Interface using Javascript and AJAX calls (needs a decent browser)
-  * Support of BIRD, Cisco (IOS and IOS-XR), Juniper, OpenBGPd, Quagga and
-    Vyatta/VyOS/EdgeOS routers
+  * Support of BIRD, Cisco (IOS and IOS-XR), Juniper, Extreme/Brocade NetIron,
+    OpenBGPd, Quagga, Vyatta/VyOS/EdgeOS and FRRouting routers
   * Support of Telnet and SSH connection to routers using password
     authentication and SSH keys
   * Configurable list of routers
