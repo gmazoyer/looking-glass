@@ -55,8 +55,8 @@ abstract class Router {
     if (!isset($this->config['disable_ipv4'])) {
       $this->config['disable_ipv4'] = false;
     }
-    if (!isset($this->config['bgp-detail'])) {
-      $this->config['bgp-detail'] = false;
+    if (!isset($this->config['bgp_detail'])) {
+      $this->config['bgp_detail'] = false;
     }
   }
 

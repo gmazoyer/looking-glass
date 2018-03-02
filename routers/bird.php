@@ -107,7 +107,7 @@ final class Bird extends Router {
     $birdc6 = 'birdc6';
     $birdc = 'birdc';
 
-    if ($this->config['bgp-detail']) {
+    if ($this->config['bgp_detail']) {
       $bgpdetail = ' all';
     } else {
       $bgpdetail = '';

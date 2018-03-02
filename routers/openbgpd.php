@@ -107,7 +107,7 @@ final class OpenBGPd extends Router {
 
     $bgpctl = 'bgpctl ';
 
-    if ($this->config['bgp-detail']) {
+    if ($this->config['bgp_detail']) {
       $bgpdetail = ' detail';
     } else {
       $bgpdetail = '';

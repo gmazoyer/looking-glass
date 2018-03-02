@@ -111,6 +111,8 @@ $config['routers']['router5']['source-interface-id']['ipv4'] = '192.168.1.1';
 $config['routers']['router5']['source-interface-id']['ipv6'] = '2001:db8::1';
 // The router description to be displayed in the router list
 $config['routers']['router5']['desc'] = 'Example\'s router 5';
+// Display BGP detail output for this router, defaults to false
+$config['routers']['router5']['bgp_detail'] = true;
 
 // If running on *BSD, disable '-A' which is non-existent
 $config['tools']['ping_options'] = '-c 5';

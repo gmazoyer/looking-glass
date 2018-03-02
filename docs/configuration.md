@@ -173,7 +173,7 @@ Used to set the timeout (in seconds) for the connection to the router. The
 default value is 30 seconds.
 
 ```php
-$config['routers']['router1']['bgp-detail'] = false;
+$config['routers']['router1']['bgp_detail'] = false;
 ```
 If set to true, and supported by the router, display BGP detail output which
 contains information such as BGP communities, MED, origin, etc. The default

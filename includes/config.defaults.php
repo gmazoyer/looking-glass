@@ -29,7 +29,7 @@ function set_defaults_for_routers(&$parsed_config) {
     'timeout' => 30,
     'disable_ipv6' => false,
     'disable_ipv4' => false,
-    'bgp-detail' => false
+    'bgp_detail' => false
   );
 
   // Loads defaults when key does not exist

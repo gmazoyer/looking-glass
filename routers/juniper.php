@@ -61,7 +61,7 @@ final class Juniper extends Router {
   protected function build_commands($command, $parameter) {
     $commands = array();
 
-    if ($this->config['bgp-detail']) {
+    if ($this->config['bgp_detail']) {
       $bgpdetail = ' detail';
     } else {
       $bgpdetail = '';
