@@ -51,6 +51,7 @@ final class LookingGlass {
     if ($this->frontpage['command_count'] > 0)
       return $this->frontpage['command_count'];
     else
+      $command_count = 0;
       foreach (array_keys($this->doc) as $cmd) {
         if (isset($this->doc[$cmd]['command'])) {
           $command_count++;

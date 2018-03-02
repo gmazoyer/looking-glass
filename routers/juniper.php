@@ -61,14 +61,20 @@ final class Juniper extends Router {
   protected function build_commands($command, $parameter) {
     $commands = array();
 
+    if ($this->config['bgp_detail']) {
+      $bgpdetail = ' detail';
+    } else {
+      $bgpdetail = '';
+    }
+
     switch ($command) {
       case 'bgp':
         if (match_ipv6($parameter, false)) {
           $commands[] = 'show route '.$parameter.
-            ' protocol bgp table inet6.0 active-path';
+            ' protocol bgp table inet6.0 active-path'.$bgpdetail;
         } else if (match_ipv4($parameter, false)) {
           $commands[] = 'show route '.$parameter.
-            ' protocol bgp table inet.0 active-path';
+            ' protocol bgp table inet.0 active-path'.$bgpdetail;
         } else {
           throw new Exception('The parameter is not an IP address.');
         }
@@ -78,11 +84,11 @@ final class Juniper extends Router {
         if (match_aspath_regex($parameter)) {
           if (!$this->config['disable_ipv6']) {
             $commands[] = 'show route aspath-regex "'.$parameter.
-              '" protocol bgp table inet6.0';
+              '" protocol bgp table inet6.0'.$bgpdetail;
           }
           if (!$this->config['disable_ipv4']) {
             $commands[] = 'show route aspath-regex "'.$parameter.
-              '" protocol bgp table inet.0';
+              '" protocol bgp table inet.0'.$bgpdetail;
           }
         } else {
           throw new Exception('The parameter is not an AS-Path regular expression.');
@@ -93,11 +99,11 @@ final class Juniper extends Router {
         if (match_as($parameter)) {
           if (!$this->config['disable_ipv6']) {
             $commands[] = 'show route aspath-regex "^'.$parameter.
-              ' .*" protocol bgp table inet6.0';
+              ' .*" protocol bgp table inet6.0'.$bgpdetail;
           }
           if (!$this->config['disable_ipv4']) {
             $commands[] = 'show route aspath-regex "^'.$parameter.
-              ' .*" protocol bgp table inet.0';
+              ' .*" protocol bgp table inet.0'.$bgpdetail;
           }
         } else {
           throw new Exception('The parameter is not an AS number.');

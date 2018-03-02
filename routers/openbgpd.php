@@ -107,18 +107,32 @@ final class OpenBGPd extends Router {
 
     $bgpctl = 'bgpctl ';
 
+    if ($this->config['bgp_detail']) {
+      $bgpdetail = ' detail';
+    } else {
+      $bgpdetail = '';
+    }
+
     switch ($command) {
       case 'bgp':
         if (match_ipv6($parameter, false) or match_ipv4($parameter, false)) {
-          $commands[] = $bgpctl.'show ip bgp '.$parameter;
+          $commands[] = $bgpctl.'show rib'.$bgpdetail.' '.$parameter;
         } else {
           throw new Exception('The parameter is not an IP address.');
         }
         break;
 
+      case 'as-path-regex':
+        if (match_as($parameter)) {
+          $commands[] = $bgpctl.'show rib'.$bgpdetail.' as '.$parameter;
+        } else {
+          throw new Exception('The parameter is not an AS number - OpenBGPD does not support AS-Path regular expressions.');
+        }
+        break;
+
       case 'as':
         if (match_as($parameter)) {
-          $commands[] = $bgpctl.'show ip bgp as '.$parameter;
+          $commands[] = $bgpctl.'show rib'.$bgpdetail.' peer-as '.$parameter;
         } else {
           throw new Exception('The parameter is not an AS number.');
         }
