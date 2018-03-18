@@ -72,6 +72,18 @@ be glad to know that this project was helpful for you, and I will update our
 [documentation](docs/our_users.md) to include your company inside the list of
 users if you want me to.
 
+## Helping
+
+You can help this project in many ways. Of course you can ask for features,
+give some ideas for future development, open issues if you found any and
+contribute to the code with pull requests and patches.
+
+You can also support the development of this project by
+[donating some money](https://paypal.me/GuillaumeMazoyer). Developing such
+project can be time consuming and it is done on personal time. Giving few
+dollars/euros/pounds/etc... can be a way to say thanks and help to free some
+time to develop this project.
+
 ## Thanks
 
   * [Bootstrap](http://getbootstrap.com/) and [jQuery](http://jquery.com/) for
