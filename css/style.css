@@ -76,3 +76,12 @@ a:hover {
   color:            #000000;
   text-decoration:  none;
 }
+.alert {
+  display:          none;
+}
+.result {
+  display:          none;
+}
+.loading {
+  display:          none;
+}
