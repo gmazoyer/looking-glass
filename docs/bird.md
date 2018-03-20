@@ -38,7 +38,8 @@ root@bird-router ~# su -l lg
 lg@bird-router ~# mkdir ~/.ssh/
 lg@bird-router ~# echo 'from="lg.example.com,$IP4-OF-YOUR-LG",no-port-forwarding,no-x11-forwarding,no-agent-forwarding ssh-rsa $RSA-PUBKEY-HERE lg@looking-glass' >| ~/.ssh/authorized_keys
 
-# truncate the profile dotfile
+# truncate the profile dotfile (Debian-based distributions)
+# for CentOS/RHEL, apply the below steps to ~/.bashrc instead
 lg@bird-router ~# echo >| ~/.profile
 
 # set up a limited PATH
@@ -53,7 +54,7 @@ root@bird-router ~# chsh -s /bin/rbash lg
 
 # set up the restricted PATH with the only necessary binaries simlinks
 root@bird-router ~# mkdir -p /opt/lg-bin
-root@bird-router ~# for cmd in birdc birdc6 ping traceroute; do ln -s $(which $cmd) /opt/lg-bin/; done
+root@bird-router ~# for cmd in birdc birdc6 ping ping6 traceroute traceroute6; do ln -s $(which $cmd) /opt/lg-bin/; done
 root@bird-router ~#
 ```
 
