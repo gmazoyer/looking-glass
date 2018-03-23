@@ -2181,7 +2181,8 @@ class File_X509
                         $subjectKeyID = $this->getExtension('id-ce-subjectKeyIdentifier');
                         switch (true) {
                             case !is_array($authorityKey):
-                            case is_array($authorityKey) && isset($authorityKey['keyIdentifier']) && $authorityKey['keyIdentifier'] === $subjectKeyID:
+                            case !$subjectKeyID:
+                            case isset($authorityKey['keyIdentifier']) && $authorityKey['keyIdentifier'] === $subjectKeyID:
                                 $signingCert = $this->currentCert; // working cert
                         }
                 }
@@ -2198,7 +2199,11 @@ class File_X509
                                 $subjectKeyID = $this->getExtension('id-ce-subjectKeyIdentifier', $ca);
                                 switch (true) {
                                     case !is_array($authorityKey):
-                                    case is_array($authorityKey) && isset($authorityKey['keyIdentifier']) && $authorityKey['keyIdentifier'] === $subjectKeyID:
+                                    case !$subjectKeyID:
+                                    case isset($authorityKey['keyIdentifier']) && $authorityKey['keyIdentifier'] === $subjectKeyID:
+                                        if (is_array($authorityKey) && isset($authorityKey['authorityCertSerialNumber']) && !$authorityKey['authorityCertSerialNumber']->equals($ca['tbsCertificate']['serialNumber'])) {
+                                            break 2; // serial mismatch - check other ca
+                                        }
                                         $signingCert = $ca; // working cert
                                         break 3;
                                 }
@@ -2244,7 +2249,11 @@ class File_X509
                                 $subjectKeyID = $this->getExtension('id-ce-subjectKeyIdentifier', $ca);
                                 switch (true) {
                                     case !is_array($authorityKey):
-                                    case is_array($authorityKey) && isset($authorityKey['keyIdentifier']) && $authorityKey['keyIdentifier'] === $subjectKeyID:
+                                    case !$subjectKeyID:
+                                    case isset($authorityKey['keyIdentifier']) && $authorityKey['keyIdentifier'] === $subjectKeyID:
+                                        if (is_array($authorityKey) && isset($authorityKey['authorityCertSerialNumber']) && !$authorityKey['authorityCertSerialNumber']->equals($ca['tbsCertificate']['serialNumber'])) {
+                                            break 2; // serial mismatch - check other ca
+                                        }
                                         $signingCert = $ca; // working cert
                                         break 3;
                                 }
@@ -2521,6 +2530,10 @@ class File_X509
         }
 
         $dn = array_values($dn);
+        // fix for https://bugs.php.net/75433 affecting PHP 7.2
+        if (!isset($dn[0])) {
+            $dn = array_splice($dn, 0, 0);
+        }
     }
 
     /**
@@ -2765,7 +2778,11 @@ class File_X509
                     $value = array_pop($value); // Always strip data type.
                 }
             } elseif (is_object($value) && strtolower(get_class($value)) == 'file_asn1_element') {
-                $callback = create_function('$x', 'return "\x" . bin2hex($x[0]);');
+                // @codingStandardsIgnoreStart
+                $callback = version_compare(PHP_VERSION, '5.3.0') >= 0 ?
+                    function ($x) { return "\x" . bin2hex($x[0]); } :
+                    create_function('$x', 'return "\x" . bin2hex($x[0]);');
+                // @codingStandardsIgnoreEnd
                 $value = strtoupper(preg_replace_callback('#[^\x20-\x7E]#', $callback, $value->element));
             }
             $output.= $desc . '=' . $value;
@@ -4153,6 +4170,10 @@ class File_X509
         }
 
         $extensions = array_values($extensions);
+        // fix for https://bugs.php.net/75433 affecting PHP 7.2
+        if (!isset($extensions[0])) {
+            $extensions = array_splice($extensions, 0, 0);
+        }
         return $result;
     }
 
