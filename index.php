@@ -296,7 +296,7 @@ final class LookingGlass {
     print('</body>');
     print('<script src="libs/jquery-3.3.1.min.js"></script>');
     print('<script src="libs/bootstrap-4.0.0/js/bootstrap.min.js"></script>');
-    print('<script src="libs/fontawesome-5.0.6/js/fontawesome-all.min.js"></script>');
+    print('<script src="libs/fontawesome-5.0.8/js/fontawesome-all.min.js"></script>');
     print('<script src="js/looking-glass.js"></script>');
     print('</html>');
   }
