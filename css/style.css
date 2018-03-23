@@ -41,6 +41,10 @@ body {
   width:            50%;
   margin-left:      auto;
   margin-right:     auto;
+  display:          none;
+}
+.result {
+  display:          none;
 }
 .reset {
   width:            25%;
@@ -51,6 +55,7 @@ body {
   width:            50%;
   margin-left:      auto;
   margin-right:     auto;
+  display:          none;
 }
 kbd {
   display:          block;
