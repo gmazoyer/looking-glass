@@ -91,7 +91,8 @@ $config['routers']['router4']['auth'] = 'ssh-password';
 // The router type (can only be openbgpd)
 $config['routers']['router4']['type'] = 'openbgpd';
 // The router source address to be used
-$config['routers']['router4']['source-interface-id'] = '192.168.1.1';
+$config['routers']['router4']['source-interface-id']['ipv4'] = '192.168.1.1';
+$config['routers']['router4']['source-interface-id']['ipv6'] = '2001:db8::1';
 // The router description to be displayed in the router list
 $config['routers']['router4']['desc'] = 'OpenBGPd Router';
 

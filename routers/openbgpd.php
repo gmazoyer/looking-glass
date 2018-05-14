@@ -37,11 +37,9 @@ final class OpenBGPd extends Router {
     }
 
     if (match_ipv6($destination)) {
-      $ping = 'ping6 '.$this->global_config['tools']['ping_options'].' '.
-        (isset($hostname) ? $hostname : $destination);
+      $ping = 'ping6 '.$this->global_config['tools']['ping_options'];
     } else if (match_ipv4($destination)) {
-      $ping = 'ping '.$this->global_config['tools']['ping_options'].' '.
-        (isset($hostname) ? $hostname : $destination);
+      $ping = 'ping '.$this->global_config['tools']['ping_options'];
     } else {
       throw new Exception('The parameter does not resolve to an IP address.');
     }
@@ -50,11 +48,13 @@ final class OpenBGPd extends Router {
       if (match_ipv6($destination) &&
           ($this->get_source_interface_id('ipv6') != null)) {
         $ping .= ' '.$this->global_config['tools']['ping_source_option'].' '.
-          $this->get_source_interface_id('ipv6');
+          $this->get_source_interface_id('ipv6').' '.
+        (isset($hostname) ? $hostname : $destination);
       } else if (match_ipv4($destination) &&
           ($this->get_source_interface_id('ipv4') != null)) {
         $ping .= ' '.$this->global_config['tools']['ping_source_option'].' '.
-          $this->get_source_interface_id('ipv4');
+          $this->get_source_interface_id('ipv4').' '.
+        (isset($hostname) ? $hostname : $destination);
       }
     }
 
@@ -75,12 +75,10 @@ final class OpenBGPd extends Router {
 
     if (match_ipv6($destination)) {
       $traceroute = $this->global_config['tools']['traceroute6'].' '.
-        $this->global_config['tools']['traceroute_options'].' '.
-        (isset($hostname) ? $hostname : $destination);
+        $this->global_config['tools']['traceroute_options'];
     } else if (match_ipv4($destination)) {
       $traceroute = $this->global_config['tools']['traceroute4'].' '.
-        $this->global_config['tools']['traceroute_options'].' '.
-        (isset($hostname) ? $hostname : $destination);
+        $this->global_config['tools']['traceroute_options'];
     } else {
       throw new Exception('The parameter does not resolve to an IP address.');
     }
@@ -90,12 +88,14 @@ final class OpenBGPd extends Router {
           ($this->get_source_interface_id('ipv6') != null)) {
         $traceroute .= ' '.
           $this->global_config['tools']['traceroute_source_option'].' '.
-          $this->get_source_interface_id('ipv6');
+          $this->get_source_interface_id('ipv6').' '.
+          (isset($hostname) ? $hostname : $destination);
       } else if (match_ipv4($destination) &&
           ($this->get_source_interface_id('ipv4') != null)) {
         $traceroute .= ' '.
           $this->global_config['tools']['traceroute_source_option'].' '.
-          $this->get_source_interface_id('ipv4');
+          $this->get_source_interface_id('ipv4').' '. 
+          (isset($hostname) ? $hostname : $destination);
       }
     }
 
