@@ -35,6 +35,9 @@ future:
   * Support more routers
   * Support of other types of authentication
 
+Questions? Comments? Join us in the #looking-glass Slack channel on
+[NetworkToCode](https://networktocode.slack.com/).
+
 ## Configuration
 
 Copy the configuration **config.php.example** file to create a **config.php**
