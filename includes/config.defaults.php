@@ -100,7 +100,9 @@ $config = array(
     'file' => '/var/log/looking-glass.log',
     // Format for each logged command (%D is for the time, %R is for the
     // requester IP address, %H is for the host and %C is for the command)
-    'format' => '[%D] [client: %R] %H > %C'
+    'format' => '[%D] [client: %R] %H > %C',
+    // Logs authentication debug details to the logs file
+    'auth_debug' => false
   ),
 
   // Misc

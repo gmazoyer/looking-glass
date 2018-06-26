@@ -142,7 +142,8 @@ abstract class Router {
       throw $e;
     }
 
-    $auth = Authentication::instance($this->config);
+    $auth = Authentication::instance($this->config,
+      $this->global_config['logs']['auth_debug']);
 
     try {
       $data = '';

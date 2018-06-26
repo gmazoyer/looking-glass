@@ -42,6 +42,11 @@ abstract class Authentication {
   protected $config;
 
   /**
+   * True if debug info must be logged, false otherwise.
+   */
+  protected $debug;
+
+  /**
    * Build a new object to manipulate the authentication mechanism.
    *
    * It will also check if the configuration is correct before doing the
@@ -49,8 +54,9 @@ abstract class Authentication {
    *
    * @param array $config the configuration for the authentication mechanism.
    */
-  public function __construct($config) {
+  public function __construct($config, $debug) {
     $this->config = $config;
+    $this->debug = $debug;
     $this->check_config();
   }
 
@@ -97,16 +103,18 @@ abstract class Authentication {
    *
    * @param  array          $config the configuration for the authentication
    *                                mechanism.
+   * @param  boolean        $debug enable/disable debug info for the
+   *                               authentication mechanism.
    * @return Authentication the authentication mechanism to be used.
    */
-  public static final function instance($config) {
+  public static final function instance($config, $debug) {
     switch ($config['auth']) {
       case 'ssh-password':
       case 'ssh-key':
-        return new SSH($config);
+        return new SSH($config, $debug);
 
       case 'telnet':
-        return new Telnet($config);
+        return new Telnet($config, $debug);
 
       default:
         print('Unknown authentication mechanism "'.$config['auth'].'"."');

@@ -235,6 +235,12 @@ $config['logs']['format'] = '[%D] [client: %R] %H > %C';
 Defines the format for each log (%D is for the time, %R is for the requester
 IP address, %H is for the host and %C is for the command).
 
+```php
+$config['logs']['auth_debug'] = false;
+```
+Enable or disable authentication debug details. The details are written in the
+logs file.
+
 ### Filters
 
 ```php

@@ -24,8 +24,8 @@ require_once('authentication.php');
 final class Telnet extends Authentication {
   private $port;
 
-  public function __construct($config) {
-    parent::__construct($config);
+  public function __construct($config, $debug) {
+    parent::__construct($config, $debug);
 
     $this->port = isset($this->config['port']) ? (int) $this->config['port'] : 23;
   }
