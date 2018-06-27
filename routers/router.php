@@ -149,6 +149,11 @@ abstract class Router {
       $data = '';
 
       foreach ($commands as $selected) {
+        $log = str_replace(array('%D', '%R', '%H', '%C'),
+          array(date('Y-m-d H:i:s'), $this->requester, $this->config['host'],
+          '[BEGIN] '.$selected), $this->global_config['logs']['format']);
+        log_to_file($log);
+
         $output = $auth->send_command($selected);
         $output = $this->sanitize_output($output);
 
@@ -156,7 +161,7 @@ abstract class Router {
 
         $log = str_replace(array('%D', '%R', '%H', '%C'),
           array(date('Y-m-d H:i:s'), $this->requester, $this->config['host'],
-          $selected), $this->global_config['logs']['format']);
+          '[END] '.$selected), $this->global_config['logs']['format']);
         log_to_file($log);
       }
     } catch (Exception $e) {
