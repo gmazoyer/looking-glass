@@ -27,6 +27,11 @@ $config['filters'][] = '/^NotToShow/';
 // If telnet is used in combination with extreme_netiron, uncomment the following filter
 //$config['filters'][] = '/([^\x20-\x7E]|User|Please|Disable|telnet|^\s*$)/';
 
+// Google reCaptcha integration
+$config['recaptcha']['enabled'] = false;
+$config['recaptcha']['apikey'] = 'foobar';
+$config['recaptcha']['secret'] = 'foobar';
+
 // Routers definitions
 
 // Authentication based on SSH or Telnet with password

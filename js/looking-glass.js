@@ -37,12 +37,18 @@ $(document).ready(function() {
     // reset the form and update the doc modal
     $(this).closest('form').get(0).reset();
     request_doc($('#query').val());
+    if (typeof grecaptcha.reset === "function") {
+     grecaptcha.reset();
+    }
   });
 
   // reset the view to the default one
   $('#backhome').click(function() {
     $('.content').slideDown();
     $('.result').slideUp();
+    if (typeof grecaptcha.reset === "function") {
+     grecaptcha.reset();
+    }
   });
 
   // initialize the help modal

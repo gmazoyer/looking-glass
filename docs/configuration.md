@@ -250,6 +250,23 @@ $config['filters'][] = '/^NotToShow/';
 Defines filters to eliminate some lines from the output. Do not define any
 filters if there is no nothing to filter.
 
+### Google reCAPTCHA
+
+```php
+$config['recaptcha']['enabled'] = true;
+```
+If set to true, allows the use of Google reCAPTCHA. Sitekey and secret must be
+configured to use reCAPTCHA.
+
+php-curl is required.
+
+```php
+$config['recaptcha']['apikey'] = "foobar";
+$config['recaptcha']['secret'] = "foobar";
+```
+Defines Google reCAPTCHA sitekey and secret.
+
+
 ### Misc.
 
 ```php

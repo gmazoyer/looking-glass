@@ -38,6 +38,7 @@ final class LookingGlass {
     $this->misc = $config['misc'];
     $this->routers = $config['routers'];
     $this->doc = $config['doc'];
+    $this->recaptcha = $config['recaptcha'];
   }
 
   private function router_count() {
@@ -121,6 +122,9 @@ final class LookingGlass {
     print('<button class="col-md-6 btn btn-primary" id="send" type="submit">Enter</button>');
     print('<button class="col-md-6 btn btn-danger" id="clear" type="reset">Reset</button>');
     print('</div>');
+    if ($this->recaptcha['enabled'] && isset($this->recaptcha['apikey']) && isset($this->recaptcha['secret'])) {
+      print('<div class="g-recaptcha" data-sitekey="'.$this->recaptcha['apikey'].'"></div>');
+    }
     print('</div>');
   }
 
@@ -298,6 +302,9 @@ final class LookingGlass {
     print('<script src="libs/bootstrap-4.1.1/js/bootstrap.min.js"></script>');
     print('<script src="libs/fontawesome-5.0.13/js/fontawesome-all.min.js"></script>');
     print('<script src="js/looking-glass.js"></script>');
+    if ($this->recaptcha['enabled'] && isset($this->recaptcha['apikey']) && isset($this->recaptcha['secret'])) {
+      print('<script src="https://www.google.com/recaptcha/api.js" async defer></script>');
+    }
     print('</html>');
   }
 }

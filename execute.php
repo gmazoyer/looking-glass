@@ -57,6 +57,28 @@ if (isset($_POST['query']) && !empty($_POST['query']) &&
     return;
   }
 
+  if ($config['recaptcha']['enabled'] && isset($config['recaptcha']['apikey']) && isset($config['recaptcha']['secret'])) {
+    $remoteip = $_SERVER['REMOTE_ADDR'];
+    $response = $_POST['g-recaptcha-response'];
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $config['recaptcha']['url']);
+    curl_setopt($curl, CURLOPT_POST, true);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, array(
+        'secret' => $config['recaptcha']['secret'],
+        'response' => $response,
+        'remoteip' => $remoteip
+        ));
+    $curlData = curl_exec($curl);
+    curl_close($curl);
+    $recaptcha = json_decode($curlData, true);
+    if ($recaptcha["success"] == false) {
+      $error = 'Are you a robot?';
+      print(json_encode(array('error' => $error)));
+      return;
+    }
+  }
+
   // Do the processing
   $router = Router::instance($hostname, $requester);
   $router_config = $router->get_config();

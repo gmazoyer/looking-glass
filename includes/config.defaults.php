@@ -94,6 +94,13 @@ $config = array(
   // Filters
   'filters' => array(),
 
+  // Google reCaptcha
+  'recaptcha' => array(
+    // Disabled by default
+    'enabled' => false,
+    'url' => 'https://www.google.com/recaptcha/api/siteverify'
+  ),
+
   // Logs
   'logs' => array(
     // Logs file where commands will be written
