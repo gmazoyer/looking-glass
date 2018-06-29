@@ -57,6 +57,18 @@ if (isset($_POST['query']) && !empty($_POST['query']) &&
     return;
   }
 
+  if ($config['recaptcha']['enabled'] && isset($config['recaptcha']['apikey']) && isset($config['recaptcha']['secret'])) {
+    $remoteip = $_SERVER['REMOTE_ADDR'];
+    $response = $_POST['g-recaptcha-response'];
+    $verify=file_get_contents($config['recaptcha']['url'].'?secret='.$config['recaptcha']['secret'].'&response='.$response.'&remoteip='.$remoteip);
+    $recaptcha = json_decode($verify, true);
+    if ($recaptcha["success"] == false) {
+      $error = 'Are you a robot?';
+      print(json_encode(array('error' => $error)));
+      return;
+    }
+  }
+
   // Do the processing
   $router = Router::instance($hostname, $requester);
   $router_config = $router->get_config();
