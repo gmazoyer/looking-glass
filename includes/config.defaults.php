@@ -98,7 +98,9 @@ $config = array(
   'recaptcha' => array(
     // Disabled by default
     'enabled' => false,
-    'url' => 'https://www.google.com/recaptcha/api/siteverify'
+    'url' => 'https://www.google.com/recaptcha/api/siteverify',
+    'apikey' => null,
+    'secret' => null
   ),
 
   // Logs
