@@ -258,8 +258,6 @@ $config['recaptcha']['enabled'] = true;
 If set to true, allows the use of Google reCAPTCHA. Sitekey and secret must be
 configured to use reCAPTCHA.
 
-php-curl is required.
-
 ```php
 $config['recaptcha']['apikey'] = "foobar";
 $config['recaptcha']['secret'] = "foobar";
