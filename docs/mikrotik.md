@@ -11,7 +11,7 @@ Log in your ROS router via Terminal or SSH mode and type the
 following command to create a new read-only user:
 
 ```
-[admin@mikrotik] > /user add name=ro_user comment="read-only user for looking-glass" address=x.x.x.x password=xxx
+[admin@mikrotik] > /user add name=ro_user group=read comment="read-only user" address=x.x.x.x password=xxx
 ```
 
 Where `address=x.x.x.x` is the source address of your looking-glass 
