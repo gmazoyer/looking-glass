@@ -26,9 +26,10 @@ final class Mikrotik extends Router {
   protected function build_ping($destination) {
     $ping = null;
 
-    if (match_hostname($destination) || match_ipv6($destination) ||
-        match_ipv4($destination)) {
+    if (match_ipv4($destination) || match_ipv6($destination)) {
       $ping = 'ping count=10 address='.$destination;
+    } else if (match_hostname($destination)) {
+      $ping = 'ping count=10 address=[:resolv '.$destination.']';
     } else {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
@@ -43,10 +44,10 @@ final class Mikrotik extends Router {
   protected function build_traceroute($destination) {
     $traceroute = null;
 
-    if (match_hostname($destination) || match_ipv6($destination)) {
+    if (match_ipv4($destination) || match_ipv6($destination)) {
       $traceroute = 'tool traceroute count=1 use-dns=yes address='.$destination;
-    } else if (match_ipv4($destination)) {
-      $traceroute = 'tool traceroute count=1 use-dns=yes address='.$destination;
+    } else if (match_hostname($destination)) {
+      $traceroute = 'tool traceroute count=1 use-dns=yes address=[:resolv '.$destination.']';
     } else {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
