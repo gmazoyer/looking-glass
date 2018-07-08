@@ -95,12 +95,10 @@ final class Mikrotik extends Router {
       case 'as':
         if (match_as($parameter)) {
           if (!$this->config['disable_ipv6']) {
-            $commands[] = 'show route aspath-regex "^'.$parameter.
-              ' .*" protocol bgp table inet6.0'.$bgpdetail;
+            $commands[] = 'ipv6 route print '.$bgpdetail.' where bgp-as-path="'.$parameter.'"';
           }
           if (!$this->config['disable_ipv4']) {
-            $commands[] = 'show route aspath-regex "^'.$parameter.
-              ' .*" protocol bgp table inet.0'.$bgpdetail;
+            $commands[] = 'ip route print '.$bgpdetail.' where bgp-as-path="'.$parameter.'"';
           }
         } else {
           throw new Exception('The parameter is not an AS number.');
