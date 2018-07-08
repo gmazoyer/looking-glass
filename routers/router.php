@@ -26,6 +26,7 @@ require_once('cisco.php');
 require_once('cisco_iosxr.php');
 require_once('extreme_netiron.php');
 require_once('juniper.php');
+require_once('mikrotik.php');
 require_once('openbgpd.php');
 require_once('quagga.php');
 require_once('frr.php');
@@ -194,6 +195,10 @@ abstract class Router {
       case 'juniper':
       case 'junos':
         return new Juniper($config, $router_config, $id, $requester);
+
+      case 'mikrotik':
+      case 'routeros':
+        return new Mikrotik($config, $router_config, $id, $requester);
 
       case 'openbgpd':
         return new OpenBGPd($config, $router_config, $id, $requester);
