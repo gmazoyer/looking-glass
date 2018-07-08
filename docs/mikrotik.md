@@ -5,9 +5,9 @@
 As security by least privilege is quite efficient, using a restricted read-only
 user to execute the commands is advised.
 
-## Configuration: User Class
+## Configuration: Read-only user
 
-Log in your ROS router via Terminal or SSH mode and type the
+Log in your ROS router via Terminal or SSH and type the
 following command to create a new read-only user:
 
 ```
@@ -18,7 +18,7 @@ Where `address=x.x.x.x` is the source address of your looking-glass
 installation and `password=xxx` is your desired password for the
 newly created read-only user.
 
-It is strongly advised to create matching firewall rules for SSH.
+It is strongly recommended to create matching firewall rules for SSH/Telnet.
 
 ## Debug
 
