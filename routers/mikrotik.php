@@ -27,9 +27,9 @@ final class Mikrotik extends Router {
     $ping = null;
 
     if (match_ipv4($destination) || match_ipv6($destination)) {
-      $ping = 'ping count=10 address='.$destination;
+      $ping = 'ping count=10 address="'.$destination.'"';
     } else if (match_hostname($destination)) {
-      $ping = 'ping count=10 address=[:resolv '.$destination.']';
+      $ping = 'ping count=10 address=[:resolv "'.$destination.'"]';
     } else {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
@@ -45,9 +45,9 @@ final class Mikrotik extends Router {
     $traceroute = null;
 
     if (match_ipv4($destination) || match_ipv6($destination)) {
-      $traceroute = 'tool traceroute count=1 use-dns=yes address='.$destination;
+      $traceroute = 'tool traceroute count=1 use-dns=yes address="'.$destination.'"';
     } else if (match_hostname($destination)) {
-      $traceroute = 'tool traceroute count=1 use-dns=yes address=[:resolv '.$destination.']';
+      $traceroute = 'tool traceroute count=1 use-dns=yes address=[:resolv "'.$destination.'"]';
     } else {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
@@ -71,11 +71,9 @@ final class Mikrotik extends Router {
     switch ($command) {
       case 'bgp':
         if (match_ipv6($parameter, false)) {
-          $commands[] = 'show route '.$parameter.
-            ' protocol bgp table inet6.0 active-path'.$bgpdetail;
+          $commands[] = 'ipv6 route print '.$bgpdetail.' where dst-address="'.$parameter.'"';
         } else if (match_ipv4($parameter, false)) {
-          $commands[] = 'show route '.$parameter.
-            ' protocol bgp table inet.0 active-path'.$bgpdetail;
+          $commands[] = 'ip route print '.$bgpdetail.' where dst-address="'.$parameter.'"';
         } else {
           throw new Exception('The parameter is not an IP address.');
         }
@@ -84,12 +82,10 @@ final class Mikrotik extends Router {
       case 'as-path-regex':
         if (match_aspath_regex($parameter)) {
           if (!$this->config['disable_ipv6']) {
-            $commands[] = 'show route aspath-regex "'.$parameter.
-              '" protocol bgp table inet6.0'.$bgpdetail;
+            $commands[] = 'ipv6 route print '.$bgpdetail.' where bgp-as-path="'.$parameter.'"';
           }
           if (!$this->config['disable_ipv4']) {
-            $commands[] = 'show route aspath-regex "'.$parameter.
-              '" protocol bgp table inet.0'.$bgpdetail;
+            $commands[] = 'ip route print '.$bgpdetail.' where bgp-as-path="'.$parameter.'"';
           }
         } else {
           throw new Exception('The parameter is not an AS-Path regular expression.');
