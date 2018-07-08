@@ -128,6 +128,7 @@ Possible values are:
   * juniper **or** junos
   * cisco **or** ios
   * ios-xr **or** iosxr
+  * mikrotik **or** routeros
   * extreme_netiron
   * bird
   * quagga **or** zebra

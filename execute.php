@@ -57,6 +57,7 @@ if (isset($_POST['query']) && !empty($_POST['query']) &&
     return;
   }
 
+  // Process captcha if it is enabled
   if ($config['recaptcha']['enabled'] &&
       isset($config['recaptcha']['apikey']) &&
       isset($config['recaptcha']['secret'])) {
