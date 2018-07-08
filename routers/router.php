@@ -25,10 +25,11 @@ require_once('bird.php');
 require_once('cisco.php');
 require_once('cisco_iosxr.php');
 require_once('extreme_netiron.php');
+require_once('frr.php');
 require_once('juniper.php');
+require_once('mikrotik.php');
 require_once('openbgpd.php');
 require_once('quagga.php');
-require_once('frr.php');
 require_once('vyatta.php');
 require_once('includes/utils.php');
 require_once('auth/authentication.php');
@@ -187,6 +188,9 @@ abstract class Router {
       case 'extreme_netiron':
         return new ExtremeNetIron($config, $router_config, $id, $requester);
 
+      case 'frr':
+        return new Frr($config, $router_config, $id, $requester);
+        
       case 'ios-xr':
       case 'iosxr':
         return new IOSXR($config, $router_config, $id, $requester);
@@ -195,15 +199,16 @@ abstract class Router {
       case 'junos':
         return new Juniper($config, $router_config, $id, $requester);
 
+      case 'mikrotik':
+      case 'routeros':
+        return new Mikrotik($config, $router_config, $id, $requester);
+        
       case 'openbgpd':
         return new OpenBGPd($config, $router_config, $id, $requester);
 
       case 'quagga':
       case 'zebra':
         return new Quagga($config, $router_config, $id, $requester);
-
-      case 'frr':
-        return new Frr($config, $router_config, $id, $requester);
 
       case 'vyatta':
       case 'vyos':
