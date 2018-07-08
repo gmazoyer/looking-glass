@@ -28,13 +28,13 @@ final class Mikrotik extends Router {
 
     if (match_hostname($destination) || match_ipv6($destination) ||
         match_ipv4($destination)) {
-      $ping = 'ping count 10 rapid '.$destination;
+      $ping = 'ping count=10 address='.$destination;
     } else {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
 
     if (($ping != null) && $this->has_source_interface_id()) {
-      $ping .= ' interface '.$this->get_source_interface_id();
+      $ping .= ' interface='.$this->get_source_interface_id();
     }
 
     return $ping;
@@ -44,15 +44,15 @@ final class Mikrotik extends Router {
     $traceroute = null;
 
     if (match_hostname($destination) || match_ipv6($destination)) {
-      $traceroute = 'traceroute '.$destination;
+      $traceroute = 'tool traceroute count=1 use-dns=yes address='.$destination;
     } else if (match_ipv4($destination)) {
-      $traceroute = 'traceroute as-number-lookup '.$destination;
+      $traceroute = 'tool traceroute count=1 use-dns=yes address='.$destination;
     } else {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
 
     if (($traceroute != null) && $this->has_source_interface_id()) {
-      $traceroute .= ' interface '.$this->get_source_interface_id();
+      $traceroute .= ' interface='.$this->get_source_interface_id();
     }
 
     return $traceroute;
