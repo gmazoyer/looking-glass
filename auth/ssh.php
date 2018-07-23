@@ -60,11 +60,11 @@ final class SSH extends Authentication {
       $success = $this->connection->login($this->config['user'], $this->config['pass']);
     } else if ($this->config['auth'] == 'ssh-key') {
       $key = new Crypt_RSA();
-      $key->loadKey(file_get_contents($this->config['private_key']));
 
       if (isset($this->config['pass'])) {
         $key->setPassword($this->config['pass']);
       }
+      $key->loadKey(file_get_contents($this->config['private_key']));
 
       $success = $this->connection->login($this->config['user'], $key);
     } else {
