@@ -286,7 +286,7 @@ final class LookingGlass {
     print('<meta name="keywords" content="Looking Glass, LG, BGP, prefix-list, AS-path, ASN, traceroute, ping, IPv4, IPv6, Cisco, Juniper, Internet" />');
     print('<meta name="description" content="'.$this->frontpage['title'].'" />');
     print('<title>'.htmlentities($this->frontpage['title']).'</title>');
-    print('<link href="libs/bootstrap-4.1.2/css/bootstrap.min.css" rel="stylesheet" />');
+    print('<link href="libs/bootstrap-4.1.3/css/bootstrap.min.css" rel="stylesheet" />');
     print('<link href="'.$this->frontpage['css'].'" rel="stylesheet" />');
     print('</head>');
     print('<body>');
@@ -299,8 +299,8 @@ final class LookingGlass {
     }
     print('</body>');
     print('<script src="libs/jquery-3.3.1.min.js"></script>');
-    print('<script src="libs/bootstrap-4.1.2/js/bootstrap.min.js"></script>');
-    print('<script src="libs/fontawesome-5.1.1/js/all.min.js"></script>');
+    print('<script src="libs/bootstrap-4.1.3/js/bootstrap.min.js"></script>');
+    print('<script src="libs/fontawesome-5.2.0/js/all.min.js"></script>');
     print('<script src="js/looking-glass.js"></script>');
     if ($this->recaptcha['enabled'] && isset($this->recaptcha['apikey']) && isset($this->recaptcha['secret'])) {
       print('<script src="https://www.google.com/recaptcha/api.js" async defer></script>');
