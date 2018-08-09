@@ -284,7 +284,7 @@ function hostname_to_ip_address($hostname, $config = null) {
 
     foreach ($dns_record as $record) {
       if ($record['type'] == 'A') {
-        return $record['ipv4'];
+        return $record['ip'];
       }
     }
 
