@@ -9,6 +9,8 @@ Easy to deploy Looking Glass made in PHP.
 
   * Webserver such as Apache 2, or Lighttpd, etc…
   * PHP (> 5.3) module for the webserver (mod-php5 for Apache 2 for example)
+  * When using PHP >= 7, the XML package is required as well (php7.0-xml on
+    Debian for example)
 
 ## Description
 
