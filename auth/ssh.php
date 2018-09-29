@@ -49,7 +49,7 @@ final class SSH extends Authentication {
         throw new Exception('Router authentication configuration incomplete.');
       }
 
-      if (!is_readable($this->config['private_key'])) {
+      if (isset($this->config['private_key']) && !is_readable($this->config['private_key'])) {
         throw new Exception('SSH key for authentication is not readable.');
       }
     }
