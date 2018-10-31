@@ -3,9 +3,10 @@
 The following companies and organizations trust this looking glass to expose a
 small view of their networks.
 
-  * [LUXNETWORK S.A.](https://www.luxnetwork.eu/) - [Looking Glass](https://lg.luxnetwork.eu/)
+  * [LUXNETWORK S.A.](https://luxnetwork.eu/) - [Looking Glass](https://lg.luxnetwork.eu/)
   * [TRINAPS](https://www.trinaps.com/) - [Looking Glass](https://lg.trinaps.net/)
   * [GLaNET](https://glanet.org/)
   * [SysEleven GmbH](https://www.syseleven.de/)
   * [BAEHOST](https://baehost.com/) - [Looking Glass](https://baehost.com/looking-glass/)
   * [i3D.net](https://www.i3d.net/) - [Looking Glass](https://noc.i3d.net/lg/)
+  * [mazoyer.eu](https://as201281.net/) - [Looking Glass](https://lg.as201281.net/)
