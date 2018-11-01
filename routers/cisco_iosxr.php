@@ -28,7 +28,7 @@ final class IOSXR extends Router {
 
     if (match_ipv6($destination) || match_ipv4($destination) ||
         (match_hostname($destination) && !$this->has_source_interface_id())) {
-      $ping = 'ping '.$destination. ' count 10';
+      $ping = 'ping '.$this->global_config['tools']['vrf_cmd'].' '.$destination. ' count 10';
     } else if (match_hostname($destination)) {
       $hostname = $destination;
       $destination = hostname_to_ip_address($hostname, $this->config);
@@ -38,11 +38,9 @@ final class IOSXR extends Router {
       }
 
       if (match_ipv6($destination)) {
-        $ping = 'ping ipv6 '.(isset($hostname) ? $hostname : $destination).
-          ' repeat 10';
+        $ping = 'ping ipv6 '.(isset($hostname) ? $hostname : $destination).' '.$this->global_config['tools']['vrf_cmd'].' repeat 10';
       } else if (match_ipv4($destination)) {
-        $ping = 'ping ipv4 '.(isset($hostname) ? $hostname : $destination).
-          ' repeat 10';
+        $ping = 'ping ipv4 '.(isset($hostname) ? $hostname : $destination).' '.$this->global_config['tools']['vrf_cmd'].' repeat 10';
       } else {
         throw new Exception('The parameter does not resolve to an IP address.');
       }
@@ -68,7 +66,7 @@ final class IOSXR extends Router {
 
     if (match_ipv6($destination) || match_ipv4($destination) ||
         (match_hostname($destination) && !$this->has_source_interface_id())) {
-      $traceroute = 'traceroute '.$destination;
+      $traceroute = 'traceroute '.$this->global_config['tools']['vrf_cmd'].' '.$destination;
     } else if (match_hostname($destination)) {
       $hostname = $destination;
       $destination = hostname_to_ip_address($hostname);
@@ -78,9 +76,9 @@ final class IOSXR extends Router {
       }
 
       if (match_ipv6($destination)) {
-        $traceroute = 'traceroute ipv6 '.(isset($hostname) ? $hostname : $destination);
+        $traceroute = 'traceroute ipv6 '.(isset($hostname) ? $hostname : $destination).' '.$this->global_config['tools']['vrf_cmd'];
       } else if (match_ipv4($destination)) {
-        $traceroute = 'traceroute ipv4 '.(isset($hostname) ? $hostname : $destination);
+        $traceroute = 'traceroute ipv4 '.(isset($hostname) ? $hostname : $destination).' '.$this->global_config['tools']['vrf_cmd'];
       } else {
         throw new Exception('The parameter does not resolve to an IP address.');
       }
@@ -107,23 +105,21 @@ final class IOSXR extends Router {
     switch ($command) {
       case 'bgp':
         if (match_ipv6($parameter, false)) {
-          $commands[] = 'show bgp ipv6 unicast '.$parameter;
+          $commands[] = 'show bgp '.$this->global_config['tools']['vrf_cmd'].' ipv6 unicast '.$parameter;
         } else if (match_ipv4($parameter, false)) {
-          $commands[] = 'show bgp ipv4 unicast '.$parameter;
+          $commands[] = 'show bgp '.$this->global_config['tools']['vrf_cmd'].' ipv4 unicast '.$parameter;
         } else {
           throw new Exception('The parameter is not an IP address.');
         }
         break;
 
       case 'as-path-regex':
-        if (match_aspath_regexp($parameter)) {
+        if (match_aspath_regex($parameter)) {
           if (!$this->config['disable_ipv6']) {
-            $commands[] = 'show bgp ipv6 unicast regexp "'.$parameter.
-              '"';
+            $commands[] = 'show bgp '.$this->global_config['tools']['vrf_cmd'].' ipv6 unicast regexp "'.$parameter.'"';
           }
           if (!$this->config['disable_ipv4']) {
-            $commands[] = 'show bgp ipv4 unicast regexp "'.$parameter.
-              '"';
+            $commands[] = 'show bgp '.$this->global_config['tools']['vrf_cmd'].' ipv4 unicast regexp "'.$parameter.'"';
           }
         } else {
           throw new Exception('The parameter is not an AS-Path regular expression.');
@@ -133,12 +129,10 @@ final class IOSXR extends Router {
       case 'as':
         if (match_as($parameter)) {
           if (!$this->config['disable_ipv6']) {
-            $commands[] = 'show bgp ipv6 unicast regexp "^'.$parameter.
-              '_"';
+            $commands[] = 'show bgp '.$this->global_config['tools']['vrf_cmd'].' ipv6 unicast regexp "^'.$parameter.'_"';
           }
           if (!$this->config['disable_ipv4']) {
-            $commands[] = 'show bgp ipv4 unicast regexp "^'.$parameter.
-              '_"';
+            $commands[] = 'show bgp '.$this->global_config['tools']['vrf_cmd'].' ipv4 unicast regexp "^'.$parameter.'_"';
           }
         } else {
           throw new Exception('The parameter is not an AS number.');

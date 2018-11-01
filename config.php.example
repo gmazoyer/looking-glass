@@ -128,4 +128,8 @@ $config['tools']['traceroute_options'] = '-A -q1 -w2 -m15';
 $config['tools']['traceroute6'] = 'traceroute6';
 $config['tools']['traceroute4'] = 'traceroute';
 
+// If running against IOS-XR and queries should be performed from within a VRF
+// specify the command set to perform VRF queries
+// $config['tools']['vrf_cmd'] = 'vrf internet';
+
 // End of config.php
