@@ -118,7 +118,7 @@ final class Quagga extends Router {
         break;
 
       case 'as-path-regex':
-        if (match_aspath_regex($parameter)) {
+        if (match_aspath_regexp($parameter)) {
           if (!$this->config['disable_ipv6']) {
             $commands[] = $vtysh.'show ipv6 bgp regexp '.$parameter.'"';
           }

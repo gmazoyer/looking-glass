@@ -22,10 +22,10 @@ $config['frontpage']['image'] = 'logo.png';
 $config['frontpage']['disclaimer'] = 'This is a disclaimer!';
 
 // Things to remove from the output (PHP compatible regex)
-$config['filters'][] = '/(client1|client2)/';
-$config['filters'][] = '/^NotToShow/';
+$config['filters']['output'][] = '/(client1|client2)/';
+$config['filters']['output'][] = '/^NotToShow/';
 // If telnet is used in combination with extreme_netiron, uncomment the following filter
-//$config['filters'][] = '/([^\x20-\x7E]|User|Please|Disable|telnet|^\s*$)/';
+//$config['filters']['output'][] = '/([^\x20-\x7E]|User|Please|Disable|telnet|^\s*$)/';
 
 // Google reCaptcha integration
 $config['recaptcha']['enabled'] = false;

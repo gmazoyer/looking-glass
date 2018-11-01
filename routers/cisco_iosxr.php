@@ -116,7 +116,7 @@ final class IOSXR extends Router {
         break;
 
       case 'as-path-regex':
-        if (match_aspath_regex($parameter)) {
+        if (match_aspath_regexp($parameter)) {
           if (!$this->config['disable_ipv6']) {
             $commands[] = 'show bgp ipv6 unicast regexp "'.$parameter.
               '"';

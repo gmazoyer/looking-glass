@@ -63,7 +63,7 @@ abstract class Router {
 
   private function sanitize_output($output) {
     // No filters defined
-    if (count($this->global_config['filters']) < 1) {
+    if (count($this->global_config['filters']['output']) < 1) {
       return preg_replace('/(?:\n|\r\n|\r)$/D', '', $output);
     }
 
@@ -72,7 +72,7 @@ abstract class Router {
     foreach (preg_split("/((\r?\n)|(\r\n?))/", $output) as $line) {
       $valid = true;
 
-      foreach ($this->global_config['filters'] as $filter) {
+      foreach ($this->global_config['filters']['output'] as $filter) {
         // Line has been marked as invalid
         // Or filtered based on the configuration
         if (!$valid || (preg_match($filter, $line) === 1)) {

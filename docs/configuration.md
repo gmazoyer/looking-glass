@@ -245,11 +245,29 @@ logs file.
 ### Filters
 
 ```php
-$config['filters'][] = '/(client1|client2)/';
-$config['filters'][] = '/^NotToShow/';
+$config['filters']['output'][] = '/(client1|client2)/';
+$config['filters']['output'][] = '/^NotToShow/';
 ```
 Defines filters to eliminate some lines from the output. Do not define any
 filters if there is no nothing to filter.
+
+```php
+// Use the unset command if you don't want to use pre-defined filters
+// unset $config['filters']['aspath_regexp'];
+$config['filters']['aspath_regexp'][] = '.* 64546 .*';
+```
+Defines AS path regexp values that must not be executed for some reasons. It
+can be used to avoid people trying to enter potential harmful AS path regexps.
+
+Pre-defined regexps are the following:
+  * `.`
+  * `.*`
+  * `.[,]*`
+  * `.[0-9,0-9]*`
+  * `.[0-9,0-9]+`
+
+To reset the default filter, the `unset` command must be used first before
+adding new values.
 
 ### Google reCAPTCHA
 

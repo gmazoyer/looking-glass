@@ -208,24 +208,33 @@ function match_as($as) {
   return true;
 }
 
-function match_aspath_regex($aspath_regex) {
-  // Empty AS path regex
-  if (empty($aspath_regex)) {
+function match_aspath_regexp($aspath_regexp) {
+  global $config;
+
+  // Empty AS path regexp
+  if (empty($aspath_regexp)) {
     return false;
   }
 
   // AS path containing a ; (not a valid character)
-  if (strpos($aspath_regex, ';') !== false) {
+  if (strpos($aspath_regexp, ';') !== false) {
     return false;
   }
 
   // AS path containing a " (not a valid character, the string is automatically
   // quoted if needed)
-  if (strpos($aspath_regex, '"') !== false) {
+  if (strpos($aspath_regexp, '"') !== false) {
     return false;
   }
 
-  // TODO: validate a regex with a regex?
+  // Check if the AS path regexp in in the list of regexp considered as
+  // invalid (see config option)
+  foreach ($config['filters']['aspath_regexp'] as $invalid_aspath_regexp) {
+    if ($invalid_aspath_regexp === $aspath_regexp) {
+      return false;
+    }
+  }
+
   return true;
 }
 

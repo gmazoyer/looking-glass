@@ -81,7 +81,7 @@ final class Juniper extends Router {
         break;
 
       case 'as-path-regex':
-        if (match_aspath_regex($parameter)) {
+        if (match_aspath_regexp($parameter)) {
           if (!$this->config['disable_ipv6']) {
             $commands[] = 'show route aspath-regex "'.$parameter.
               '" protocol bgp table inet6.0'.$bgpdetail;

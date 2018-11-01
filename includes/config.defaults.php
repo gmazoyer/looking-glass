@@ -92,7 +92,18 @@ $config = array(
   ),
 
   // Filters
-  'filters' => array(),
+  'filters' => array(
+    // Lines (based on regexp) not to show in the output
+    'output' => array(),
+    // AS path regexps to disallow
+    'aspath_regexp' => array(
+      '.',
+      '.*',
+      '.[,]*',
+      '.[0-9,0-9]*',
+      '.[0-9,0-9]+'
+    )
+  ),
 
   // Google reCaptcha
   'recaptcha' => array(

@@ -125,7 +125,7 @@ final class ExtremeNetIron extends Router {
         break;
 
       case 'as-path-regex':
-        if (match_aspath_regex($parameter)) {
+        if (match_aspath_regexp($parameter)) {
           if (!$this->config['disable_ipv6']) {
             $commands[] = "skip-page-display\r\nshow ipv6 bgp routes ".$bgpdetail."regular-expression \"".$parameter.
               '"';

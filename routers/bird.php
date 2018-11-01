@@ -125,7 +125,7 @@ final class Bird extends Router {
         break;
 
       case 'as-path-regex':
-        if (match_aspath_regex($parameter)) {
+        if (match_aspath_regexp($parameter)) {
           if (!$this->config['disable_ipv6']) {
             $commands[] = $birdc6.' \'show route where bgp_path ~ [= '.
               $parameter.' =]'.$bgpdetail.'\'';
