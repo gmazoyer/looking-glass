@@ -1,3 +1,5 @@
 config.php
+logo.*
+peering_policy.*
 *.log
 *.html
