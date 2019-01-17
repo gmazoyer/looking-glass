@@ -1,4 +1,4 @@
-FROM php:apache
+FROM php7.2:apache
 MAINTAINER Guillaume Mazoyer <gmazoyer@gravitons.in>
 
 RUN apt update
