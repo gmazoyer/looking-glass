@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 2.0.1 | Established (Bug fixes release) | 2018-01-30
+
+  * Remove dead code
+  * Add documentation for FRRouting (thanks to pautiina)
+  * Fix focus and highlight the parameter field if it was omitted
+
 ## Version 2.0.0 | Established (New major release) | 2018-01-28
 
   * First major release of 2.X.Y branch
@@ -65,4 +71,3 @@ documentation.
   * Routes, AS, ping and traceroute related commands
   * Requires at least PHP 5.2
   * Embeds Bootstrap 3.3.1, jQuery 2.1.1 and phpseclib 0.3.7
-

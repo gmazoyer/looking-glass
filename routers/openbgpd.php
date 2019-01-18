@@ -2,8 +2,8 @@
 
 /*
  * Looking Glass - An easy to deploy Looking Glass
- * Copyright (C) 2017-2018 Guillaume Mazoyer <gmazoyer@gravitons.in>
- * Copyright (C) 2017-2018 Denis Fondras <github@ggl.ledeuns.net>
+ * Copyright (C) 2017-2019 Guillaume Mazoyer <gmazoyer@gravitons.in>
+ * Copyright (C) 2017-2019 Denis Fondras <github@ggl.ledeuns.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -94,7 +94,7 @@ final class OpenBGPd extends Router {
           ($this->get_source_interface_id('ipv4') != null)) {
         $traceroute .= ' '.
           $this->global_config['tools']['traceroute_source_option'].' '.
-          $this->get_source_interface_id('ipv4').' '. 
+          $this->get_source_interface_id('ipv4').' '.
           (isset($hostname) ? $hostname : $destination);
       }
     }
