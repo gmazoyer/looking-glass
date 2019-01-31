@@ -661,7 +661,7 @@ class Crypt_Base
                 $count = isset($func_args[4]) ? $func_args[4] : 1000;
 
                 // Keylength
-                if (isset($func_args[5])) {
+                if (isset($func_args[5]) && $func_args[5] > 0) {
                     $dkLen = $func_args[5];
                 } else {
                     $dkLen = $method == 'pbkdf1' ? 2 * $this->key_length : $this->key_length;
@@ -696,10 +696,10 @@ class Crypt_Base
                             include_once 'Crypt/Hash.php';
                         }
                         $i = 1;
+                        $hmac = new Crypt_Hash();
+                        $hmac->setHash($hash);
+                        $hmac->setKey($password);
                         while (strlen($key) < $dkLen) {
-                            $hmac = new Crypt_Hash();
-                            $hmac->setHash($hash);
-                            $hmac->setKey($password);
                             $f = $u = $hmac->hash($salt . pack('N', $i++));
                             for ($j = 2; $j <= $count; ++$j) {
                                 $u = $hmac->hash($u);
