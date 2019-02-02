@@ -92,7 +92,7 @@ abstract class Router {
 
   protected function format_output($command, $output) {
     if ($this->global_config['output']['show_command']) {
-      $displayable  = '<p><kbd>Command: '.$command.'</kdb></p>';
+      $displayable = '<p><kbd>Command: '.$command.'</kdb></p>';
     }
     $displayable .= '<pre class="pre-scrollable">'.$output.'</pre>';
 
@@ -103,7 +103,7 @@ abstract class Router {
     return isset($this->config['source-interface-id']);
   }
 
-  protected function get_source_interface_id($ip_version = null) {
+  protected function get_source_interface_id($ip_version = 'ipv6') {
     // No source interface ID specified
     if (!$this->has_source_interface_id()) {
       return null;
