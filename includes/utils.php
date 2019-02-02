@@ -169,6 +169,17 @@ function match_hostname($hostname) {
 }
 
 /**
+ * Test if a given destination is valid. It will match this destination against
+ * individual functions checking if it is a valid IP address or hostname.
+ *
+ * @return boolean true if the destination is valid, false otherwise.
+ */
+function is_valid_destination($destination) {
+  return match_ipv6($destination) || match_ipv4($destination) ||
+         match_hostname($destination);
+}
+
+/**
  * Test if a given parameter is a valid AS number or not.
  *
  * @param  integer $as the parameter to test.

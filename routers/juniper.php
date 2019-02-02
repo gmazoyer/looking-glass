@@ -26,8 +26,7 @@ final class Juniper extends Router {
   protected function build_ping($destination) {
     $ping = null;
 
-    if (match_hostname($destination) || match_ipv6($destination) ||
-        match_ipv4($destination)) {
+    if (is_valid_destination($destination)) {
       $ping = 'ping count 10 rapid '.$destination;
     } else {
       throw new Exception('The parameter is not an IP address or a hostname.');
