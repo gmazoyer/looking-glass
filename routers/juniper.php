@@ -24,15 +24,12 @@ require_once('includes/utils.php');
 
 final class Juniper extends Router {
   protected function build_ping($destination) {
-    $ping = null;
-
-    if (is_valid_destination($destination)) {
-      $ping = 'ping count 10 rapid '.$destination;
-    } else {
+    if (!is_valid_destination($destination)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
 
-    if (($ping != null) && $this->has_source_interface_id()) {
+    $ping = 'ping count 10 rapid '.$destination;
+    if ($this->has_source_interface_id()) {
       $ping .= ' interface '.$this->get_source_interface_id();
     }
 
@@ -50,7 +47,7 @@ final class Juniper extends Router {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
 
-    if (($traceroute != null) && $this->has_source_interface_id()) {
+    if ($this->has_source_interface_id()) {
       $traceroute .= ' interface '.$this->get_source_interface_id();
     }
 
@@ -59,21 +56,16 @@ final class Juniper extends Router {
 
   protected function build_commands($command, $parameter) {
     $commands = array();
-
-    if ($this->config['bgp_detail']) {
-      $bgpdetail = ' detail';
-    } else {
-      $bgpdetail = '';
-    }
+    $bgp_detail = $this->config['bgp_detail'] ? ' detail' : '';
 
     switch ($command) {
       case 'bgp':
         if (match_ipv6($parameter, false)) {
           $commands[] = 'show route '.$parameter.
-            ' protocol bgp table inet6.0 active-path'.$bgpdetail;
+            ' protocol bgp table inet6.0 active-path'.$bgp_detail;
         } else if (match_ipv4($parameter, false)) {
           $commands[] = 'show route '.$parameter.
-            ' protocol bgp table inet.0 active-path'.$bgpdetail;
+            ' protocol bgp table inet.0 active-path'.$bgp_detail;
         } else {
           throw new Exception('The parameter is not an IP address.');
         }
@@ -83,11 +75,11 @@ final class Juniper extends Router {
         if (match_aspath_regexp($parameter)) {
           if (!$this->config['disable_ipv6']) {
             $commands[] = 'show route aspath-regex "'.$parameter.
-              '" protocol bgp table inet6.0'.$bgpdetail;
+              '" protocol bgp table inet6.0'.$bgp_detail;
           }
           if (!$this->config['disable_ipv4']) {
             $commands[] = 'show route aspath-regex "'.$parameter.
-              '" protocol bgp table inet.0'.$bgpdetail;
+              '" protocol bgp table inet.0'.$bgp_detail;
           }
         } else {
           throw new Exception('The parameter is not an AS-Path regular expression.');
@@ -98,11 +90,11 @@ final class Juniper extends Router {
         if (match_as($parameter)) {
           if (!$this->config['disable_ipv6']) {
             $commands[] = 'show route aspath-regex "^'.$parameter.
-              ' .*" protocol bgp table inet6.0'.$bgpdetail;
+              ' .*" protocol bgp table inet6.0'.$bgp_detail;
           }
           if (!$this->config['disable_ipv4']) {
             $commands[] = 'show route aspath-regex "^'.$parameter.
-              ' .*" protocol bgp table inet.0'.$bgpdetail;
+              ' .*" protocol bgp table inet.0'.$bgp_detail;
           }
         } else {
           throw new Exception('The parameter is not an AS number.');

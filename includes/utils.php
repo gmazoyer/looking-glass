@@ -169,14 +169,25 @@ function match_hostname($hostname) {
 }
 
 /**
+ * Test if a given IP address is valid. It will match this destination against
+ * individual functions checking if it is a valid IP address.
+ *
+ * @param  string  $ip_address the IP address to validate.
+ * @return boolean true if the IP address is valid, false otherwise.
+ */
+function is_valid_ip_address($ip_address) {
+  return match_ipv6($ip_address, false) || match_ipv4($ip_address, false);
+}
+
+/**
  * Test if a given destination is valid. It will match this destination against
  * individual functions checking if it is a valid IP address or hostname.
  *
+ * @param  string  $destination the destination to validate.
  * @return boolean true if the destination is valid, false otherwise.
  */
 function is_valid_destination($destination) {
-  return match_ipv6($destination) || match_ipv4($destination) ||
-         match_hostname($destination);
+  return is_valid_ip_address($destination) || match_hostname($destination);
 }
 
 /**
