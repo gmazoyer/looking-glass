@@ -111,62 +111,89 @@ abstract class Router {
 
     $source_interface_id = $this->config['source-interface-id'];
 
-    // Generic interface ID (interface name)
     if (!is_array($source_interface_id)) {
+      // Interface not being IP version specific
       return $source_interface_id;
     }
-
-    // Composed interface ID (IPv4 and IPv6 address)
-    if (($ip_version == null) || ($ip_version == 'ipv4')) {
-      return $source_interface_id['ipv4'];
-    } else if ($ip_version == 'ipv6') {
-      return $source_interface_id['ipv6'];
-    }
-
-    return null;
+    return $source_interface_id[$ip_version];
   }
+
+  protected abstract function build_bgp($parameter);
+
+  protected abstract function build_aspath_regexp($parameter);
+
+  protected abstract function build_as($parameter);
 
   protected abstract function build_ping($destination);
 
   protected abstract function build_traceroute($destination);
 
-  protected abstract function build_commands($command, $parameter);
+  private function build_commands($command, $parameter) {
+    $commands = array();
+
+    switch ($command) {
+      case 'bgp':
+        if (!is_valid_ip_address($parameter)) {
+          throw new Exception('The parameter is not an IP address.');
+        }
+        array_push($commands, $this->build_bgp($parameter));
+        break;
+
+      case 'as-path-regex':
+        if (!match_aspath_regexp($parameter)) {
+          throw new Exception('The parameter is not an AS-Path regular expression.');
+        }
+        array_push($commands, $this->build_aspath_regexp($parameter));
+        break;
+
+      case 'as':
+        if (!match_as($parameter)) {
+          throw new Exception('The parameter is not an AS number.');
+        }
+        array_push($commands, $this->build_as($parameter));
+        break;
+
+      case 'ping':
+        array_push($commands, $this->build_ping($parameter));
+        break;
+
+      case 'traceroute':
+        array_push($commands, $this->build_traceroute($parameter));
+        break;
+
+      default:
+        throw new Exception('Command not supported.');
+    }
+
+    return $commands;
+  }
 
   public function get_config() {
     return $this->config;
   }
 
   public function send_command($command, $parameter) {
-    try {
-      $commands = $this->build_commands($command, $parameter);
-    } catch (Exception $e) {
-      throw $e;
-    }
-
+    $commands = $this->build_commands($command, $parameter);
     $auth = Authentication::instance($this->config,
       $this->global_config['logs']['auth_debug']);
 
-    try {
-      $data = '';
+    $data = '';
 
-      foreach ($commands as $selected) {
-        $log = str_replace(array('%D', '%R', '%H', '%C'),
-          array(date('Y-m-d H:i:s'), $this->requester, $this->config['host'],
-          '[BEGIN] '.$selected), $this->global_config['logs']['format']);
-        log_to_file($log);
+    foreach ($commands as $selected) {
+      $log = str_replace(array('%D', '%R', '%H', '%C'),
+        array(date('Y-m-d H:i:s'), $this->requester, $this->config['host'],
+        '[BEGIN] '.$selected), $this->global_config['logs']['format']);
+      log_to_file($log);
 
-        $output = $auth->send_command($selected);
-        $output = $this->sanitize_output($output);
+      $output = $auth->send_command($selected->to_string());
+      $output = $this->sanitize_output($output);
 
-        $data .= $this->format_output($selected, $output);
+      $data .= $this->format_output($selected, $output);
 
-        $log = str_replace(array('%D', '%R', '%H', '%C'),
-          array(date('Y-m-d H:i:s'), $this->requester, $this->config['host'],
-          '[END] '.$selected), $this->global_config['logs']['format']);
-        log_to_file($log);
-      }
-    } catch (Exception $e) {
-      throw $e;
+      $log = str_replace(array('%D', '%R', '%H', '%C'),
+        array(date('Y-m-d H:i:s'), $this->requester, $this->config['host'],
+        '[END] '.$selected), $this->global_config['logs']['format']);
+      log_to_file($log);
     }
 
     return $data;

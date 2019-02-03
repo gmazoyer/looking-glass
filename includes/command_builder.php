@@ -61,4 +61,4 @@ class CommandBuilder {
   }
 }
 
-// End of string_builder.php
+// End of command_builder.php
