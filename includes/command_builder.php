@@ -49,7 +49,7 @@ class CommandBuilder {
    *
    * @param  string $separator the string to use as a separator, the default
    *                           value is one space.
-   * @return string a single string containing all elements delimited by a
+   * @return string a single string containing all elements separated by a
    *                separator.
    */
   public function to_string($separator = ' ') {
@@ -58,6 +58,15 @@ class CommandBuilder {
       $string .= ' '.$element;
     }
     return $string;
+  }
+
+  /**
+   * Returns a string of all the elements that have been used in the builder.
+   *
+   * @return string a single string with all elements separated by spaces.
+   */
+  public function __toString() {
+    return $this->to_string();
   }
 }
 

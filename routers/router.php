@@ -185,7 +185,7 @@ abstract class Router {
         '[BEGIN] '.$selected), $this->global_config['logs']['format']);
       log_to_file($log);
 
-      $output = $auth->send_command($selected->to_string());
+      $output = $auth->send_command((string) $selected);
       $output = $this->sanitize_output($output);
 
       $data .= $this->format_output($selected, $output);
