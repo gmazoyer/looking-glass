@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/respawner/looking-glass.svg?branch=master)](https://travis-ci.org/respawner/looking-glass)
 [![Documentation Status](https://readthedocs.org/projects/looking-glass/badge/?version=latest)](http://looking-glass.readthedocs.io/en/latest/?badge=latest)
-[![Liberapay](https://img.shields.io/badge/liberapay-donate-yellow.svg?style=flat-square)](https://liberapay.com/gmazoyer/donate)
+[![Liberapay](https://img.shields.io/badge/liberapay-donate-yellow.svg)](https://liberapay.com/gmazoyer/donate)
 
 # Looking Glass
 
