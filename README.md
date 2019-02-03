@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/respawner/looking-glass.svg?branch=master)](https://travis-ci.org/respawner/looking-glass)
 [![Documentation Status](https://readthedocs.org/projects/looking-glass/badge/?version=latest)](http://looking-glass.readthedocs.io/en/latest/?badge=latest)
+[![Paypal](https://img.shields.io/badge/paypal-donate-yellow.svg)](https://paypal.me/GuillaumeMazoyer)
 [![Liberapay](https://img.shields.io/badge/liberapay-donate-yellow.svg)](https://liberapay.com/gmazoyer/donate)
 
 # Looking Glass
@@ -9,9 +10,9 @@ Easy to deploy Looking Glass made in PHP.
 ## Requirements
 
   * Webserver such as Apache 2, or Lighttpd, etc…
-  * PHP (> 5.3) module for the webserver (mod-php5 for Apache 2 for example)
-  * When using PHP >= 7, the XML package is required as well (php7.0-xml on
-    Debian for example)
+  * PHP (>= 7.0) module for the webserver (libapache2-mod-php for Apache 2 for
+    example)
+  * The XML package is required as well (php7.0-xml on Debian for example)
 
 ## Description
 
@@ -68,7 +69,8 @@ An up-to-date (hopefully) documentation is available in the **docs/**
 directory. It gives enough details to setup the looking glass, to configure it
 and to prepare your routers.
 
-You can also find it at [Read the Docs](http://looking-glass.readthedocs.io/en/latest/).
+You can also find it at
+[Read the Docs](http://looking-glass.readthedocs.io/en/latest/).
 
 ## License
 
@@ -92,14 +94,12 @@ You can help this project in many ways. Of course you can ask for features,
 give some ideas for future development, open issues if you found any and
 contribute to the code with pull requests and patches.
 
-You can also support the development of this project by
-[donating some money](https://paypal.me/GuillaumeMazoyer). Developing such
-project can be time consuming and it is done on personal time. Giving few
-dollars/euros/pounds/etc... can be a way to say thanks and help to free some
-time to develop this project.
+You can also support the development of this project by donating some coins,
+take a look at the badges above.
 
 ## Thanks
 
   * [Bootstrap](http://getbootstrap.com/) and [jQuery](http://jquery.com/) for
     making CSS and Javascript less painful for people like me.
-  * [Romain Boissat](https://chroot-me.in/) for all his great ideas, bug reports and contributions.
+  * [Romain Boissat](https://chroot-me.in/) for all his great ideas, bug
+    reports and contributions.
