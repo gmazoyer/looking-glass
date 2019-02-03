@@ -20,161 +20,143 @@
  */
 
 require_once('router.php');
+require_once('includes/command_builder.php');
 require_once('includes/utils.php');
 
 final class Bird extends Router {
+  private static $birdc6 = 'birdc6';
+  private static $birdc4 = 'birdc';
+
+  private function get_bird_binary($ipv6 = true) {
+    return $ipv6 ? $birdc6 : $birdc4;
+  }
+
+  private function get_aspath($parameter) {
+    $cmd = new CommandBuilder();
+    $cmd->add($this->get_bird_binary(match_ipv6($parameter, false)));
+
+    // Build the command to send to the binary
+    $cmd->add("'show route where bgp_path ~ [=", $parameter, '=]');
+    if ($this->config['bgp_detail']) {
+      $cmd->add('all');
+    }
+    $cmd("'");
+
+    return array($cmd);
+  }
+
+  protected function build_bgp($parameter) {
+    if (!is_valid_ip_address($parameter)) {
+      throw new Exception('The parameter is not an IP address.');
+    }
+
+    $cmd = new CommandBuilder();
+    $cmd->add($this->get_bird_binary(match_ipv6($parameter, false)));
+
+    // Build the command to send to the binary
+    $cmd->add("'show route for", $parameter);
+    if ($this->config['bgp_detail']) {
+      $cmd->add('all');
+    }
+    $cmd("'");
+
+    return array($cmd);
+  }
+
+  protected function build_aspath_regexp($parameter) {
+    if (!match_aspath_regexp($parameter)) {
+      throw new Exception('The parameter is not an AS-Path regular expression.');
+    }
+    return $this->get_aspath($parameter);
+  }
+
+  protected function build_as($parameter) {
+    if (!match_as($parameter)) {
+      throw new Exception('The parameter is not an AS number.');
+    }
+    return $this->get_aspath($parameter);
+  }
+
   protected function build_ping($destination) {
-    $ping = null;
-
+    // If the destination is a hostname, try to resolve it to an IP address
     if (match_hostname($destination)) {
-      $hostname = $destination;
-      $destination = hostname_to_ip_address($hostname, $this->config);
-
+      $destination = hostname_to_ip_address($destination, $this->config);
       if (!$destination) {
         throw new Exception('No record found for '.$hostname);
       }
     }
 
-    if (match_ipv6($destination)) {
-      $ping = 'ping6 '.$this->global_config['tools']['ping_options'].' '.
-        (isset($hostname) ? $hostname : $destination);
-    } else if (match_ipv4($destination)) {
-      $ping = 'ping '.$this->global_config['tools']['ping_options'].' '.
-        (isset($hostname) ? $hostname : $destination);
-    } else {
+    if (!is_valid_ip_address($destination)) {
       throw new Exception('The parameter does not resolve to an IP address.');
     }
 
-    if (($ping != null) && $this->has_source_interface_id()) {
-      if (match_ipv6($destination) &&
-          ($this->get_source_interface_id('ipv6') != null)) {
-        $ping .= ' '.$this->global_config['tools']['ping_source_option'].' '.
-          $this->get_source_interface_id('ipv6');
-      } else if (match_ipv4($destination) &&
-          ($this->get_source_interface_id('ipv4') != null)) {
-        $ping .= ' '.$this->global_config['tools']['ping_source_option'].' '.
-          $this->get_source_interface_id('ipv4');
+    $cmd = new CommandBuilder();
+
+    // Build the command based on the IP address
+    if (match_ipv6($destination)) {
+      $cmd->add('ping6', $this->global_config['tools']['ping_options'],
+                (isset($hostname) ? $hostname : $destination));
+    }
+    if (match_ipv4($destination)) {
+      $cmd->add('ping4', $this->global_config['tools']['ping_options'],
+                (isset($hostname) ? $hostname : $destination));
+    }
+
+    // Add the source interface based on the IP address
+    if ($this->has_source_interface_id()) {
+      if (match_ipv6($destination) && $this->get_source_interface_id('ipv6')) {
+        $cmd->add($this->global_config['tools']['ping_source_option'],
+                  $this->get_source_interface_id('ipv6'));
+      }
+      if (match_ipv4($destination) && $this->get_source_interface_id('ipv4')) {
+        $cmd->add($this->global_config['tools']['ping_source_option'],
+                  $this->get_source_interface_id('ipv4'));
       }
     }
 
-    return $ping;
+    return array($cmd);
   }
 
   protected function build_traceroute($destination) {
-    $traceroute = null;
-
+    // If the destination is a hostname, try to resolve it to an IP address
     if (match_hostname($destination)) {
-      $hostname = $destination;
-      $destination = hostname_to_ip_address($hostname, $this->config);
-
+      $destination = hostname_to_ip_address($destination, $this->config);
       if (!$destination) {
         throw new Exception('No record found for '.$hostname);
       }
     }
 
-    if (match_ipv6($destination)) {
-      $traceroute = $this->global_config['tools']['traceroute6'].' '.
-        $this->global_config['tools']['traceroute_options'].' '.
-        (isset($hostname) ? $hostname : $destination);
-    } else if (match_ipv4($destination)) {
-      $traceroute = $this->global_config['tools']['traceroute4'].' '.
-        $this->global_config['tools']['traceroute_options'].' '.
-        (isset($hostname) ? $hostname : $destination);
-    } else {
+    if (!is_valid_ip_address($destination)) {
       throw new Exception('The parameter does not resolve to an IP address.');
     }
 
-    if (($traceroute != null) && $this->has_source_interface_id()) {
-      if (match_ipv6($destination) &&
-          ($this->get_source_interface_id('ipv6') != null)) {
-        $traceroute .= ' '.
-          $this->global_config['tools']['traceroute_source_option'].' '.
-          $this->get_source_interface_id('ipv6');
-      } else if (match_ipv4($destination) &&
-          ($this->get_source_interface_id('ipv4') != null)) {
-        $traceroute .= ' '.
-          $this->global_config['tools']['traceroute_source_option'].' '.
-          $this->get_source_interface_id('ipv4');
+    $cmd = new CommandBuilder();
+
+    // Build the command based on the IP address
+    if (match_ipv6($destination)) {
+      $cmd->add($this->global_config['tools']['traceroute6'],
+                $this->global_config['tools']['traceroute_options'],
+                (isset($hostname) ? $hostname : $destination));
+    }
+    if (match_ipv4($destination)) {
+      $cmd->add($this->global_config['tools']['traceroute4'],
+                $this->global_config['tools']['traceroute_options'],
+                (isset($hostname) ? $hostname : $destination));
+    }
+
+    // Add the source interface based on the IP address
+    if ($this->has_source_interface_id()) {
+      if (match_ipv6($destination) && $this->get_source_interface_id('ipv6')) {
+        $cmd->add($this->global_config['tools']['traceroute_source_option'],
+                  $this->get_source_interface_id('ipv6'));
+      }
+      if (match_ipv4($destination) && $this->get_source_interface_id('ipv4')) {
+        $cmd->add($this->global_config['tools']['traceroute_source_option'],
+                  $this->get_source_interface_id('ipv4'));
       }
     }
 
-    return $traceroute;
-  }
-
-  protected function build_commands($command, $parameter) {
-    $commands = array();
-
-    $birdc6 = 'birdc6';
-    $birdc = 'birdc';
-
-    if ($this->config['bgp_detail']) {
-      $bgpdetail = ' all';
-    } else {
-      $bgpdetail = '';
-    }
-
-    switch ($command) {
-      case 'bgp':
-        if (match_ipv6($parameter, false)) {
-          $commands[] = $birdc6.' \'show route for '.$parameter.$bgpdetail.'\'';
-        } else if (match_ipv4($parameter, false)) {
-          $commands[] = $birdc.' \'show route for '.$parameter.$bgpdetail.'\'';
-        } else {
-          throw new Exception('The parameter is not an IP address.');
-        }
-        break;
-
-      case 'as-path-regex':
-        if (match_aspath_regexp($parameter)) {
-          if (!$this->config['disable_ipv6']) {
-            $commands[] = $birdc6.' \'show route where bgp_path ~ [= '.
-              $parameter.' =]'.$bgpdetail.'\'';
-          }
-          if (!$this->config['disable_ipv4']) {
-            $commands[] = $birdc.' \'show route where bgp_path ~ [= '.
-              $parameter.' =]'.$bgpdetail.'\'';
-          }
-        } else {
-          throw new Exception('The parameter is not an AS-Path regular expression.');
-        }
-        break;
-
-      case 'as':
-        if (match_as($parameter)) {
-          if (!$this->config['disable_ipv6']) {
-            $commands[] = $birdc6.' \'show route where bgp_path ~ [= '.
-              $parameter.' =]'.$bgpdetail.'\'';
-          }
-          if (!$this->config['disable_ipv4']) {
-            $commands[] = $birdc.' \'show route where bgp_path ~ [= '.
-              $parameter.' =]'.$bgpdetail.'\'';
-          }
-        } else {
-          throw new Exception('The parameter is not an AS number.');
-        }
-        break;
-
-      case 'ping':
-        try {
-          $commands[] = $this->build_ping($parameter);
-        } catch (Exception $e) {
-          throw $e;
-        }
-        break;
-
-      case 'traceroute':
-        try {
-          $commands[] = $this->build_traceroute($parameter);
-        } catch (Exception $e) {
-          throw $e;
-        }
-        break;
-
-      default:
-        throw new Exception('Command not supported.');
-    }
-
-    return $commands;
+    return array($cmd);
   }
 }
 
