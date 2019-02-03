@@ -23,7 +23,7 @@ require_once('router.php');
 require_once('includes/command_builder.php');
 require_once('includes/utils.php');
 
-final class Cisco extends Router {
+class Cisco extends Router {
   protected function build_bgp($parameter) {
     if (!is_valid_ip_address($parameter)) {
       throw new Exception('The parameter is not an IP address.');
