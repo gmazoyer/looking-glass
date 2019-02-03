@@ -88,10 +88,11 @@ final class Cisco extends Router {
     }
 
     $cmd = new CommandBuilder('traceroute');
-    if (match_ipv6($destination) || match_ipv4($destination) ||
+    if (match_ipv6($parameter) || match_ipv4($parameter) ||
         !$this->has_source_interface_id()) {
       $cmd->add($parameter);
     } else {
+      // Resolve the hostname and go for right IP version
       $hostname = $parameter;
       $parameter = hostname_to_ip_address($hostname);
 
@@ -100,13 +101,14 @@ final class Cisco extends Router {
       }
 
       if (match_ipv6($parameter)) {
-        $cmd->add('ipv6', (isset($hostname) ? $hostname : $destination));
+        $cmd->add('ipv6', (isset($hostname) ? $hostname : $parameter));
       }
       if (match_ipv4($parameter)) {
-        $cmd->add('ip', (isset($hostname) ? $hostname : $destination));
+        $cmd->add('ip', (isset($hostname) ? $hostname : $parameter));
       }
     }
 
+    // Make sure to use the right source interface
     if ($this->has_source_interface_id() && !match_ipv6($parameter)) {
       $cmd->add('source', $this->get_source_interface_id());
     }
