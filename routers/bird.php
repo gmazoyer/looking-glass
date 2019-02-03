@@ -24,25 +24,28 @@ require_once('includes/command_builder.php');
 require_once('includes/utils.php');
 
 final class Bird extends Router {
-  private static $birdc6 = 'birdc6';
-  private static $birdc4 = 'birdc';
-
   private function get_bird_binary($ipv6 = true) {
-    return $ipv6 ? $birdc6 : $birdc4;
+    return $ipv6 ? 'birdc6' : 'birdc';
   }
 
   private function get_aspath($parameter) {
-    $cmd = new CommandBuilder();
-    $cmd->add($this->get_bird_binary(match_ipv6($parameter, false)));
+    $commands = array();
 
-    // Build the command to send to the binary
-    $cmd->add("'show route where bgp_path ~ [=", $parameter, '=]');
-    if ($this->config['bgp_detail']) {
-      $cmd->add('all');
+    foreach (array(true, false) as $ipv6_enabled) {
+      $cmd = new CommandBuilder();
+      $cmd->add($this->get_bird_binary($ipv6_enabled));
+
+      // Build the command to send to the binary
+      $cmd->add("'show route where bgp_path ~ [=", $parameter, '=]');
+      if ($this->config['bgp_detail']) {
+        $cmd->add('all');
+      }
+      $cmd("'");
+
+      $commands[] = $cmd;
     }
-    $cmd("'");
 
-    return array($cmd);
+    return $commands;
   }
 
   protected function build_bgp($parameter) {

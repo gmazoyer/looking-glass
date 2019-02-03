@@ -48,6 +48,9 @@ final class Juniper extends Router {
       throw new Exception('The parameter is not an AS-Path regular expression.');
     }
 
+    // Quote the regexp
+    $parameter = '"'.$parameter.'"';
+
     $commands = array();
     $cmd = new CommandBuilder('show route aspath-regex', $parameter,
                               'protocol bgp table');
@@ -76,27 +79,8 @@ final class Juniper extends Router {
       throw new Exception('The parameter is not an AS number.');
     }
 
-    $commands = array();
-    $cmd = new CommandBuilder('show route aspath-regex "^'.$parameter.
-                              '.*" protocol bgp table');
-    if (!$this->config['disable_ipv6']) {
-      $cmd6 = clone $cmd;
-      $cmd6->add('inet6.0');
-      if ($this->config['bgp_detail']) {
-        $cmd6->add('detail');
-      }
-      $commands[] = $cmd6;
-    }
-    if (!$this->config['disable_ipv4']) {
-      $cmd4 = clone $cmd;
-      $cmd4->add('inet.0');
-      if ($this->config['bgp_detail']) {
-        $cmd4->add('detail');
-      }
-      $commands[] = $cmd4;
-    }
-
-    return $commands;
+    $parameter = '^'.$parameter.' .*';
+    return $this->build_aspath_regexp($parameter);
   }
 
   protected function build_ping($destination) {
