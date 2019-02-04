@@ -39,6 +39,8 @@ final class FRR extends Quagga {
     if (!$this->config['disable_ipv4']) {
       $commands[] = (clone $cmd)->add('ip bgp regexp', $parameter, '"');
     }
+
+    return $commands;
   }
 }
 

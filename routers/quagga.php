@@ -59,6 +59,8 @@ class Quagga extends UNIX {
     if (!$this->config['disable_ipv4']) {
       $commands[] = (clone $cmd)->add('ip bgp regexp', $parameter, '"');
     }
+
+    return $commands;
   }
 
   protected function build_as($parameter) {
