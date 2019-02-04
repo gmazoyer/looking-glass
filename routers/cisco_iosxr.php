@@ -54,11 +54,13 @@ final class IOSXR extends Cisco {
 
     // Make sure to use the right source interface
     if ($this->has_source_interface_id()) {
+      $cmd->add('source');
+
       if (match_ipv6($parameter) && $this->get_source_interface_id('ipv6')) {
-        $cmd->add('source', $this->get_source_interface_id('ipv6'));
+        $cmd->add($this->get_source_interface_id('ipv6'));
       }
       if (match_ipv4($parameter) && $this->get_source_interface_id('ipv4')) {
-        $cmd->add('source', $this->get_source_interface_id('ipv4'));
+        $cmd->add($this->get_source_interface_id('ipv4'));
       }
     }
 
@@ -93,11 +95,13 @@ final class IOSXR extends Cisco {
 
     // Make sure to use the right source interface
     if ($this->has_source_interface_id()) {
+      $cmd->add('source');
+
       if (match_ipv6($parameter) && $this->get_source_interface_id('ipv6')) {
-        $cmd->add('source', $this->get_source_interface_id('ipv6'));
+        $cmd->add($this->get_source_interface_id('ipv6'));
       }
       if (match_ipv4($parameter) && $this->get_source_interface_id('ipv4')) {
-        $cmd->add('source', $this->get_source_interface_id('ipv4'));
+        $cmd->add($this->get_source_interface_id('ipv4'));
       }
     }
 
