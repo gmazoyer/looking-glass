@@ -20,109 +20,77 @@
  */
 
 require_once('router.php');
+require_once('includes/command_builder.php');
 require_once('includes/utils.php');
 
 final class Mikrotik extends Router {
-  protected function build_ping($destination) {
-    $ping = null;
-
-    if (match_ipv4($destination) || match_ipv6($destination)) {
-      $ping = 'ping count=10 address="'.$destination.'"';
-    } else if (match_hostname($destination)) {
-      $ping = 'ping count=10 address=[:resolv "'.$destination.'"]';
-    } else {
-      throw new Exception('The parameter is not an IP address or a hostname.');
+  protected function build_bgp($parameter) {
+    if (!is_valid_ip_address($parameter)) {
+      throw new Exception('The parameter is not an IP address.');
     }
 
-    if (($ping != null) && $this->has_source_interface_id()) {
-      $ping .= ' interface='.$this->get_source_interface_id();
+    $cmd = new CommandBuilder();
+    if (match_ipv6($parameter, false)) {
+      $cmd->add('ipv6');
+    } else if (match_ipv4($parameter, false)) {
+      $cmd->add('ip');
     }
-
-    return $ping;
-  }
-
-  protected function build_traceroute($destination) {
-    $traceroute = null;
-
-    if (match_ipv4($destination) || match_ipv6($destination)) {
-      $traceroute = 'tool traceroute count=1 use-dns=yes address="'.$destination.'"';
-    } else if (match_hostname($destination)) {
-      $traceroute = 'tool traceroute count=1 use-dns=yes address=[:resolv "'.$destination.'"]';
-    } else {
-      throw new Exception('The parameter is not an IP address or a hostname.');
-    }
-
-    if (($traceroute != null) && $this->has_source_interface_id()) {
-      $traceroute .= ' interface='.$this->get_source_interface_id();
-    }
-
-    return $traceroute;
-  }
-
-  protected function build_commands($command, $parameter) {
-    $commands = array();
+    $cmd->add('route print');
 
     if ($this->config['bgp_detail']) {
-      $bgpdetail = ' detail';
-    } else {
-      $bgpdetail = '';
+      $cmd->add('detail');
     }
 
-    switch ($command) {
-      case 'bgp':
-        if (match_ipv6($parameter, false)) {
-          $commands[] = 'ipv6 route print '.$bgpdetail.' where dst-address="'.$parameter.'"';
-        } else if (match_ipv4($parameter, false)) {
-          $commands[] = 'ip route print '.$bgpdetail.' where dst-address="'.$parameter.'"';
-        } else {
-          throw new Exception('The parameter is not an IP address.');
-        }
-        break;
+    $cmd->add('where', 'dst-address="'.$parameter.'"');
 
-      case 'as-path-regex':
-        if (match_aspath_regexp($parameter)) {
-          if (!$this->config['disable_ipv6']) {
-            $commands[] = 'ipv6 route print '.$bgpdetail.' where bgp-as-path="'.$parameter.'"';
-          }
-          if (!$this->config['disable_ipv4']) {
-            $commands[] = 'ip route print '.$bgpdetail.' where bgp-as-path="'.$parameter.'"';
-          }
-        } else {
-          throw new Exception('The parameter is not an AS-Path regular expression.');
-        }
-        break;
+    return array($cmd);
+  }
 
-      case 'as':
-        if (match_as($parameter)) {
-          if (!$this->config['disable_ipv6']) {
-            $commands[] = 'ipv6 route print '.$bgpdetail.' where bgp-as-path~"'.$parameter.'\$"';
-          }
-          if (!$this->config['disable_ipv4']) {
-            $commands[] = 'ip route print '.$bgpdetail.' where bgp-as-path~"'.$parameter.'\$"';
-          }
-        } else {
-          throw new Exception('The parameter is not an AS number.');
-        }
-        break;
+  protected function build_aspath_regexp($parameter) {
+    if (!match_aspath_regexp($parameter)) {
+      throw new Exception('The parameter is not an AS-Path regular expression.');
+    }
 
-      case 'ping':
-        try {
-          $commands[] = $this->build_ping($parameter);
-        } catch (Exception $e) {
-          throw $e;
-        }
-        break;
+    $commands = array();
 
-      case 'traceroute':
-        try {
-          $commands[] = $this->build_traceroute($parameter);
-        } catch (Exception $e) {
-          throw $e;
-        }
-        break;
+    if (!$this->config['disable_ipv6']) {
+      $cmd6 = new CommandBuilder('ipv6 route print');
+      if ($this->config['bgp_detail']) {
+        $cmd6->add('detail');
+      }
+      $commands[] = $cmd6->add('where', 'bgp-as-path="'.$parameter.'"');
+    }
+    if (!$this->config['disable_ipv4']) {
+      $cmd4 = new CommandBuilder('ip route print');
+      if ($this->config['bgp_detail']) {
+        $cmd4->add('detail');
+      }
+      $commands[] = $cmd4->add('where', 'bgp-as-path="'.$parameter.'"');
+    }
 
-      default:
-        throw new Exception('Command not supported.');
+    return $commands;
+  }
+
+  protected function build_as($parameter) {
+    if (!match_as($parameter)) {
+      throw new Exception('The parameter is not an AS number.');
+    }
+
+    $commands = array();
+
+    if (!$this->config['disable_ipv6']) {
+      $cmd6 = new CommandBuilder('ipv6 route print');
+      if ($this->config['bgp_detail']) {
+        $cmd6->add('detail');
+      }
+      $commands[] = $cmd6->add('where', 'bgp-as-path~"'.$parameter.'\$"');
+    }
+    if (!$this->config['disable_ipv4']) {
+      $cmd4 = new CommandBuilder('ip route print');
+      if ($this->config['bgp_detail']) {
+        $cmd4->add('detail');
+      }
+      $commands[] = $cmd4->add('where', 'bgp-as-path~"'.$parameter.'\$"');
     }
 
     return $commands;
