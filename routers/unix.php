@@ -52,7 +52,7 @@ abstract class UNIX extends Router {
                 (isset($hostname) ? $hostname : $destination));
     }
     if (match_ipv4($destination)) {
-      $cmd->add('ping4', $this->global_config['tools']['ping_options'],
+      $cmd->add('ping', $this->global_config['tools']['ping_options'],
                 (isset($hostname) ? $hostname : $destination));
     }
 
