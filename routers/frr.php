@@ -31,7 +31,7 @@ final class FRR extends Quagga {
 
     $commands = array();
     // vytsh commands need to be quoted
-    $cmd = new CommandBuilder(self::$vtysh, '"', 'show');
+    $cmd = new CommandBuilder(self::$wrapper, '"', 'show');
 
     if (!$this->config['disable_ipv6']) {
       $commands[] = (clone $cmd)->add('bgp ipv6 regexp', $parameter, '"');

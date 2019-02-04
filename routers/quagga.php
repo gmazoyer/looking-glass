@@ -24,7 +24,7 @@ require_once('includes/command_builder.php');
 require_once('includes/utils.php');
 
 class Quagga extends UNIX {
-  protected static $vtysh = 'vtysh -c';
+  protected static $wrapper = 'vtysh -c';
 
   protected function build_bgp($parameter) {
     if (!is_valid_ip_address($parameter)) {
@@ -32,7 +32,7 @@ class Quagga extends UNIX {
     }
 
     // vytsh commands need to be quoted
-    $cmd = new CommandBuilder(self::$vtysh, '"', 'show bgp');
+    $cmd = new CommandBuilder(self::$wrapper, '"', 'show bgp');
     if (match_ipv6($parameter, false)) {
       $cmd->add('ipv6');
     }
@@ -51,7 +51,7 @@ class Quagga extends UNIX {
 
     $commands = array();
     // vytsh commands need to be quoted
-    $cmd = new CommandBuilder(self::$vtysh, '"', 'show');
+    $cmd = new CommandBuilder(self::$wrapper, '"', 'show');
 
     if (!$this->config['disable_ipv6']) {
       $commands[] = (clone $cmd)->add('ipv6 bgp regexp', $parameter, '"');
