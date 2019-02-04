@@ -55,7 +55,7 @@ class CommandBuilder {
   public function to_string($separator = ' ') {
     $string = '';
     foreach ($elements as $element) {
-      $string .= ' '.$element;
+      $string .= $separator.$element;
     }
     return $string;
   }
