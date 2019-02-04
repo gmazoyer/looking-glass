@@ -105,7 +105,13 @@ final class OpenBGPd extends Router {
   protected function build_commands($command, $parameter) {
     $commands = array();
 
-    $bgpctl = 'bgpctl ';
+    if ($this->config['bgp_sudo'] == 1) {
+        $bgpctl = 'sudo bgpctl ';
+    } elseif ($this->config['bgp_sudo'] == 2) {
+        $bgpctl = 'doas bgpctl ';
+    } else {
+        $bgpctl = 'bgpctl ';
+    }
 
     if ($this->config['bgp_detail']) {
       $bgpdetail = ' detail';
