@@ -235,7 +235,7 @@ abstract class Router {
         return new Quagga($config, $router_config, $id, $requester);
 
       case 'frr':
-        return new Frr($config, $router_config, $id, $requester);
+        return new FRR($config, $router_config, $id, $requester);
 
       case 'vyatta':
       case 'vyos':
