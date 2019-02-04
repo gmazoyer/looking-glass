@@ -20,145 +20,53 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-require_once('router.php');
+require_once('unix.php');
+require_once('includes/command_builder.php');
 require_once('includes/utils.php');
 
-final class OpenBGPd extends Router {
-  protected function build_ping($destination) {
-    $ping = null;
+final class OpenBGPD extends UNIX {
+  private static $wrapper = 'bgpctl';
 
-    if (match_hostname($destination)) {
-      $hostname = $destination;
-      $destination = hostname_to_ip_address($hostname, $this->config);
-
-      if (!$destination) {
-        throw new Exception('No record found for '.$hostname);
-      }
+  protected function build_bgp($parameter) {
+    if (!is_valid_ip_address($parameter)) {
+      throw new Exception('The parameter is not an IP address.');
     }
 
-    if (match_ipv6($destination)) {
-      $ping = 'ping6 '.$this->global_config['tools']['ping_options'];
-    } else if (match_ipv4($destination)) {
-      $ping = 'ping '.$this->global_config['tools']['ping_options'];
-    } else {
-      throw new Exception('The parameter does not resolve to an IP address.');
-    }
-
-    if (($ping != null) && $this->has_source_interface_id()) {
-      if (match_ipv6($destination) &&
-          ($this->get_source_interface_id('ipv6') != null)) {
-        $ping .= ' '.$this->global_config['tools']['ping_source_option'].' '.
-          $this->get_source_interface_id('ipv6').' '.
-        (isset($hostname) ? $hostname : $destination);
-      } else if (match_ipv4($destination) &&
-          ($this->get_source_interface_id('ipv4') != null)) {
-        $ping .= ' '.$this->global_config['tools']['ping_source_option'].' '.
-          $this->get_source_interface_id('ipv4').' '.
-        (isset($hostname) ? $hostname : $destination);
-      }
-    }
-
-    return $ping;
-  }
-
-  protected function build_traceroute($destination) {
-    $traceroute = null;
-
-    if (match_hostname($destination)) {
-      $hostname = $destination;
-      $destination = hostname_to_ip_address($hostname, $this->config);
-
-      if (!$destination) {
-        throw new Exception('No record found for '.$hostname);
-      }
-    }
-
-    if (match_ipv6($destination)) {
-      $traceroute = $this->global_config['tools']['traceroute6'].' '.
-        $this->global_config['tools']['traceroute_options'];
-    } else if (match_ipv4($destination)) {
-      $traceroute = $this->global_config['tools']['traceroute4'].' '.
-        $this->global_config['tools']['traceroute_options'];
-    } else {
-      throw new Exception('The parameter does not resolve to an IP address.');
-    }
-
-    if (($traceroute != null) && $this->has_source_interface_id()) {
-      if (match_ipv6($destination) &&
-          ($this->get_source_interface_id('ipv6') != null)) {
-        $traceroute .= ' '.
-          $this->global_config['tools']['traceroute_source_option'].' '.
-          $this->get_source_interface_id('ipv6').' '.
-          (isset($hostname) ? $hostname : $destination);
-      } else if (match_ipv4($destination) &&
-          ($this->get_source_interface_id('ipv4') != null)) {
-        $traceroute .= ' '.
-          $this->global_config['tools']['traceroute_source_option'].' '.
-          $this->get_source_interface_id('ipv4').' '.
-          (isset($hostname) ? $hostname : $destination);
-      }
-    }
-
-    return $traceroute;
-  }
-
-  protected function build_commands($command, $parameter) {
-    $commands = array();
-
-    $bgpctl = 'bgpctl ';
-
+    $cmd = new CommandBuilder(self::$wrapper, 'show rib');
     if ($this->config['bgp_detail']) {
-      $bgpdetail = ' detail';
-    } else {
-      $bgpdetail = '';
+      $cmd->add('detail');
+    }
+    $cmd->add($parameter);
+
+    return array($cmd);
+  }
+
+  protected function build_aspath_regexp($parameter) {
+    if (!match_as($parameter)) {
+      throw new Exception('The parameter is not an AS number - OpenBGPD does not support AS-Path regular expressions.');
     }
 
-    switch ($command) {
-      case 'bgp':
-        if (match_ipv6($parameter, false) or match_ipv4($parameter, false)) {
-          $commands[] = $bgpctl.'show rib'.$bgpdetail.' '.$parameter;
-        } else {
-          throw new Exception('The parameter is not an IP address.');
-        }
-        break;
+    $cmd = new CommandBuilder(self::$wrapper, 'show rib');
+    if ($this->config['bgp_detail']) {
+      $cmd->add('detail');
+    }
+    $cmd->add('as', $parameter);
 
-      case 'as-path-regex':
-        if (match_as($parameter)) {
-          $commands[] = $bgpctl.'show rib'.$bgpdetail.' as '.$parameter;
-        } else {
-          throw new Exception('The parameter is not an AS number - OpenBGPD does not support AS-Path regular expressions.');
-        }
-        break;
+    return array($cmd);
+  }
 
-      case 'as':
-        if (match_as($parameter)) {
-          $commands[] = $bgpctl.'show rib'.$bgpdetail.' peer-as '.$parameter;
-        } else {
-          throw new Exception('The parameter is not an AS number.');
-        }
-        break;
-
-      case 'ping':
-        try {
-          $commands[] = $this->build_ping($parameter);
-        } catch (Exception $e) {
-          throw $e;
-        }
-        break;
-
-      case 'traceroute':
-        try {
-          $commands[] = $this->build_traceroute($parameter);
-        } catch (Exception $e) {
-          throw $e;
-        }
-        break;
-
-      default:
-        throw new Exception('Command not supported.');
+  protected function build_as($parameter) {
+    if (!match_as($parameter)) {
+      throw new Exception('The parameter is not an AS number.');
     }
 
-    return $commands;
+    $cmd = new CommandBuilder(self::$wrapper, 'show rib');
+    if ($this->config['bgp_detail']) {
+      $cmd->add('detail');
+    }
+    $cmd->add('peer-as', $parameter);
+
+    return array($cmd);
   }
 }
 

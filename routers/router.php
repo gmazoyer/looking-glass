@@ -228,7 +228,7 @@ abstract class Router {
         return new Mikrotik($config, $router_config, $id, $requester);
 
       case 'openbgpd':
-        return new OpenBGPd($config, $router_config, $id, $requester);
+        return new OpenBGPD($config, $router_config, $id, $requester);
 
       case 'quagga':
       case 'zebra':
