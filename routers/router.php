@@ -124,9 +124,9 @@ abstract class Router {
 
   protected abstract function build_as($parameter);
 
-  protected abstract function build_ping($destination);
+  protected abstract function build_ping($parameter);
 
-  protected abstract function build_traceroute($destination);
+  protected abstract function build_traceroute($parameter);
 
   private function build_commands($command, $parameter) {
     $commands = array();
