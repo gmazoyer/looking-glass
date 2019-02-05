@@ -54,7 +54,7 @@ class CommandBuilder {
    */
   public function to_string($separator = ' ') {
     $string = '';
-    foreach ($elements as $element) {
+    foreach ($this->elements as $element) {
       $string .= $separator.$element;
     }
     return $string;
