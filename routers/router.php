@@ -129,43 +129,36 @@ abstract class Router {
   protected abstract function build_traceroute($parameter);
 
   private function build_commands($command, $parameter) {
-    $commands = array();
-
     switch ($command) {
       case 'bgp':
         if (!is_valid_ip_address($parameter)) {
           throw new Exception('The parameter is not an IP address.');
         }
-        array_push($commands, $this->build_bgp($parameter));
-        break;
+        return $this->build_bgp($parameter);
 
       case 'as-path-regex':
         if (!match_aspath_regexp($parameter)) {
           throw new Exception('The parameter is not an AS-Path regular expression.');
         }
-        array_push($commands, $this->build_aspath_regexp($parameter));
-        break;
+        return $this->build_aspath_regexp($parameter);
 
       case 'as':
         if (!match_as($parameter)) {
           throw new Exception('The parameter is not an AS number.');
         }
-        array_push($commands, $this->build_as($parameter));
-        break;
+        return $this->build_as($parameter);
 
       case 'ping':
-        array_push($commands, $this->build_ping($parameter));
-        break;
+        return $this->build_ping($parameter);
 
       case 'traceroute':
-        array_push($commands, $this->build_traceroute($parameter));
-        break;
+        return $this->build_traceroute($parameter);
 
       default:
         throw new Exception('Command not supported.');
     }
 
-    return $commands;
+    return null;
   }
 
   public function get_config() {
