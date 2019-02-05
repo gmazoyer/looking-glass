@@ -65,7 +65,7 @@ final class ExtremeNetIron extends Router {
         $cmd6->add('detail');
       }
 
-      $commands[] = $cmd6->add('regular-expression', '"'.$parameter.'"');
+      $commands[] = $cmd6->add('regular-expression', quote($parameter));
     }
     if (!$this->config['disable_ipv4']) {
       $cmd4 = clone $cmd;
@@ -75,7 +75,7 @@ final class ExtremeNetIron extends Router {
         $cmd4->add('detail');
       }
 
-      $commands[] = $cmd4->add('regular-expression', '"'.$parameter.'"');
+      $commands[] = $cmd4->add('regular-expression', quote($parameter));
     }
 
     return $commands;

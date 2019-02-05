@@ -41,7 +41,7 @@ final class Mikrotik extends Router {
       $cmd->add('detail');
     }
 
-    $cmd->add('where', 'dst-address="'.$parameter.'"');
+    $cmd->add('where', 'dst-address='.quote($parameter));
 
     return array($cmd);
   }
@@ -58,14 +58,14 @@ final class Mikrotik extends Router {
       if ($this->config['bgp_detail']) {
         $cmd6->add('detail');
       }
-      $commands[] = $cmd6->add('where', 'bgp-as-path="'.$parameter.'"');
+      $commands[] = $cmd6->add('where', 'bgp-as-path='.quote($parameter));
     }
     if (!$this->config['disable_ipv4']) {
       $cmd4 = new CommandBuilder('ip route print');
       if ($this->config['bgp_detail']) {
         $cmd4->add('detail');
       }
-      $commands[] = $cmd4->add('where', 'bgp-as-path="'.$parameter.'"');
+      $commands[] = $cmd4->add('where', 'bgp-as-path='.quote($parameter));
     }
 
     return $commands;
@@ -83,14 +83,14 @@ final class Mikrotik extends Router {
       if ($this->config['bgp_detail']) {
         $cmd6->add('detail');
       }
-      $commands[] = $cmd6->add('where', 'bgp-as-path~"'.$parameter.'\$"');
+      $commands[] = $cmd6->add('where', 'bgp-as-path~'.quote($parameter.'\$'));
     }
     if (!$this->config['disable_ipv4']) {
       $cmd4 = new CommandBuilder('ip route print');
       if ($this->config['bgp_detail']) {
         $cmd4->add('detail');
       }
-      $commands[] = $cmd4->add('where', 'bgp-as-path~"'.$parameter.'\$"');
+      $commands[] = $cmd4->add('where', 'bgp-as-path~'.quote($parameter.'\$'));
     }
 
     return $commands;
@@ -102,10 +102,10 @@ final class Mikrotik extends Router {
     }
 
     $cmd = new CommandBuilder('ping count=10');
-    if (match_hostname($destination)) {
-      $cmd->add('address=[:resolv "'.$parameter.'"]');
+    if (match_hostname($parameter)) {
+      $cmd->add('address=[:resolv '.quote($parameter).']');
     } else {
-      $cmd->add('address="'.$destination.'"');
+      $cmd->add('address='.quote($parameter));
     }
 
     if ($this->has_source_interface_id()) {
@@ -114,16 +114,16 @@ final class Mikrotik extends Router {
 
     return array($cmd);
   }
-  protected function build_traceroute($destination) {
+  protected function build_traceroute($parameter) {
     if (!is_valid_destination($parameter)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
 
     $cmd = new CommandBuilder('tool traceroute count=1 use-dns=yes');
     if (match_hostname($destination)) {
-      $cmd->add('address=[:resolv "'.$parameter.'"]');
+      $cmd->add('address=[:resolv '.quote($parameter).']');
     } else {
-      $cmd->add('address="'.$destination.'"');
+      $cmd->add('address='.quote($parameter));
     }
 
     if ($this->has_source_interface_id()) {
