@@ -39,7 +39,7 @@ class CommandBuilder {
    * @return CommandBuilder the instance used when calling this function.
    */
   public function add() {
-    array_push($this->elements, func_get_args());
+    $this->elements = array_merge($this->elements, func_get_args());
     return $this;
   }
 
