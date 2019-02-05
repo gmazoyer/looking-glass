@@ -26,8 +26,9 @@ class CommandBuilder {
     // Use an array instead of a string to help in element manipulations
     $this->elements = array();
 
-    if (func_num_args() > 0) {
-      $this->add(func_get_args());
+    // Add elements given in constructor.
+    for ($i = 0; $i < func_num_args(); i++) {
+      $this->add(func_get_arg($i));
     }
   }
 
