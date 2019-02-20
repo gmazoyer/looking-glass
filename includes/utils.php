@@ -335,4 +335,14 @@ function log_to_file($log) {
   file_put_contents($config['logs']['file'], $log, FILE_APPEND | LOCK_EX);
 }
 
+/**
+ * Return the given string surrounded by quotes.
+ *
+ * @param  string $string the string to be quoted.
+ * @return string a string with double quotes at the beginning and at the end.
+ */
+function quote($string) {
+  return sprintf('"%s"', $string);
+}
+
 // End of utils.php

@@ -138,16 +138,16 @@ $config = array(
 
   // Tools used for some processing
   'tools' => array(
-    // Options to be used when pinging from a UNIX host (case of BIRD
-    // and Quagga)
+    // Options to be used when pinging from a UNIX host (case of BIRD, Quagga,
+    // and others)
     'ping_options' => '-A -c 10',
     // Source option to use when pinging
     'ping_source_option' => '-I',
     // Traceroute tool to be used
     'traceroute4' => 'traceroute -4',
     'traceroute6' => 'traceroute -6',
-    // Options to be used when tracerouting from a UNIX host (case of BIRD
-    // and Quagga)
+    // Options to be used when tracerouting from a UNIX host (case of BIRD,
+    // Quagga, and others)
     'traceroute_options' => '-A -q1 -N32 -w1 -m15',
     // Source option to use when tracerouting
     'traceroute_source_option' => '-s'
