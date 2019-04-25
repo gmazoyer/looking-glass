@@ -47,26 +47,28 @@ abstract class UNIX extends Router {
 
     $cmd = new CommandBuilder();
 
-    // Build the command based on the IP address
-    if (match_ipv6($parameter)) {
-      $cmd->add('ping6', $this->global_config['tools']['ping_options'],
-                (isset($hostname) ? $hostname : $parameter));
-    }
-    if (match_ipv4($destination)) {
-      $cmd->add('ping', $this->global_config['tools']['ping_options'],
-                (isset($hostname) ? $hostname : $parameter));
-    }
-
     // Add the source interface based on the IP address
     if ($this->has_source_interface_id()) {
       if (match_ipv6($parameter) && $this->get_source_interface_id('ipv6')) {
-        $cmd->add($this->global_config['tools']['ping_source_option'],
+        $cmd->add('ping6',
+                  $this->global_config['tools']['ping_source_option'],
                   $this->get_source_interface_id('ipv6'));
       }
       if (match_ipv4($parameter) && $this->get_source_interface_id('ipv4')) {
-        $cmd->add($this->global_config['tools']['ping_source_option'],
+        $cmd->add('ping',
+                  $this->global_config['tools']['ping_source_option'],
                   $this->get_source_interface_id('ipv4'));
       }
+    }
+
+    // Build the command based on the IP address
+    if (match_ipv6($parameter)) {
+      $cmd->add($this->global_config['tools']['ping_options'],
+                (isset($hostname) ? $hostname : $parameter));
+    }
+    if (match_ipv4($parameter)) {
+      $cmd->add($this->global_config['tools']['ping_options'],
+                (isset($hostname) ? $hostname : $parameter));
     }
 
     return array($cmd);
