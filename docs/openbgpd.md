@@ -1,11 +1,11 @@
 # Looking Glass: OpenBGPd configuration and tips.
 
 OpenBGPd is the BGP router devlope and maintain by the OpenBSD team.
-It's incude in the OpenBSD developpement tree.
+It's incude in the OpenBSD developpement tree and shifted with the OpenBSD base.
 
 ## OpenBGPd instalation and configuration
 
-OpenBGPd in par of the OpenBSD base, no packages are nedded.
+OpenBGPd in part of the OpenBSD base, no packages are nedded.
 Usefull information for configuration can be found un man pages
 
   * https://man.openbsd.org/bgpd.conf
@@ -14,10 +14,10 @@ Usefull information for configuration can be found un man pages
 
 ## Security and user access
 
-Looking Glass call the `bgpctl` utility. This utility is only accessible via root user we higly
+Looking Glass call the `bgpctl` utility. This utility is only accessible via root user, we higly
 recomand to use a restriction mecanisme like `sudo` or `doas` intead of a root user.
 
-The `become_method` allow you to precise witch tool you use to run your commande as root :
+The `become_method` allow you to select witch tool you use to run your commande as root :
 ```
 $config['routers']['xxxx']['type'] = 'openbgpd';
 $config['routers']['xxxx']['user'] = 'lg';
@@ -30,52 +30,71 @@ and a bit of dark magic.
 
 ## Configuration
 
-Rough steps ahead (maybe more doc later):
+To setup the access on a OpenBSD router, you can follow the following step:
 
+### User creation and configuration
+  * create the "lg" unix user
 ```
-# create the "lg" unix user
 root@openbgpd-router ~# adduser lg
 (boring questions)
+```
 
-# log in as lg user
+  *  log in as lg user
+```
 root@openbgpd-router ~# su -l lg
+```
 
-# create ssh userdir and authorized the looking glass RSA pubkey with limited access and features
+  *  create ssh userdir and authorized the looking glass RSA pubkey with limited access and features
+```
 lg@openbgpd-router ~# mkdir ~/.ssh/
 lg@openbgpd-router ~# echo 'ssh-rsa $RSA-PUBKEY-HERE lg@looking-glass' >| ~/.ssh/authorized_keys
+```
 
 You can use funny options to limit access and feature, check https://man.openbsd.org/sshd_config.5
 
-# truncate the profile dotfile
+  *  truncate the profile dotfile
+```
 lg@openbgpd-router ~# echo >| ~/.profile
+```
 
-# set up a limited PATH
+  *  set up a limited PATH
+```
 lg@openbgpd-router ~# echo "export PATH=/opt/lg-bin" >| ~/.profile
-lg@openbgpd-router ~# exit
+```
 
-# render the profile dotfile immutable, the lg user will not be able to truncate/edit it
+### Configure user restiction and security
+
+  *  render the profile dotfile immutable, the lg user will not be able to truncate/edit it
+```
 root@openbgpd-router ~# chflags schg /home/lg/.profile
+```
 
-# create the rbash symlink
+  *  create the rbash symlink
+```
 root@openbgpd-router ~# ln -s /usr/local/bin/bash /usr/local/bin/rbash
+```
 
-# change lg user shell to restricted bash
+  *  change lg user shell to restricted bash
+```
 root@openbgpd-router ~# chsh -s '/usr/local/bin/rbash' lg
+```
 
-# set up the restricted PATH with the only necessary binaries simlinks
+  *  set up the restricted PATH with the only necessary binaries simlinks
+```
 root@openbgpd-router ~# mkdir -p /opt/lg-bin
 root@openbgpd-router ~# for cmd in bgpctl ping traceroute; do ln -s $(which $cmd) /opt/lg-bin/; done
+```
 
-# create the sudo configuration file for bgpctl
+  *  create the sudo configuration file for bgpctl
+```
 echo '# Cmnd alias specification
 Cmnd_Alias LG_CMD=/usr/sbin/bgpctl show rib *
 
-# User privilege specification
+  *  User privilege specification
 lg      ALL=(ALL) NOPASSWD: LG_CMD' > /etc/sudo.d/lg
 ```
 
-You can disable password authentication for the lg user in the sshd config:
-
+  * You can disable password authentication for the lg user in the sshd config:
 ```
 Match user lg
   PasswordAuthentication no
