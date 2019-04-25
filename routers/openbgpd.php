@@ -25,14 +25,26 @@ require_once('includes/command_builder.php');
 require_once('includes/utils.php');
 
 final class OpenBGPD extends UNIX {
-  private static $wrapper = 'bgpctl';
+
+  public function __construct($global_config, $config, $id, $requester) {
+    parent::__construct($global_config, $config, $id, $requester);
+
+    // Check if we need sudo or dosu
+    if (isset($this->config['become_method']) && $this->config['become_method'] == 'doas') {
+      $this->wrapper = 'doas bgpctl';
+    } elseif (isset($this->config['become_method']) && $this->config['become_method'] == 'sudo') {
+      $this->wrapper = 'sudo bgpctl';
+    } else {
+      $this->wrapper = 'bgpctl';
+    }
+  }
 
   protected function build_bgp($parameter) {
     if (!is_valid_ip_address($parameter)) {
       throw new Exception('The parameter is not an IP address.');
     }
 
-    $cmd = new CommandBuilder(self::$wrapper, 'show rib');
+    $cmd = new CommandBuilder($this->wrapper, 'show rib');
     if ($this->config['bgp_detail']) {
       $cmd->add('detail');
     }
@@ -46,7 +58,7 @@ final class OpenBGPD extends UNIX {
       throw new Exception('The parameter is not an AS number - OpenBGPD does not support AS-Path regular expressions.');
     }
 
-    $cmd = new CommandBuilder(self::$wrapper, 'show rib');
+    $cmd = new CommandBuilder($this->wrapper, 'show rib');
     if ($this->config['bgp_detail']) {
       $cmd->add('detail');
     }
@@ -60,7 +72,7 @@ final class OpenBGPD extends UNIX {
       throw new Exception('The parameter is not an AS number.');
     }
 
-    $cmd = new CommandBuilder(self::$wrapper, 'show rib');
+    $cmd = new CommandBuilder($this->wrapper, 'show rib');
     if ($this->config['bgp_detail']) {
       $cmd->add('detail');
     }
