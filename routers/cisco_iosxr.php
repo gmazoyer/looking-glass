@@ -67,13 +67,13 @@ final class IOSXR extends Cisco {
     return array($cmd);
   }
 
-  protected function build_traceroute($destination) {
+  protected function build_traceroute($parameter) {
     if (!is_valid_destination($parameter)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
 
     $cmd = new CommandBuilder('traceroute');
-    if (match_ipv6($destination) || match_ipv4($destination) ||
+    if (match_ipv6($parameter) || match_ipv4($parameter) ||
         !$this->has_source_interface_id()) {
       $cmd->add($parameter);
     } else {

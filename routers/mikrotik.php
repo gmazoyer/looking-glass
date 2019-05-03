@@ -120,7 +120,7 @@ final class Mikrotik extends Router {
     }
 
     $cmd = new CommandBuilder('tool traceroute count=1 use-dns=yes');
-    if (match_hostname($destination)) {
+    if (match_hostname($parameter)) {
       $cmd->add('address=[:resolv '.quote($parameter).']');
     } else {
       $cmd->add('address='.quote($parameter));
