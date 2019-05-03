@@ -81,12 +81,12 @@ final class Juniper extends Router {
     return $this->build_aspath_regexp($parameter);
   }
 
-  protected function build_ping($destination) {
-    if (!is_valid_destination($destination)) {
+  protected function build_ping($parameter) {
+    if (!is_valid_destination($parameter)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
 
-    $cmd = new CommandBuilder('ping count 10 rapid', $destination);
+    $cmd = new CommandBuilder('ping count 10 rapid', $parameter);
     if ($this->has_source_interface_id()) {
       $cmd->add('interface', $this->get_source_interface_id());
     }
@@ -94,16 +94,16 @@ final class Juniper extends Router {
     return array($cmd);
   }
 
-  protected function build_traceroute($destination) {
-    if (!is_valid_destination($destination)) {
+  protected function build_traceroute($parameter) {
+    if (!is_valid_destination($parameter)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
 
     $cmd = new CommandBuilder('traceroute');
-    if (match_ipv4($destination)) {
+    if (match_ipv4($parameter)) {
       $cmd->add('as-number-lookup');
     }
-    $cmd->add($destination);
+    $cmd->add($parameter);
 
     if ($this->has_source_interface_id()) {
       $cmd->add('interface', $this->get_source_interface_id());

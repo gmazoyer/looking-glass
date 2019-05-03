@@ -104,12 +104,12 @@ final class ExtremeNetIron extends Router {
         throw new Exception('No record found for '.$hostname);
       }
 
-      if (match_ipv6($destination)) {
+      if (match_ipv6($parameter)) {
         $cmd->add('ipv6');
       }
       $cmd->add(isset($hostname) ? $hostname : $parameter);
     } else {
-      if (match_ipv6($destination)) {
+      if (match_ipv6($parameter)) {
         $cmd->add('ipv6');
       }
       $cmd->add($parameter);
@@ -118,10 +118,10 @@ final class ExtremeNetIron extends Router {
     if ($this->has_source_interface_id()) {
       $cmd->add('source');
 
-      if (match_ipv6($destination) && $this->get_source_interface_id('ipv6')) {
+      if (match_ipv6($parameter) && $this->get_source_interface_id('ipv6')) {
         $cmd->add($this->get_source_interface_id('ipv6'));
       }
-      if (match_ipv4($destination) && $this->get_source_interface_id('ipv4')) {
+      if (match_ipv4($parameter) && $this->get_source_interface_id('ipv4')) {
         $cmd->add($this->get_source_interface_id('ipv4'));
       }
     }
@@ -129,7 +129,7 @@ final class ExtremeNetIron extends Router {
     return array($cmd);
   }
 
-  protected function build_traceroute($destination) {
+  protected function build_traceroute($parameter) {
     if (!is_valid_destination($parameter)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
@@ -143,12 +143,12 @@ final class ExtremeNetIron extends Router {
         throw new Exception('No record found for '.$hostname);
       }
 
-      if (match_ipv6($destination)) {
+      if (match_ipv6($parameter)) {
         $cmd->add('ipv6');
       }
       $cmd->add(isset($hostname) ? $hostname : $parameter);
     } else {
-      if (match_ipv6($destination)) {
+      if (match_ipv6($parameter)) {
         $cmd->add('ipv6');
       }
       $cmd->add($parameter);
@@ -157,10 +157,10 @@ final class ExtremeNetIron extends Router {
     if ($this->has_source_interface_id()) {
       $cmd->add('source');
 
-      if (match_ipv6($destination) && $this->get_source_interface_id('ipv6')) {
+      if (match_ipv6($parameter) && $this->get_source_interface_id('ipv6')) {
         $cmd->add($this->get_source_interface_id('ipv6'));
       }
-      if (match_ipv4($destination) && $this->get_source_interface_id('ipv4')) {
+      if (match_ipv4($parameter) && $this->get_source_interface_id('ipv4')) {
         $cmd->add($this->get_source_interface_id('ipv4'));
       }
     }
