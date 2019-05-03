@@ -41,7 +41,7 @@ final class ExtremeNetIron extends Router {
     $cmd->add('bgp routes');
 
     if ($this->config['bgp_detail']) {
-      $this->add('detail');
+      $cmd->add('detail');
     }
 
     $cmd->add($parameter);
