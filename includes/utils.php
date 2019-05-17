@@ -81,6 +81,11 @@ function match_ipv6($ip, $ip_only = true) {
       return false;
     }
 
+    if (($config['minimum_prefix_length']['ipv6'] > 0) &&
+        (intval($ip_and_mask[1]) > $config['minimum_prefix_length']['ipv6'])) {
+      return false;
+    }
+
     return filter_var($ip_and_mask[0], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) &&
       filter_var($ip_and_mask[1], FILTER_VALIDATE_INT);
   } else {
@@ -121,6 +126,11 @@ function match_ipv4($ip, $ip_only = true) {
 
     if (!$config['misc']['allow_reserved_ip'] &&
         match_reserved_ip_range($ip_and_mask[0])) {
+      return false;
+    }
+
+    if (($config['minimum_prefix_length']['ipv4'] > 0) &&
+        (intval($ip_and_mask[1]) > $config['minimum_prefix_length']['ipv4'])) {
       return false;
     }
 

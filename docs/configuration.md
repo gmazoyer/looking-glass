@@ -302,6 +302,15 @@ $config['misc']['allow_reserved_ip'] = true;
 If set to true, allows reserved the use of IPv4 addresses (0.0.0.0/8,
 169.254.0.0/16, 192.0.2.0/24 and 224.0.0.0/4) as parameters.
 
+
+```php
+$config['misc']['minimum_prefix_length']['ipv6'] = 0;
+$config['misc']['minimum_prefix_length']['ipv4'] = 0;
+```
+Set the minimum prefix length for route lookup. If set to 0, the prefix length
+will not be checked. If the value is greater than zero and greater than the
+prefix length for the route given by the user, an error will be displayed.
+
 ### Tools
 
 The tools that are used by this software are **ping** and **traceroute** for

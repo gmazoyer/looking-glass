@@ -133,7 +133,12 @@ $config = array(
     'allow_private_ip' => true,
     // Allow reserved IPv4 addresses (0.0.0.0/8, 169.254.0.0/16,
     // 192.0.2.0/24 and 224.0.0.0/4)
-    'allow_reserved_ip' => true
+    'allow_reserved_ip' => true,
+    // Allowed prefix length for route lookup
+    'minimum_prefix_length' => array(
+      'ipv6' => 0,
+      'ipv4' => 0
+    )
   ),
 
   // Tools used for some processing
