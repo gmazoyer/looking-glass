@@ -308,7 +308,7 @@ $config['misc']['minimum_prefix_length']['ipv6'] = 0;
 $config['misc']['minimum_prefix_length']['ipv4'] = 0;
 ```
 Set the minimum prefix length for route lookup. If set to 0, the prefix length
-will not be checked. If the value is greater than zero and greater than the
+will not be checked. If the value is greater than zero and lesser than the
 prefix length for the route given by the user, an error will be displayed.
 
 ### Tools
