@@ -31,17 +31,20 @@ class Quagga extends UNIX {
       throw new Exception('The parameter is not an IP address.');
     }
 
+    $commands = array();
     // vytsh commands need to be quoted
-    $cmd = new CommandBuilder(self::$wrapper, '"', 'show bgp');
-    if (match_ipv6($parameter, false)) {
-      $cmd->add('ipv6');
-    }
-    if (match_ipv4($parameter, false)) {
-      $cmd->add('ipv4');
-    }
-    $cmd->add($parameter, '"');
+    $cmd = new CommandBuilder(self::$wrapper, '"', 'show');
 
-    return array($cmd);
+    if (!$this->config['disable_ipv6']) {
+      $commands[] = (clone $cmd)->add('ipv6 bgp', $parameter, '"');
+    }
+    if (!$this->config['disable_ipv4']) {
+      $commands[] = (clone $cmd)->add('ip bgp', $parameter, '"');
+    }
+
+    return $commands;
+
+
   }
 
   protected function build_aspath_regexp($parameter) {
