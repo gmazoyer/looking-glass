@@ -1,7 +1,5 @@
 [![Build Status](https://travis-ci.org/respawner/looking-glass.svg?branch=master)](https://travis-ci.org/respawner/looking-glass)
 [![Documentation Status](https://readthedocs.org/projects/looking-glass/badge/?version=latest)](http://looking-glass.readthedocs.io/en/latest/?badge=latest)
-[![Paypal](https://img.shields.io/badge/paypal-donate-yellow.svg)](https://paypal.me/GuillaumeMazoyer)
-[![Liberapay](https://img.shields.io/badge/liberapay-donate-yellow.svg)](https://liberapay.com/gmazoyer/donate)
 
 # Looking Glass
 
@@ -47,7 +45,7 @@ future:
   * Support more routers
   * Support of other types of authentication
 
-Questions? Comments? Join us in the #looking-glass Slack channel on
+Questions? Comments? Join us in the `#looking-glass` Slack channel on
 [NetworkToCode](https://networktocode.slack.com/).
 
 ## Configuration
@@ -79,27 +77,17 @@ LICENSE file for more information.
 
 ## Contact
 
-If you have any bugs, errors, improvements, patches, ideas, you can contact me
-on my email address <gmazoyer@gravitons.in>. You are also welcome to fork and
-make some pull requests.
+If you have any bugs, errors, improvements, patches, ideas, you can create an
+issue. You are also welcome to fork and make some pull requests.
 
-If you use this looking glass in your company, please drop me a mail. I would
-be glad to know that this project was helpful for you, and I will update our
-[documentation](docs/our_users.md) to include your company inside the list of
-users if you want me to.
+If you use this looking glass in your company, feel free to update
+[this page](docs/our_users.md) of the documentation and send a pull request. I
+will be glad to know that this project was helpful for you, and will merge the
+PR to include your company inside the list of users.
 
 ## Helping
 
 You can help this project in many ways. Of course you can ask for features,
 give some ideas for future development, open issues if you found any and
-contribute to the code with pull requests and patches.
-
-You can also support the development of this project by donating some coins,
-take a look at the badges above.
-
-## Thanks
-
-  * [Bootstrap](http://getbootstrap.com/) and [jQuery](http://jquery.com/) for
-    making CSS and Javascript less painful for people like me.
-  * [Romain Boissat](https://chroot-me.in/) for all his great ideas, bug
-    reports and contributions.
+contribute to the code with pull requests and patches. You can also support the
+development of this project by donating some coins.
