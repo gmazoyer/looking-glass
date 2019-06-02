@@ -20,16 +20,29 @@
  */
 
 class CommandBuilder {
+  private $separator;
   private $elements;
 
-  public function __construct() {
+  public function __construct($separator = ' ') {
+    $this->separator = $separator;
     // Use an array instead of a string to help in element manipulations
     $this->elements = array();
 
-    // Add elements given in constructor.
+    // Add elements given in constructor
     for ($i = 0; $i < func_num_args(); $i++) {
       $this->add(func_get_arg($i));
     }
+  }
+
+  /**
+   * Breaks down an element into smaller one using the instance separator as
+   * delimiter.
+   *
+   * @param  string $element the element to break down.
+   * @return array  an array containing sub-elements.
+   */
+  private function breakdown_element($element) {
+    return explode($this->separator, $element);
   }
 
   /**
@@ -48,26 +61,15 @@ class CommandBuilder {
    * Returns a string of all the elements that have been used in the builder.
    * Elements will be separated from each other by the given separator.
    *
-   * @param  string $separator the string to use as a separator, the default
-   *                           value is one space.
    * @return string a single string containing all elements separated by a
    *                separator.
    */
-  public function to_string($separator = ' ') {
+  public function __toString() {
     $string = '';
     foreach ($this->elements as $element) {
-      $string .= $separator.$element;
+      $string .= $this->separator.$element;
     }
     return $string;
-  }
-
-  /**
-   * Returns a string of all the elements that have been used in the builder.
-   *
-   * @return string a single string with all elements separated by spaces.
-   */
-  public function __toString() {
-    return $this->to_string();
   }
 }
 
