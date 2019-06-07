@@ -29,7 +29,9 @@ final class IOSXR extends Cisco {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
 
-    $cmd = new CommandBuilder('ping');
+    $cmd = new CommandBuilder();
+    $cmd->add('ping');
+
     if (match_ipv6($parameter) || match_ipv4($parameter) ||
         !$this->has_source_interface_id()) {
       $cmd->add($parameter);
@@ -72,7 +74,9 @@ final class IOSXR extends Cisco {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
 
-    $cmd = new CommandBuilder('traceroute');
+    $cmd = new CommandBuilder();
+    $cmd->add('traceroute');
+
     if (match_ipv6($parameter) || match_ipv4($parameter) ||
         !$this->has_source_interface_id()) {
       $cmd->add($parameter);

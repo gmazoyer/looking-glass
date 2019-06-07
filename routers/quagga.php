@@ -27,12 +27,10 @@ class Quagga extends UNIX {
   protected static $wrapper = 'vtysh -c';
 
   protected function build_bgp($parameter) {
-    if (!is_valid_ip_address($parameter)) {
-      throw new Exception('The parameter is not an IP address.');
-    }
-
+    $cmd = new CommandBuilder();
     // vytsh commands need to be quoted
-    $cmd = new CommandBuilder(self::$wrapper, '"', 'show bgp');
+    $cmd->add(self::$wrapper, '"', 'show bgp');
+
     if (match_ipv6($parameter, false)) {
       $cmd->add('ipv6');
     }
@@ -45,13 +43,10 @@ class Quagga extends UNIX {
   }
 
   protected function build_aspath_regexp($parameter) {
-    if (match_aspath_regexp($parameter)) {
-      throw new Exception('The parameter is not an AS-Path regular expression.');
-    }
-
     $commands = array();
+    $cmd = new CommandBuilder();
     // vytsh commands need to be quoted
-    $cmd = new CommandBuilder(self::$wrapper, '"', 'show');
+    $cmd->add(self::$wrapper, '"', 'show');
 
     if (!$this->config['disable_ipv6']) {
       $commands[] = (clone $cmd)->add('ipv6 bgp regexp', $parameter, '"');
@@ -64,10 +59,6 @@ class Quagga extends UNIX {
   }
 
   protected function build_as($parameter) {
-    if (!match_as($parameter)) {
-      throw new Exception('The parameter is not an AS number.');
-    }
-
     $parameter = '^'.$parameter.'_';
     return $this->build_aspath_regexp($parameter);
   }

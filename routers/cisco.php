@@ -25,11 +25,9 @@ require_once('includes/utils.php');
 
 class Cisco extends Router {
   protected function build_bgp($parameter) {
-    if (!is_valid_ip_address($parameter)) {
-      throw new Exception('The parameter is not an IP address.');
-    }
+    $cmd = new CommandBuilder();
+    $cmd->add('show bgp');
 
-    $cmd = new CommandBuilder('show bgp');
     if (match_ipv6($parameter, false)) {
       $cmd->add('ipv6');
     }
@@ -42,13 +40,10 @@ class Cisco extends Router {
   }
 
   protected function build_aspath_regexp($parameter) {
-    if (!match_aspath_regexp($parameter)) {
-      throw new Exception('The parameter is not an AS-Path regular expression.');
-    }
-
     $parameter = quote($parameter);
     $commands = array();
-    $cmd = new CommandBuilder('show bgp');
+    $cmd = new CommandBuilder();
+    $cmd->add('show bgp');
 
     if (!$this->config['disable_ipv6']) {
       $commands[] = (clone $cmd)->add('ipv6 unicast quote-regexp', $parameter);
@@ -59,10 +54,6 @@ class Cisco extends Router {
   }
 
   protected function build_as($parameter) {
-    if (!match_as($parameter)) {
-      throw new Exception('The parameter is not an AS number.');
-    }
-
     $parameter = '^'.$parameter.'_';
     return $this->build_aspath_regexp($parameter);
   }
@@ -72,7 +63,9 @@ class Cisco extends Router {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
 
-    $cmd = new CommandBuilder('ping', $parameter, 'repeat 10');
+    $cmd = new CommandBuilder();
+    $cmd->add('ping', $parameter, 'repeat 10');
+
     if ($this->has_source_interface_id()) {
       $cmd->add('source', $this->get_source_interface_id());
     }
@@ -85,7 +78,9 @@ class Cisco extends Router {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
 
-    $cmd = new CommandBuilder('traceroute');
+    $cmd = new CommandBuilder();
+    $cmd->add('traceroute');
+
     if (match_ipv6($parameter) || match_ipv4($parameter) ||
         !$this->has_source_interface_id()) {
       $cmd->add($parameter);

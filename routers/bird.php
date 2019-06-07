@@ -49,10 +49,6 @@ final class Bird extends UNIX {
   }
 
   protected function build_bgp($parameter) {
-    if (!is_valid_ip_address($parameter)) {
-      throw new Exception('The parameter is not an IP address.');
-    }
-
     $cmd = new CommandBuilder();
     $cmd->add($this->get_bird_binary(match_ipv6($parameter, false)));
 
@@ -67,16 +63,10 @@ final class Bird extends UNIX {
   }
 
   protected function build_aspath_regexp($parameter) {
-    if (!match_aspath_regexp($parameter)) {
-      throw new Exception('The parameter is not an AS-Path regular expression.');
-    }
     return $this->get_aspath($parameter);
   }
 
   protected function build_as($parameter) {
-    if (!match_as($parameter)) {
-      throw new Exception('The parameter is not an AS number.');
-    }
     return $this->get_aspath($parameter);
   }
 }

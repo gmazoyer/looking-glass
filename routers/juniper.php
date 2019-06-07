@@ -25,11 +25,9 @@ require_once('includes/utils.php');
 
 final class Juniper extends Router {
   protected function build_bgp($parameter) {
-    if (!is_valid_ip_address($parameter)) {
-      throw new Exception('The parameter is not an IP address.');
-    }
+    $cmd = new CommandBuilder();
+    $cmd->add('show route', $parameter, 'protocol bgp table');
 
-    $cmd = new CommandBuilder('show route', $parameter, 'protocol bgp table');
     if (match_ipv6($parameter, false)) {
       $cmd->add('inet6.0');
     }
@@ -44,14 +42,11 @@ final class Juniper extends Router {
   }
 
   protected function build_aspath_regexp($parameter) {
-    if (!match_aspath_regexp($parameter)) {
-      throw new Exception('The parameter is not an AS-Path regular expression.');
-    }
-
     $parameter = quote($parameter);
     $commands = array();
-    $cmd = new CommandBuilder('show route aspath-regex', $parameter,
-                              'protocol bgp table');
+    $cmd = new CommandBuilder();
+    $cmd->add('show route aspath-regex', $parameter, 'protocol bgp table');
+
     if (!$this->config['disable_ipv6']) {
       $cmd6 = clone $cmd;
       $cmd6->add('inet6.0');
@@ -73,10 +68,6 @@ final class Juniper extends Router {
   }
 
   protected function build_as($parameter) {
-    if (!match_as($parameter)) {
-      throw new Exception('The parameter is not an AS number.');
-    }
-
     $parameter = '^'.$parameter.' .*';
     return $this->build_aspath_regexp($parameter);
   }
@@ -86,7 +77,9 @@ final class Juniper extends Router {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
 
-    $cmd = new CommandBuilder('ping count 10 rapid', $parameter);
+    $cmd = new CommandBuilder();
+    $cmd->add('ping count 10 rapid', $parameter);
+
     if ($this->has_source_interface_id()) {
       $cmd->add('interface', $this->get_source_interface_id());
     }
@@ -99,7 +92,9 @@ final class Juniper extends Router {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
 
-    $cmd = new CommandBuilder('traceroute');
+    $cmd = new CommandBuilder();
+    $cmd->add('traceroute');
+
     if (match_ipv4($parameter)) {
       $cmd->add('as-number-lookup');
     }

@@ -30,6 +30,7 @@ final class Mikrotik extends Router {
     }
 
     $cmd = new CommandBuilder();
+
     if (match_ipv6($parameter, false)) {
       $cmd->add('ipv6');
     } else if (match_ipv4($parameter, false)) {
@@ -47,21 +48,18 @@ final class Mikrotik extends Router {
   }
 
   protected function build_aspath_regexp($parameter) {
-    if (!match_aspath_regexp($parameter)) {
-      throw new Exception('The parameter is not an AS-Path regular expression.');
-    }
-
     $commands = array();
+    $cmd = new CommandBuilder();
 
     if (!$this->config['disable_ipv6']) {
-      $cmd6 = new CommandBuilder('ipv6 route print');
+      $cmd6 = (clone $cmd)->add('ipv6 route print');
       if ($this->config['bgp_detail']) {
         $cmd6->add('detail');
       }
       $commands[] = $cmd6->add('where', 'bgp-as-path='.quote($parameter));
     }
     if (!$this->config['disable_ipv4']) {
-      $cmd4 = new CommandBuilder('ip route print');
+      $cmd4 = (clone $cmd)->add('ip route print');
       if ($this->config['bgp_detail']) {
         $cmd4->add('detail');
       }
@@ -72,21 +70,18 @@ final class Mikrotik extends Router {
   }
 
   protected function build_as($parameter) {
-    if (!match_as($parameter)) {
-      throw new Exception('The parameter is not an AS number.');
-    }
-
     $commands = array();
+    $cmd = new CommandBuilder();
 
     if (!$this->config['disable_ipv6']) {
-      $cmd6 = new CommandBuilder('ipv6 route print');
+      $cmd6 = (clone $cmd)->add('ipv6 route print');
       if ($this->config['bgp_detail']) {
         $cmd6->add('detail');
       }
       $commands[] = $cmd6->add('where', 'bgp-as-path~'.quote($parameter.'\$'));
     }
     if (!$this->config['disable_ipv4']) {
-      $cmd4 = new CommandBuilder('ip route print');
+      $cmd4 = (clone $cmd)->add('ip route print');
       if ($this->config['bgp_detail']) {
         $cmd4->add('detail');
       }
@@ -101,7 +96,9 @@ final class Mikrotik extends Router {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
 
-    $cmd = new CommandBuilder('ping count=10');
+    $cmd = new CommandBuilder();
+    $cmd->add('ping count=10');
+
     if (match_hostname($parameter)) {
       $cmd->add('address=[:resolv '.quote($parameter).']');
     } else {
@@ -119,7 +116,9 @@ final class Mikrotik extends Router {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
 
-    $cmd = new CommandBuilder('tool traceroute count=1 use-dns=yes');
+    $cmd = new CommandBuilder();
+    $cmd->add('tool traceroute count=1 use-dns=yes');
+
     if (match_hostname($parameter)) {
       $cmd->add('address=[:resolv '.quote($parameter).']');
     } else {

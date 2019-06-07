@@ -40,11 +40,9 @@ final class OpenBGPD extends UNIX {
   }
 
   protected function build_bgp($parameter) {
-    if (!is_valid_ip_address($parameter)) {
-      throw new Exception('The parameter is not an IP address.');
-    }
+    $cmd = new CommandBuilder();
+    $cmd->add($this->wrapper, 'show rib');
 
-    $cmd = new CommandBuilder($this->wrapper, 'show rib');
     if ($this->config['bgp_detail']) {
       $cmd->add('detail');
     }
@@ -54,11 +52,9 @@ final class OpenBGPD extends UNIX {
   }
 
   protected function build_aspath_regexp($parameter) {
-    if (!match_as($parameter)) {
-      throw new Exception('The parameter is not an AS number - OpenBGPD does not support AS-Path regular expressions.');
-    }
+    $cmd = new CommandBuilder();
+    $cmd->add($this->wrapper, 'show rib');
 
-    $cmd = new CommandBuilder($this->wrapper, 'show rib');
     if ($this->config['bgp_detail']) {
       $cmd->add('detail');
     }
@@ -68,11 +64,9 @@ final class OpenBGPD extends UNIX {
   }
 
   protected function build_as($parameter) {
-    if (!match_as($parameter)) {
-      throw new Exception('The parameter is not an AS number.');
-    }
+    $cmd = new CommandBuilder();
+    $cmd->add($this->wrapper, 'show rib');
 
-    $cmd = new CommandBuilder($this->wrapper, 'show rib');
     if ($this->config['bgp_detail']) {
       $cmd->add('detail');
     }

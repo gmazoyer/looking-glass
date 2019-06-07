@@ -27,11 +27,9 @@ final class ExtremeNetIron extends Router {
   private static $wrapper = "skip-page-display\r\n";
 
   protected function build_bgp($parameter) {
-    if (!is_valid_ip_address($parameter)) {
-      throw new Exception('The parameter is not an IP address.');
-    }
+    $cmd = new CommandBuilder();
+    $cmd->add(self::$wrapper.'show');
 
-    $cmd = new CommandBuilder(self::$wrapper.'show');
     if (match_ipv6($parameter, false)) {
       $cmd->add('ipv6');
     }
@@ -50,12 +48,9 @@ final class ExtremeNetIron extends Router {
   }
 
   protected function build_aspath_regexp($parameter) {
-    if (!match_aspath_regexp($parameter)) {
-      throw new Exception('The parameter is not an AS-Path regular expression.');
-    }
-
     $commands = array();
-    $cmd = new CommandBuilder(self::$wrapper.'show');
+    $cmd = new CommandBuilder();
+    $cmd->add(self::$wrapper.'show');
 
     if (!$this->config['disable_ipv6']) {
       $cmd6 = clone $cmd;
@@ -82,10 +77,6 @@ final class ExtremeNetIron extends Router {
   }
 
   protected function build_as($parameter) {
-    if (!match_as($parameter)) {
-      throw new Exception('The parameter is not an AS number.');
-    }
-
     $parameter = '^'.$parameter.'_';
     return $this->build_aspath_regexp($parameter);
   }
@@ -95,7 +86,9 @@ final class ExtremeNetIron extends Router {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
 
-    $cmd = new CommandBuilder('ping');
+    $cmd = new CommandBuilder();
+    $cmd->add('ping');
+
     if (match_hostname($parameter)) {
       $hostname = $parameter;
       $parameter = hostname_to_ip_address($hostname, $this->config);
@@ -134,7 +127,9 @@ final class ExtremeNetIron extends Router {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
 
-    $cmd = new CommandBuilder('traceroute');
+    $cmd = new CommandBuilder();
+    $cmd->add('traceroute');
+
     if (match_hostname($parameter)) {
       $hostname = $parameter;
       $parameter = hostname_to_ip_address($hostname, $this->config);

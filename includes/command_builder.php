@@ -27,11 +27,6 @@ class CommandBuilder {
     $this->separator = $separator;
     // Use an array instead of a string to help in element manipulations
     $this->elements = array();
-
-    // Add elements given in constructor
-    for ($i = 1; $i < func_num_args(); $i++) {
-      $this->add(func_get_arg($i));
-    }
   }
 
   /**
@@ -52,8 +47,8 @@ class CommandBuilder {
    *
    * @return CommandBuilder the instance used when calling this function.
    */
-  public function add() {
-    $this->elements = array_merge($this->elements, func_get_args());
+  public function add(...$elements) {
+    $this->elements = array_merge($this->elements, $elements);
     return $this;
   }
 

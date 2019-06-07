@@ -25,13 +25,10 @@ require_once('includes/utils.php');
 
 final class FRR extends Quagga {
   protected function build_aspath_regexp($parameter) {
-    if (match_aspath_regexp($parameter)) {
-      throw new Exception('The parameter is not an AS-Path regular expression.');
-    }
-
     $commands = array();
+    $cmd = new CommandBuilder();
     // vytsh commands need to be quoted
-    $cmd = new CommandBuilder(self::$wrapper, '"', 'show');
+    $cmd->add(self::$wrapper, '"', 'show');
 
     if (!$this->config['disable_ipv6']) {
       $commands[] = (clone $cmd)->add('bgp ipv6 regexp', $parameter, '"');
