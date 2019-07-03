@@ -85,8 +85,8 @@ abstract class Router {
         }
       }
       if ($valid) {
-          // The line is valid, print it
-          $filtered .= $line."\n";
+        // The line is valid, print it
+        $filtered .= $line."\n";
       }
     }
 
