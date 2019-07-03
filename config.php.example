@@ -24,6 +24,9 @@ $config['frontpage']['disclaimer'] = 'This is a disclaimer!';
 // Things to remove from the output (PHP compatible regex)
 $config['filters']['output'][] = '/(client1|client2)/';
 $config['filters']['output'][] = '/^NotToShow/';
+// Matched patterns can also replaced inline
+$config['filters']['output'][] = ['/replacethis/', 'withthis'];
+
 // If telnet is used in combination with extreme_netiron, uncomment the following filter
 //$config['filters']['output'][] = '/([^\x20-\x7E]|User|Please|Disable|telnet|^\s*$)/';
 

@@ -73,17 +73,20 @@ abstract class Router {
       $valid = true;
 
       foreach ($this->global_config['filters']['output'] as $filter) {
-        // Line has been marked as invalid
-        // Or filtered based on the configuration
-        if (!$valid || (preg_match($filter, $line) === 1)) {
-          $valid = false;
-          break;
+        if (gettype($filter) == gettype(array())) {
+          $line = preg_replace($filter[0], $filter[1], $line);
+        } else {
+          // Line has been marked as invalid
+          // Or filtered based on the configuration
+          if (!$valid || (preg_match($filter, $line) === 1)) {
+            $valid = false;
+            break;
+          }
         }
       }
-
-     if ($valid) {
-        // The line is valid, print it
-        $filtered .= $line."\n";
+      if ($valid) {
+          // The line is valid, print it
+          $filtered .= $line."\n";
       }
     }
 
