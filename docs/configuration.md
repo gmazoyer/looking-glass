@@ -252,6 +252,11 @@ Defines filters to eliminate some lines from the output. Do not define any
 filters if there is no nothing to filter.
 
 ```php
+$config['filters']['output'][] = ['/replacethis/', 'withthis'];
+```
+Defines filters that will replace an matched expression with another one.
+
+```php
 // Use the unset command if you don't want to use pre-defined filters
 // unset $config['filters']['aspath_regexp'];
 $config['filters']['aspath_regexp'][] = '.* 64546 .*';

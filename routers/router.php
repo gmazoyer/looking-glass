@@ -73,7 +73,7 @@ abstract class Router {
       $valid = true;
 
       foreach ($this->global_config['filters']['output'] as $filter) {
-        if (gettype($filter) == gettype(array())) {
+        if (is_array($filter)) {
           $line = preg_replace($filter[0], $filter[1], $line);
         } else {
           // Line has been marked as invalid
@@ -119,6 +119,26 @@ abstract class Router {
       return $source_interface_id;
     }
     return $source_interface_id[$ip_version];
+  }
+
+  protected function has_routing_table_name() {
+    return isset($this->config['routing-table']);
+  }
+
+  protected function get_routing_table_name($ip_version = 'ipv6') {
+    // No specific routing table given
+    if (!$this->has_routing_table_name()) {
+      return null;
+    }
+
+    $routing_table_names = $this->config['routing-table'];
+
+    // Single routing table (IPv4 and IPv6 routes)
+    if (!is_array($routing_table_names)) {
+      return $routing_table_names;
+    }
+
+    return $routing_tables_names[$ip_version];
   }
 
   protected abstract function build_bgp($parameter);
