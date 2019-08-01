@@ -11,3 +11,4 @@ small view of their networks.
   * [i3D.net](https://www.i3d.net/) - [Looking Glass](https://noc.i3d.net/lg/)
   * [mazoyer.eu](https://as201281.net/) - [Looking Glass](https://lg.as201281.net/)
   * [M Networks](https://mnetworks.org/) - [Looking Glass](https://lg.mnetworks.org/)
+  * [Anexia](https://www.anexia-it.com/) - [Looking Glass](https://bgp.anexia-it.net/)
