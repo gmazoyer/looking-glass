@@ -261,6 +261,12 @@ function match_aspath_regexp($aspath_regexp) {
     return false;
   }
 
+  // AS path containing a ' (not a valid character, the string is automatically
+  // quoted if needed)
+  if (strpos($aspath_regexp, '\'') !== false) {
+    return false;
+  }
+
   // Check if the AS path regexp in in the list of regexp considered as
   // invalid (see config option)
   foreach ($config['filters']['aspath_regexp'] as $invalid_aspath_regexp) {
