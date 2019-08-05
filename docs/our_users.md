@@ -12,3 +12,4 @@ small view of their networks.
   * [mazoyer.eu](https://as201281.net/) - [Looking Glass](https://lg.as201281.net/)
   * [M Networks](https://mnetworks.org/) - [Looking Glass](https://lg.mnetworks.org/)
   * [Anexia](https://www.anexia-it.com/) - [Looking Glass](https://bgp.anexia-it.net/)
+  * [Launtel](https://launtel.net.au) - [Looking Glass](https://lg.launtel.net.au)
