@@ -19,8 +19,15 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-require_once('Crypt/RSA.php');
-require_once('Net/SSH2.php');
+include('libs/ClassLoader.php');
+
+$loader = new \Composer\Autoload\ClassLoader();
+$loader->addPsr4('phpseclib\\', 'libs/phpseclib-2.0.21');
+$loader->register();
+
+use phpseclib\Crypt\RSA;
+use phpseclib\Net\SSH2;
+
 require_once('authentication.php');
 require_once('includes/utils.php');
 
@@ -56,14 +63,14 @@ final class SSH extends Authentication {
   }
 
   public function connect() {
-    $this->connection = new Net_SSH2($this->config['host'], $this->port);
+    $this->connection = new SSH2($this->config['host'], $this->port);
     $this->connection->setTimeout($this->config['timeout']);
     $success = false;
 
     if ($this->config['auth'] == 'ssh-password') {
       $success = $this->connection->login($this->config['user'], $this->config['pass']);
     } else if ($this->config['auth'] == 'ssh-key') {
-      $key = new Crypt_RSA();
+      $key = new RSA();
 
       if (isset($this->config['pass'])) {
         $key->setPassword($this->config['pass']);
