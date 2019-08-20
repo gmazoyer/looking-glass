@@ -51,6 +51,8 @@ class Cisco extends Router {
     if (!$this->config['disable_ipv4']) {
       $commands[] = (clone $cmd)->add('ipv4 unicast quote-regexp', $parameter);
     }
+
+    return $commands;
   }
 
   protected function build_as($parameter) {
