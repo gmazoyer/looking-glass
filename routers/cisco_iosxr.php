@@ -24,6 +24,22 @@ require_once('includes/command_builder.php');
 require_once('includes/utils.php');
 
 final class IOSXR extends Cisco {
+  protected function build_aspath_regexp($parameter) {
+    $parameter = quote($parameter);
+    $commands = array();
+    $cmd = new CommandBuilder();
+    $cmd->add('show bgp');
+
+    if (!$this->config['disable_ipv6']) {
+      $commands[] = (clone $cmd)->add('ipv6 unicast regexp', $parameter);
+    }
+    if (!$this->config['disable_ipv4']) {
+      $commands[] = (clone $cmd)->add('ipv4 unicast regexp', $parameter);
+    }
+
+    return $commands;
+  }
+
   protected function build_ping($parameter) {
     if (!is_valid_destination($parameter)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
