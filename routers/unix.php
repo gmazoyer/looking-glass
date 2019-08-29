@@ -46,7 +46,8 @@ abstract class UNIX extends Router {
     }
 
     // Choose ping binary based on the IP family (IPv6 or IPv4)
-    $cmd = new CommandBuilder(match_ipv6($parameter) ? 'ping6' : 'ping');
+    $cmd = new CommandBuilder();
+    $cmd->add(match_ipv6($parameter) ? 'ping6' : 'ping');
 
     // Add the source interface based on the IP address
     if ($this->has_source_interface_id()) {
