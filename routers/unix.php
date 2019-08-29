@@ -45,31 +45,23 @@ abstract class UNIX extends Router {
       throw new Exception('The parameter does not resolve to an IP address.');
     }
 
-    $cmd = new CommandBuilder();
+    // Choose ping binary based on the IP family (IPv6 or IPv4)
+    $cmd = new CommandBuilder(match_ipv6($parameter) ? 'ping6' : 'ping');
 
     // Add the source interface based on the IP address
     if ($this->has_source_interface_id()) {
       if (match_ipv6($parameter) && $this->get_source_interface_id('ipv6')) {
-        $cmd->add('ping6',
-                  $this->global_config['tools']['ping_source_option'],
+        $cmd->add($this->global_config['tools']['ping_source_option'],
                   $this->get_source_interface_id('ipv6'));
       }
       if (match_ipv4($parameter) && $this->get_source_interface_id('ipv4')) {
-        $cmd->add('ping',
-                  $this->global_config['tools']['ping_source_option'],
+        $cmd->add($this->global_config['tools']['ping_source_option'],
                   $this->get_source_interface_id('ipv4'));
       }
     }
 
-    // Build the command based on the IP address
-    if (match_ipv6($parameter)) {
-      $cmd->add($this->global_config['tools']['ping_options'],
-                (isset($hostname) ? $hostname : $parameter));
-    }
-    if (match_ipv4($parameter)) {
-      $cmd->add($this->global_config['tools']['ping_options'],
-                (isset($hostname) ? $hostname : $parameter));
-    }
+    $cmd->add($this->global_config['tools']['ping_options'],
+              (isset($hostname) ? $hostname : $parameter));
 
     return array($cmd);
   }
