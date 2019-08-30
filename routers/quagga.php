@@ -37,7 +37,7 @@ class Quagga extends UNIX {
     if (match_ipv4($parameter, false)) {
       $cmd->add('ipv4');
     }
-    $cmd->add($parameter, '"');
+    $cmd->add('unicast', $parameter, '"');
 
     return array($cmd);
   }
