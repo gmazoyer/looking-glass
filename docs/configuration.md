@@ -84,6 +84,11 @@ Sets the number of commands to show on the front page before the list scrolls. I
 set to a positive integer, then that number of commands will be shown, otherwise
 the list will dynamically scale to show all commands (default is dynamic scaling).
 
+```php
+$config['frontpage']['additional_html_header'] = '<link rel="icon" href="/static/images/cropped-32x32.png" sizes="32x32" /><link rel="icon" href="/static/images/cropped-192x192.png" sizes="192x192" /><link rel="apple-touch-icon-precomposed" href="/static/images/cropped-180x180.png" /><meta name="msapplication-TileImage" content="/static/images/cropped-270x270.png" />';
+```
+Sets additional HTML-Elements between <head> and </head> of index.php
+
 ### Contact
 
 ```php
