@@ -55,6 +55,8 @@ $config = array(
   'frontpage' => array(
     // CSS to use
     'css' => 'css/style.css',
+    // Extra HTML header elements
+    'additional_html_header' => null,
     // Title
     'title' => 'Looking Glass',
     // Image (null for no image)
