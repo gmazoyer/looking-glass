@@ -27,6 +27,7 @@ For now this looking glass is quite simple. Here you have some features:
     * Cisco (IOS and IOS-XR)
     * Extreme/Brocade NetIron
     * Mikrotik/RouterOS
+    * Nokia
     * OpenBGPd
     * Quagga
     * Vyatta/VyOS/EdgeOS

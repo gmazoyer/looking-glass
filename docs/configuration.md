@@ -134,6 +134,7 @@ Possible values are:
   * cisco **or** ios
   * ios-xr **or** iosxr
   * mikrotik **or** routeros
+  * nokia
   * extreme_netiron
   * bird
   * quagga **or** zebra
