@@ -303,7 +303,7 @@ final class LookingGlass {
     print('</body>');
     print('<script src="libs/jquery-3.4.1.min.js"></script>');
     print('<script src="libs/bootstrap-4.3.1/js/bootstrap.min.js"></script>');
-    print('<script src="libs/fontawesome-5.10.1/js/all.min.js"></script>');
+    print('<script src="libs/fontawesome-5.11.2/js/all.min.js"></script>');
     print('<script src="js/looking-glass.js"></script>');
     if ($this->recaptcha['enabled'] && isset($this->recaptcha['apikey']) && isset($this->recaptcha['secret'])) {
       print('<script src="https://www.google.com/recaptcha/api.js" async defer></script>');
