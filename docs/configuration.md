@@ -125,14 +125,15 @@ interact with it.
 ```php
 $config['routers']['router1']['type'] = 'juniper';
 ```
-The router type can be Juniper, Cisco (IOS or IOS-XR), Extreme (NetIron), Quagga,
-BIRD, OpenBGPd, Vyatta/VyOS/EdgeOS, or FRRouting. You can take a look at the specific
-documentation for your router.
+The router type can be Juniper, Cisco (IOS or IOS-XR), Arista,
+Extreme (NetIron), Quagga, BIRD, OpenBGPd, Vyatta/VyOS/EdgeOS, or FRRouting.
+You can take a look at the specific documentation for your router.
 Possible values are:
 
   * juniper **or** junos
   * cisco **or** ios
   * ios-xr **or** iosxr
+  * arista
   * mikrotik **or** routeros
   * nokia
   * extreme_netiron

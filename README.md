@@ -22,16 +22,17 @@ For now this looking glass is quite simple. Here you have some features:
 
   * Interface using Javascript and AJAX calls (needs a decent browser)
   * Support the following router types:
-    * Juniper
+    * Arista
     * BIRD
     * Cisco (IOS and IOS-XR)
     * Extreme/Brocade NetIron
+    * FRRouting
+    * Juniper
     * Mikrotik/RouterOS
     * Nokia
     * OpenBGPd
     * Quagga
     * Vyatta/VyOS/EdgeOS
-    * FRRouting
   * Support of Telnet and SSH connection to routers using password
     authentication and SSH keys
   * Configurable list of routers
