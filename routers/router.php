@@ -21,6 +21,7 @@
 
 require_once('includes/config.defaults.php');
 require_once('config.php');
+require_once('arista.php');
 require_once('bird.php');
 require_once('cisco.php');
 require_once('cisco_iosxr.php');
@@ -222,6 +223,9 @@ abstract class Router {
     $router_config = $config['routers'][$id];
 
     switch (strtolower($router_config['type'])) {
+      case 'arista':
+        return new Arista($config, $router_config, $id, $requester);
+
       case 'bird':
         return new Bird($config, $router_config, $id, $requester);
 
