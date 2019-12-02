@@ -8,7 +8,9 @@ Easy to deploy Looking Glass made in PHP.
 ## Requirements
 
   * Webserver such as Apache 2, or Lighttpd, etc…
-  * PHP (>= 7.0) module for the webserver (mod-php5 for Apache 2 for example)
+  * PHP (>= 7.0) module for the webserver (libapache2-mod-php for Apache 2 for
+    example)
+  * The XML package is required as well (php7.0-xml on Debian for example)
 
 ## Description
 
@@ -20,15 +22,17 @@ For now this looking glass is quite simple. Here you have some features:
 
   * Interface using Javascript and AJAX calls (needs a decent browser)
   * Support the following router types:
-    * Juniper
+    * Arista
     * BIRD
     * Cisco (IOS and IOS-XR)
     * Extreme/Brocade NetIron
+    * FRRouting
+    * Juniper
     * Mikrotik/RouterOS
+    * Nokia
     * OpenBGPd
     * Quagga
     * Vyatta/VyOS/EdgeOS
-    * FRRouting
   * Support of Telnet and SSH connection to routers using password
     authentication and SSH keys
   * Configurable list of routers
@@ -43,7 +47,7 @@ future:
   * Support more routers
   * Support of other types of authentication
 
-Questions? Comments? Join us in the #looking-glass Slack channel on
+Questions? Comments? Join us in the `#looking-glass` Slack channel on
 [NetworkToCode](https://networktocode.slack.com/).
 
 ## Configuration
@@ -65,7 +69,8 @@ An up-to-date (hopefully) documentation is available in the **docs/**
 directory. It gives enough details to setup the looking glass, to configure it
 and to prepare your routers.
 
-You can also find it at [Read the Docs](http://looking-glass.readthedocs.io/en/latest/).
+You can also find it at
+[Read the Docs](http://looking-glass.readthedocs.io/en/latest/).
 
 ## License
 
@@ -74,29 +79,17 @@ LICENSE file for more information.
 
 ## Contact
 
-If you have any bugs, errors, improvements, patches, ideas, you can contact me
-on my email address <gmazoyer@gravitons.in>. You are also welcome to fork and
-make some pull requests.
+If you have any bugs, errors, improvements, patches, ideas, you can create an
+issue. You are also welcome to fork and make some pull requests.
 
-If you use this looking glass in your company, please drop me a mail. I would
-be glad to know that this project was helpful for you, and I will update our
-[documentation](docs/our_users.md) to include your company inside the list of
-users if you want me to.
+If you use this looking glass in your company, feel free to update
+[this page](docs/our_users.md) of the documentation and send a pull request. I
+will be glad to know that this project was helpful for you, and will merge the
+PR to include your company inside the list of users.
 
 ## Helping
 
 You can help this project in many ways. Of course you can ask for features,
 give some ideas for future development, open issues if you found any and
-contribute to the code with pull requests and patches.
-
-You can also support the development of this project by
-[donating some money](https://paypal.me/GuillaumeMazoyer). Developing such
-project can be time consuming and it is done on personal time. Giving few
-dollars/euros/pounds/etc... can be a way to say thanks and help to free some
-time to develop this project.
-
-## Thanks
-
-  * [Bootstrap](http://getbootstrap.com/) and [jQuery](http://jquery.com/) for
-    making CSS and Javascript less painful for people like me.
-  * [Romain Boissat](https://chroot-me.in/) for all his great ideas, bug reports and contributions.
+contribute to the code with pull requests and patches. You can also support the
+development of this project by donating some coins.
