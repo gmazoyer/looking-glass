@@ -74,13 +74,13 @@ final class Arista extends Router {
     $cmd = new CommandBuilder();
     $cmd->add('ping');
 
-    if (!$this->config['disable_ipv6']) {
-      $commands[] = (clone $cmd)->add('ipv6', $parameter);
+    if (!$this->config['disable_ipv6'] && match_ipv6($parameter)) {
+      $cmd->add('ipv6');
     }
-
-    if (!$this->config['disable_ipv4']) {
-      $commands[] = (clone $cmd)->add('ip', $parameter);
+    if (!$this->config['disable_ipv4'] && match_ipv4($parameter)) {
+      $cmd->add('ip');
     }
+    $cmd->add($parameter);
 
     if ($this->has_source_interface_id()) {
       $cmd->add('source', $this->get_source_interface_id());
