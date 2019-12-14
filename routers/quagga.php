@@ -29,7 +29,7 @@ class Quagga extends UNIX {
   protected function build_bgp($parameter) {
     $cmd = new CommandBuilder();
     // vytsh commands need to be quoted
-    $cmd->add(self::$wrapper, '"', 'show bgp');
+    $cmd->add(self::$wrapper, '"', 'show');
 
     if (match_ipv6($parameter, false)) {
       $cmd->add('ipv6');
@@ -37,7 +37,7 @@ class Quagga extends UNIX {
     if (match_ipv4($parameter, false)) {
       $cmd->add('ipv4');
     }
-    $cmd->add('unicast', $parameter, '"');
+    $cmd->add('bgp unicast', $parameter, '"');
 
     return array($cmd);
   }
