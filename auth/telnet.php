@@ -54,9 +54,7 @@ final class Telnet extends Authentication {
     fputs($this->connection, $command."\r\n");
 
     $data = '';
-    while(substr($data, -1) != '#' &&
-        substr($data, -1) != '>')
-    {
+    while (substr($data, -1) != '#' && substr($data, -1) != '>') {
       $data .= fread($this->connection, 4096);
       $data = rtrim($data, " ");
     }
