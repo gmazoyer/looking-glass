@@ -24,9 +24,21 @@ require_once('includes/command_builder.php');
 require_once('includes/utils.php');
 
 final class Nokia extends Router {
+  public function __construct($global_config, $config, $id, $requester) {
+    parent::__construct($global_config, $config, $id, $requester);
+    if (isset($this->config['vrf'])) {
+      $this->vrf_cmd = 'router ' . $this->config['vrf'];
+    }
+  }
   protected function build_bgp($parameter) {
     $cmd = new CommandBuilder();
-    $cmd->add('show router bgp routes');
+    if (isset($this->vrf_cmd)) {
+      $cmd->add('show', $this->vrf_cmd, 'bgp routes');
+    } else {
+      $cmd->add('show router bgp routes');
+    }
+
+    $cmd->add($parameter);
 
     if (match_ipv6($parameter, false)) {
       $cmd->add('ipv6');
@@ -34,8 +46,6 @@ final class Nokia extends Router {
     if (match_ipv4($parameter, false)) {
       $cmd->add('ipv4');
     }
-
-    $cmd->add($parameter);
 
     if ($this->config['bgp_detail']) {
       $cmd->add('detail');
@@ -48,7 +58,11 @@ final class Nokia extends Router {
     $parameter = quote($parameter);
     $commands = array();
     $cmd = new CommandBuilder();
-    $cmd->add('show router bgp routes');
+    if (isset($this->vrf_cmd)) {
+      $cmd->add('show', $this->vrf_cmd, 'bgp routes');
+    } else {
+      $cmd->add('show router bgp routes');
+    }
 
     if (!$this->config['disable_ipv6']) {
       $cmd6 = clone $cmd;
@@ -83,7 +97,7 @@ final class Nokia extends Router {
     }
 
     $cmd = new CommandBuilder();
-    $cmd->add('ping count 10', $parameter);
+    $cmd->add('ping count 10', $parameter, $this->vrf_cmd);
 
     if ($this->has_source_interface_id()) {
       $cmd->add('source', $this->get_source_interface_id());
@@ -98,7 +112,7 @@ final class Nokia extends Router {
     }
 
     $cmd = new CommandBuilder();
-    $cmd->add('traceroute', $parameter);
+    $cmd->add('traceroute no-dns', $parameter, $this->vrf_cmd);
 
     if ($this->has_source_interface_id()) {
       $cmd->add('source', $this->get_source_interface_id());

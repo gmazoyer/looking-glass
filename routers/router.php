@@ -41,6 +41,7 @@ abstract class Router {
   protected $config;
   protected $id;
   protected $requester;
+  protected $vrf_cmd;
 
   public function __construct($global_config, $config, $id, $requester) {
     $this->global_config = $global_config;
