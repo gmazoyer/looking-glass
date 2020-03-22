@@ -40,7 +40,7 @@ final class SSH extends Authentication {
     $this->port = isset($this->config['port']) ? (int) $this->config['port'] : 22;
 
     if ($this->debug) {
-      define('NET_SSH2_LOGGING', NET_SSH2_LOG_COMPLEX);
+      define('NET_SSH2_LOGGING', SSH2::LOG_COMPLEX);
     }
   }
 
@@ -94,7 +94,17 @@ final class SSH extends Authentication {
   public function send_command($command) {
     $this->connect();
 
-    $data = $this->connection->exec($command);
+    if ($this->config['type'] == 'nokia') {
+      $this->connection->enablePTY();
+      // read and ignore the first response prompt to get clear output if the router is sending MOTD
+      $this->connection->read('/.*:.*# /', SSH2::READ_REGEX);
+
+      $this->connection->write($command . "\n");
+      $data = $this->connection->read('/.*:.*# /', SSH2::READ_REGEX);
+    } else {
+      $data = $this->connection->exec($command);
+    }
+
     if ($this->debug) {
       log_to_file($this->connection->getLog());
     }
