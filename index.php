@@ -198,23 +198,13 @@ final class LookingGlass {
     print('<p class="text-center">');
 
     if ($this->frontpage['show_visitor_ip']) {
-      if (
-        $this->misc['enable_http_x_forwarded_for'] === true
-        &&
-        isset($_SERVER['HTTP_X_FORWARDED_FOR'])
-      ) {
+      if ($this->misc['enable_http_x_forwarded_for'] === true && isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
         // The user can pass several proxy's, which each one will add its own IP address,
         //  so we like to take only the first IP address
         $ips = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
         $ip = trim($ips[0]);
-        $requester = filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 | FILTER_FLAG_IPV4);
-        if ($requester === false) {
-          // fall back to REMOTE_ADDR
-          $ip = $_SERVER['REMOTE_ADDR'];
-        } else {
-          $ip = $_SERVER['REMOTE_ADDR'];
-        }
-        printf('Your IP address: %s<br>', htmlentities($ip));
+        $requester = is_valid_ip_address($ip) ? $ip : $_SERVER['REMOTE_ADDR']; // as a fallback we use the REMOTE_ADDR
+        printf('Your IP address: %s<br>', htmlentities($requester));
       } else {
         printf('Your IP address: %s<br>', htmlentities($_SERVER['REMOTE_ADDR']));
       }
