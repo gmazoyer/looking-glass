@@ -80,7 +80,7 @@ abstract class Authentication {
    *
    * @param string $command the command to be sent to the host.
    */
-  public abstract function send_command($command);
+  public abstract function send_command($command, $router);
 
   /**
    * Method called when the object is destructed.

@@ -91,23 +91,10 @@ final class SSH extends Authentication {
     }
   }
 
-  public function send_command($command) {
+  public function send_command($command, $router) {
     $this->connect();
 
-    if ($this->config['type'] == 'nokia') {
-      $this->connection->enablePTY();
-      // read and ignore the first response prompt to get clear output if the router is sending MOTD
-      $this->connection->read('/.*:.*# /', SSH2::READ_REGEX);
-      
-      // disable paging
-      $this->connection->write("environment no more\n");
-      $this->connection->read('/.*:.*# /', SSH2::READ_REGEX);
-
-      $this->connection->write($command . "\n");
-      $data = $this->connection->read('/.*:.*# /', SSH2::READ_REGEX);
-    } else {
-      $data = $this->connection->exec($command);
-    }
+    $data = $router->send_ssh_command($command, $this->connection);
 
     if ($this->debug) {
       log_to_file($this->connection->getLog());

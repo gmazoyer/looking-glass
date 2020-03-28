@@ -48,16 +48,10 @@ final class Telnet extends Authentication {
     fputs($this->connection, $this->config['pass']."\r\n");
   }
 
-  public function send_command($command) {
+  public function send_command($command, $router) {
     $this->connect();
 
-    fputs($this->connection, $command."\r\n");
-
-    $data = '';
-    while (substr($data, -1) != '#' && substr($data, -1) != '>') {
-      $data .= fread($this->connection, 4096);
-      $data = rtrim($data, " ");
-    }
+    $data = $router->send_telnet_command($command, $this->connection);
 
     $this->disconnect();
 

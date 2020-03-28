@@ -19,6 +19,8 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
+use phpseclib\Net\SSH2;
+
 require_once('router.php');
 require_once('includes/command_builder.php');
 require_once('includes/utils.php');
@@ -30,6 +32,23 @@ final class Nokia extends Router {
       $this->vrf_cmd = 'router ' . $this->config['vrf'];
     }
   }
+
+  // overwrite Router::send_ssh_command with vendor specific
+  public function send_ssh_command($command, $connection) {
+    $connection->enablePTY();
+    // read and ignore the first response prompt to get clear output if the router is sending MOTD
+    $connection->read('/.*:.*# /', SSH2::READ_REGEX);
+
+    // disable paging
+    $connection->write("environment no more\n");
+    $connection->read('/.*:.*# /', SSH2::READ_REGEX);
+
+    $connection->write($command . "\n");
+    $data = $connection->read('/.*:.*# /', SSH2::READ_REGEX);
+
+    return $data;
+    }
+
   protected function build_bgp($parameter) {
     $cmd = new CommandBuilder();
     if (isset($this->vrf_cmd)) {
