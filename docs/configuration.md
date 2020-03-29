@@ -324,6 +324,14 @@ Set the minimum prefix length for route lookup. If set to 0, the prefix length
 will not be checked. If the value is greater than zero and lesser than the
 prefix length for the route given by the user, an error will be displayed.
 
+```php
+$config['misc']['enable_http_x_forwarded_for'] = false;
+```
+This option will add the support to use the `HTTP_X_FORWARDED_FOR` header, 
+which **should** include the user real IP, which then displayed on the page footer.
+For more info about this header see [RFC7239](https://tools.ietf.org/html/rfc7239).
+Because this header is user controlled, it's disabled by default.
+
 ### Tools
 
 The tools that are used by this software are **ping** and **traceroute** for
