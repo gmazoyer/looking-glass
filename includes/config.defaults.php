@@ -107,7 +107,7 @@ $config = array(
     )
   ),
 
-  // Google reCaptcha
+// Google reCaptcha
   'recaptcha' => array(
     // Disabled by default
     'enabled' => false,
@@ -140,7 +140,11 @@ $config = array(
     'minimum_prefix_length' => array(
       'ipv6' => 0,
       'ipv4' => 0
-    )
+    ),
+    // Extract user "real" IP from the HTTP_X_FORWARDED_FOR header
+    //  as this header can be spoofed by the user, it's not recommended to enable this option.
+    'enable_http_x_forwarded_for' => false,
+
   ),
 
   // Tools used for some processing
