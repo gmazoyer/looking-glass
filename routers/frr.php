@@ -19,11 +19,31 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-require_once('quagga.php');
+require_once('unix.php');
 require_once('includes/command_builder.php');
 require_once('includes/utils.php');
 
-final class FRR extends Quagga {
+class FRR extends UNIX {
+  protected static $wrapper = 'vtysh -c';
+
+  protected function build_bgp($parameter) {
+    $cmd = new CommandBuilder();
+    // vytsh commands need to be quoted
+    $cmd->add(self::$wrapper, '"', 'show');
+	
+	$cmd->add('bgp');
+
+    if (match_ipv6($parameter, false)) {
+      $cmd->add('ipv6');
+    }
+    if (match_ipv4($parameter, false)) {
+      $cmd->add('ipv4');
+    }
+    $cmd->add('unicast', $parameter, '"');
+
+    return array($cmd);
+  }
+
   protected function build_aspath_regexp($parameter) {
     $commands = array();
     $cmd = new CommandBuilder();
@@ -34,11 +54,15 @@ final class FRR extends Quagga {
       $commands[] = (clone $cmd)->add('bgp ipv6 regexp', $parameter, '"');
     }
     if (!$this->config['disable_ipv4']) {
-      $commands[] = (clone $cmd)->add('ip bgp regexp', $parameter, '"');
+      $commands[] = (clone $cmd)->add('bgp ip regexp', $parameter, '"');
     }
 
     return $commands;
   }
-}
 
+  protected function build_as($parameter) {
+    $parameter = '^'.$parameter.'_';
+    return $this->build_aspath_regexp($parameter);
+  }
+}
 // End of frr.php
