@@ -54,7 +54,7 @@ class FRR extends UNIX {
       $commands[] = (clone $cmd)->add('bgp ipv6 regexp', $parameter, '"');
     }
     if (!$this->config['disable_ipv4']) {
-      $commands[] = (clone $cmd)->add('bgp ip regexp', $parameter, '"');
+      $commands[] = (clone $cmd)->add('bgp ipv4 regexp', $parameter, '"');
     }
 
     return $commands;
