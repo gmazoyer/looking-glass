@@ -29,10 +29,8 @@ class FRR extends UNIX {
   protected function build_bgp($parameter) {
     $cmd = new CommandBuilder();
     // vytsh commands need to be quoted
-    $cmd->add(self::$wrapper, '"', 'show');
-	
-	$cmd->add('bgp');
-
+    $cmd->add(self::$wrapper, '"', 'show bgp');
+	  
     if (match_ipv6($parameter, false)) {
       $cmd->add('ipv6');
     }
@@ -65,4 +63,5 @@ class FRR extends UNIX {
     return $this->build_aspath_regexp($parameter);
   }
 }
+
 // End of frr.php
