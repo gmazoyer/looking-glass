@@ -23,7 +23,7 @@ require_once('unix.php');
 require_once('includes/command_builder.php');
 require_once('includes/utils.php');
 
-class FRR extends UNIX {
+final class FRR extends UNIX {
   protected static $wrapper = 'vtysh -c';
 
   protected function build_bgp($parameter) {
