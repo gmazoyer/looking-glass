@@ -20,6 +20,7 @@
  */
 
 require_once('includes/config.defaults.php');
+require_once('includes/utils.php');
 require_once('config.php');
 
 final class LookingGlass {
