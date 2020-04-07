@@ -33,6 +33,7 @@ require_once('openbgpd.php');
 require_once('quagga.php');
 require_once('frr.php');
 require_once('vyatta.php');
+require_once('huawei.php');
 require_once('includes/utils.php');
 require_once('auth/authentication.php');
 
@@ -237,6 +238,9 @@ abstract class Router {
 
       case 'extreme_netiron':
         return new ExtremeNetIron($config, $router_config, $id, $requester);
+
+      case 'huawei':
+	return new Huawei($config, $router_config, $id, $requester);
 
       case 'ios-xr':
       case 'iosxr':
