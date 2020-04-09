@@ -33,6 +33,7 @@ For now this looking glass is quite simple. Here you have some features:
     * OpenBGPd
     * Quagga
     * Vyatta/VyOS/EdgeOS
+    * Huawei (VRP)
   * Support of Telnet and SSH connection to routers using password
     authentication and SSH keys
   * Configurable list of routers
