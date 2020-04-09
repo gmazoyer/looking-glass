@@ -27,13 +27,13 @@ For now this looking glass is quite simple. Here you have some features:
     * Cisco (IOS and IOS-XR)
     * Extreme/Brocade NetIron
     * FRRouting
+    * Huawei (VRP)
     * Juniper
     * Mikrotik/RouterOS
     * Nokia
     * OpenBGPd
     * Quagga
     * Vyatta/VyOS/EdgeOS
-    * Huawei (VRP)
   * Support of Telnet and SSH connection to routers using password
     authentication and SSH keys
   * Configurable list of routers
