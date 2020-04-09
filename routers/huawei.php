@@ -19,8 +19,8 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  *
  *
- * Implementacao Huawei VRP by Alexandre J. Correa <ajcorrea@gmail.com> - 06/04/2020 
- * para acesso SSH password, utilizar este seguinte comando:
+ * Huawei VRP by Alexandre J. Correa <ajcorrea@gmail.com> - 06/04/2020 
+ * For SSH password auth, need to disable user security policies, run this on routers:
  *
  * [ROUTER] undo user-security-policy enable 
  *

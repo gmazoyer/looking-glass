@@ -240,7 +240,7 @@ abstract class Router {
         return new ExtremeNetIron($config, $router_config, $id, $requester);
 
       case 'huawei':
-	return new Huawei($config, $router_config, $id, $requester);
+        return new Huawei($config, $router_config, $id, $requester);
 
       case 'ios-xr':
       case 'iosxr':
