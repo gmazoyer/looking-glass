@@ -126,7 +126,8 @@ interact with it.
 $config['routers']['router1']['type'] = 'juniper';
 ```
 The router type can be Juniper, Cisco (IOS or IOS-XR), Arista,
-Extreme (NetIron), Quagga, BIRD, OpenBGPd, Vyatta/VyOS/EdgeOS, or FRRouting.
+Extreme (NetIron), Quagga, BIRD, OpenBGPd, Vyatta/VyOS/EdgeOS, FRRouting or
+Huawei.
 You can take a look at the specific documentation for your router.
 Possible values are:
 
@@ -142,6 +143,7 @@ Possible values are:
   * openbgpd
   * edgeos **or** vyatta **or** vyos
   * frr
+  * huawei
 
 It is also highly recommended to specify a source interface ID to be used by
 the router when it will try to ping or traceroute a destination. This is done
@@ -327,7 +329,7 @@ prefix length for the route given by the user, an error will be displayed.
 ```php
 $config['misc']['enable_http_x_forwarded_for'] = false;
 ```
-This option will add the support to use the `HTTP_X_FORWARDED_FOR` header, 
+This option will add the support to use the `HTTP_X_FORWARDED_FOR` header,
 which **should** include the user real IP, which then displayed on the page footer.
 For more info about this header see [RFC7239](https://tools.ietf.org/html/rfc7239).
 Because this header is user controlled, it's disabled by default.
