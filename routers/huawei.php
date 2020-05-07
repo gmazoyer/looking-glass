@@ -32,6 +32,7 @@ require_once('includes/utils.php');
 
 class Huawei extends Router {
   protected function build_bgp($parameter) {
+
     $cmd = new CommandBuilder();
     $cmd->add('display');
 
@@ -41,6 +42,7 @@ class Huawei extends Router {
     if (match_ipv4($parameter, false)) {
       $cmd->add('ip');
     }
+    $parameter = str_replace('/',' ', $parameter);
     $cmd->add('routing-table', $parameter);
 
     return array($cmd);
