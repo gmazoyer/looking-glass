@@ -41,13 +41,13 @@ class Huawei extends Router {
     if (match_ipv4($parameter, false)) {
       $cmd->add('ip');
     }
+    $parameter = str_replace('/', ' ', $parameter);
     $cmd->add('routing-table', $parameter);
 
     return array($cmd);
   }
 
   protected function build_aspath_regexp($parameter) {
-    //$parameter = quote($parameter);
     $commands = array();
     $cmd = new CommandBuilder();
     $cmd->add('display bgp');
@@ -63,8 +63,6 @@ class Huawei extends Router {
   }
 
   protected function build_as($parameter) {
-    //$parameter = '^'.$parameter.'_';
-    //return $this->build_aspath_regexp($parameter);
     throw new Exception('Coomand not supported.');
   }
 
@@ -113,8 +111,6 @@ class Huawei extends Router {
         $cmd->add((isset($hostname) ? $hostname : $parameter));
       }
     }
-
-    // Make sure to use the right source interface
 
     return array($cmd);
   }
