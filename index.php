@@ -118,14 +118,16 @@ final class LookingGlass {
   }
 
   private function render_buttons() {
+    if ($this->recaptcha['enabled'] && isset($this->recaptcha['apikey']) && isset($this->recaptcha['secret'])) {
+      print('<div class="form-group d-flex justify-content-center">');
+      print('<div class="g-recaptcha" data-sitekey="'.$this->recaptcha['apikey'].'"></div>');
+      print('</div>');
+    }
     print('<div class="confirm btn-group">');
     print('<div class="col-md-12 btn-group">');
     print('<button class="col-md-6 btn btn-primary" id="send" type="submit">Enter</button>');
     print('<button class="col-md-6 btn btn-danger" id="clear" type="reset">Reset</button>');
     print('</div>');
-    if ($this->recaptcha['enabled'] && isset($this->recaptcha['apikey']) && isset($this->recaptcha['secret'])) {
-      print('<div class="g-recaptcha" data-sitekey="'.$this->recaptcha['apikey'].'"></div>');
-    }
     print('</div>');
   }
 
