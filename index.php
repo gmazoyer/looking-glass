@@ -295,7 +295,7 @@ final class LookingGlass {
       print($this->frontpage['additional_html_header']);
     }
     print('<title>'.htmlentities($this->frontpage['title']).'</title>');
-    print('<link href="libs/bootstrap-4.4.1/css/bootstrap.min.css" rel="stylesheet" />');
+    print('<link href="libs/bootstrap-4.5.0/css/bootstrap.min.css" rel="stylesheet" />');
     print('<link href="'.$this->frontpage['css'].'" rel="stylesheet" />');
     print('</head>');
     print('<body>');
@@ -308,7 +308,7 @@ final class LookingGlass {
     }
     print('</body>');
     print('<script src="libs/jquery-3.4.1.min.js"></script>');
-    print('<script src="libs/bootstrap-4.4.1/js/bootstrap.min.js"></script>');
+    print('<script src="libs/bootstrap-4.5.0/js/bootstrap.min.js"></script>');
     print('<script src="libs/fontawesome-5.11.2/js/all.min.js"></script>');
     print('<script src="js/looking-glass.js"></script>');
     if ($this->recaptcha['enabled'] && isset($this->recaptcha['apikey']) && isset($this->recaptcha['secret'])) {
