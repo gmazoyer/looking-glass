@@ -4,20 +4,12 @@ body {
 }
 .header_bar {
   color:            #000000;
-  text-align:       center;
-  width:            50%;
   margin-top:       1em;
   margin-bottom:    1em;
-  margin-left:      auto;
-  margin-right:     auto;
 }
 .footer_bar {
   color:            #000000;
-  text-align:       center;
-  width:            50%;
   margin-top:       1em;
-  margin-left:      auto;
-  margin-right:     auto;
 }
 .origin {
   font-size:        0.7em;
@@ -25,41 +17,20 @@ body {
 .content {
   color:            #000000;
   font-size:        1.1em;
-  text-align:       center;
-  width:            50%;
   display:          block;
-  margin-left:      auto;
-  margin-right:     auto;
-}
-.confirm {
-  width:            55%;
-  margin-left:      auto;
-  margin-right:     auto;
 }
 .loading {
   margin-top:       1em;
-  width:            50%;
-  margin-left:      auto;
-  margin-right:     auto;
   display:          none;
 }
 .result {
   display:          none;
 }
-.reset {
-  width:            25%;
-  margin-left:      auto;
-  margin-right:     auto;
-}
 #error {
-  width:            50%;
-  margin-left:      auto;
-  margin-right:     auto;
   display:          none;
 }
 kbd {
   display:          block;
-  width:            70%;
   margin-left:      auto;
   margin-right:     auto;
 }
@@ -67,7 +38,6 @@ pre {
   color:            #FFFFFF;
   background-color: #000000;
   text-decoration:  none;
-  width:            70%;
   margin-left:      auto;
   margin-right:     auto;
   padding-left:     1%;
