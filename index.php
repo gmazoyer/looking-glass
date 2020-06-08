@@ -123,10 +123,12 @@ final class LookingGlass {
       print('<div class="g-recaptcha" data-sitekey="'.$this->recaptcha['apikey'].'"></div>');
       print('</div>');
     }
-    print('<div class="confirm btn-group">');
+    print('<div class="row">');
+    print('<div class="col-12 col-sm-8 col-md-6 mx-auto btn-group">');
     print('<div class="col-md-12 btn-group">');
     print('<button class="col-md-6 btn btn-primary" id="send" type="submit">Enter</button>');
     print('<button class="col-md-6 btn btn-danger" id="clear" type="reset">Reset</button>');
+    print('</div>');
     print('</div>');
     print('</div>');
   }
@@ -135,7 +137,7 @@ final class LookingGlass {
     if ($this->frontpage['header_link']) {
       print('<a href="'.$this->frontpage['header_link'].'" title="Home">');
     }
-    print('<div class="header_bar">');
+    print('<div class="header_bar text-center mx-auto">');
     if ($this->frontpage['show_title']) {
       print('<h1>'.htmlentities($this->frontpage['title']).'</h1><br>');
     }
@@ -149,11 +151,11 @@ final class LookingGlass {
   }
 
   private function render_content() {
-    print('<div class="alert alert-danger alert-dismissable" id="error">');
+    print('<div class="alert alert-danger alert-dismissable mx-auto" id="error">');
     print('<button type="button" class="close" aria-hidden="true">&times;</button>');
     print('<strong>Error!</strong>&nbsp;<span id="error-text"></span>');
     print('</div>');
-    print('<div class="content" id="command_options">');
+    print('<div class="content text-center mx-auto" id="command_options">');
     print('<form role="form" action="execute.php" method="post">');
 
     foreach ($this->frontpage['order'] as $element) {
@@ -182,7 +184,7 @@ final class LookingGlass {
     print('<input type="text" class="d-none" name="dontlook" placeholder="Don\'t look at me!" />');
     print('</form>');
     print('</div>');
-    print('<div class="loading">');
+    print('<div class="loading mx-auto">');
     print('<div class="progress">');
     print('<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">');
     print('</div>');
@@ -190,14 +192,14 @@ final class LookingGlass {
     print('</div>');
     print('<div class="result">');
     print('<div id="output"></div>');
-    print('<div class="reset">');
+    print('<div class="mx-auto">');
     print('<button class="btn btn-danger btn-block" id="backhome">Reset</button>');
     print('</div>');
     print('</div>');
   }
 
   private function render_footer() {
-    print('<div class="footer_bar">');
+    print('<div class="footer_bar text-center">');
     print('<p class="text-center">');
 
     if ($this->frontpage['show_visitor_ip']) {
@@ -301,6 +303,7 @@ final class LookingGlass {
     print('<link href="'.$this->frontpage['css'].'" rel="stylesheet" />');
     print('</head>');
     print('<body>');
+    print('<div class="container">');
     $this->render_header();
     $this->render_content();
     $this->render_footer();
@@ -308,6 +311,7 @@ final class LookingGlass {
     if ($this->frontpage['peering_policy_file']) {
       $this->render_peering_policy_modal();
     }
+    print('</div>');
     print('</body>');
     print('<script src="libs/jquery-3.4.1.min.js"></script>');
     print('<script src="libs/bootstrap-4.5.0/js/bootstrap.min.js"></script>');
