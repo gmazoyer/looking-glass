@@ -69,7 +69,7 @@ function match_reserved_ip_range($ip) {
 function match_ipv6($ip, $ip_only = true) {
   global $config;
 
-  if (empty($ip)) {
+  if (empty($ip) || !is_string($ip)) {
     return false;
   }
 
@@ -113,7 +113,7 @@ function match_ipv6($ip, $ip_only = true) {
 function match_ipv4($ip, $ip_only = true) {
   global $config;
 
-  if (empty($ip)) {
+  if (empty($ip) || !is_string($ip)) {
     return false;
   }
 
