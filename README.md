@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/respawner/looking-glass.svg?branch=master)](https://travis-ci.org/respawner/looking-glass)
+![Build Status](https://github.com/respawner/looking-glass/workflows/Syntax%20check/badge.svg)
 [![Documentation Status](https://readthedocs.org/projects/looking-glass/badge/?version=latest)](http://looking-glass.readthedocs.io/en/latest/?badge=latest)
 
 # Looking Glass
