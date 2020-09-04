@@ -117,7 +117,11 @@ final class Mikrotik extends Router {
         $cmd->add('interface='.$this->get_source_interface_id());
       }
     }
-
+    
+    if ($this->has_routing_table_name()) {
+      $cmd->add('routing-table='.$this->get_routing_table_name());
+    }
+    
     return array($cmd);
   }
   protected function build_traceroute($parameter) {
@@ -146,7 +150,11 @@ final class Mikrotik extends Router {
         $cmd->add('interface='.$this->get_source_interface_id());
       }
     }
-
+    
+    if ($this->has_routing_table_name()) {
+      $cmd->add('routing-table='.$this->get_routing_table_name());
+    }
+    
     return array($cmd);
   }
 }
