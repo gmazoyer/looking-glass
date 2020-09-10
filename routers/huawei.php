@@ -19,10 +19,10 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  *
  *
- * Huawei VRP by Alexandre J. Correa <ajcorrea@gmail.com> - 06/04/2020 
+ * Huawei VRP by Alexandre J. Correa <ajcorrea@gmail.com> - 06/04/2020
  * For SSH password auth, need to disable user security policies, run this on routers:
  *
- * [ROUTER] undo user-security-policy enable 
+ * [ROUTER] undo user-security-policy enable
  *
 */
 
@@ -36,10 +36,10 @@ class Huawei extends Router {
     $cmd->add('display');
 
     if (match_ipv6($parameter, false)) {
-      $cmd->add('ipv6');
+      $cmd->add('bgp ipv6');
     }
     if (match_ipv4($parameter, false)) {
-      $cmd->add('ip');
+      $cmd->add('bgp');
     }
     $parameter = str_replace('/', ' ', $parameter);
     $cmd->add('routing-table', $parameter);
