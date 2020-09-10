@@ -115,7 +115,7 @@ abstract class Authentication {
         return new Telnet($config, $debug);
 
       default:
-        print('Unknown authentication mechanism "'.$config['auth'].'"."');
+        print('Unknown authentication mechanism "'.$config['auth'].'".');
         return null;
     }
   }
