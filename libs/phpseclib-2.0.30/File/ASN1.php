@@ -493,6 +493,10 @@ class ASN1
      */
     function asn1map($decoded, $mapping, $special = array())
     {
+        if (!is_array($decoded)) {
+            return false;
+        }
+
         if (isset($mapping['explicit']) && is_array($decoded['content'])) {
             $decoded = $decoded['content'][0];
         }
@@ -786,7 +790,7 @@ class ASN1
      *
      * @param string $source
      * @param string $mapping
-     * @param int $idx
+     * @param array $special
      * @return string
      * @access public
      */
@@ -802,6 +806,7 @@ class ASN1
      * @param string $source
      * @param string $mapping
      * @param int $idx
+     * @param array $special
      * @return string
      * @access private
      */
@@ -1157,7 +1162,7 @@ class ASN1
      * Called by _encode_der()
      *
      * @access private
-     * @param string $content
+     * @param string $source
      * @return string
      */
     function _encodeOID($source)
