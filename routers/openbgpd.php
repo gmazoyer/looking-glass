@@ -2,8 +2,8 @@
 
 /*
  * Looking Glass - An easy to deploy Looking Glass
- * Copyright (C) 2017-2020 Guillaume Mazoyer <gmazoyer@gravitons.in>
- * Copyright (C) 2017-2020 Denis Fondras <github@ggl.ledeuns.net>
+ * Copyright (C) 2017-2021 Guillaume Mazoyer <guillaume@mazoyer.eu>
+ * Copyright (C) 2017-2021 Denis Fondras <github@ggl.ledeuns.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

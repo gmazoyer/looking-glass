@@ -2,7 +2,7 @@
 
 /*
  * Looking Glass - An easy to deploy Looking Glass
- * Copyright (C) 2017-2020 Guillaume Mazoyer <gmazoyer@gravitons.in>
+ * Copyright (C) 2017-2021 Guillaume Mazoyer <guillaume@mazoyer.eu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ final class FRR extends UNIX {
     $cmd = new CommandBuilder();
     // vytsh commands need to be quoted
     $cmd->add(self::$wrapper, '"', 'show bgp');
-	  
+
     if (match_ipv6($parameter, false)) {
       $cmd->add('ipv6');
     }

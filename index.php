@@ -2,7 +2,7 @@
 
 /*
  * Looking Glass - An easy to deploy Looking Glass
- * Copyright (C) 2014-2020 Guillaume Mazoyer <gmazoyer@gravitons.in>
+ * Copyright (C) 2014-2021 Guillaume Mazoyer <guillaume@mazoyer.eu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -299,7 +299,7 @@ final class LookingGlass {
       print($this->frontpage['additional_html_header']);
     }
     print('<title>'.htmlentities($this->frontpage['title']).'</title>');
-    print('<link href="libs/bootstrap-4.5.0/css/bootstrap.min.css" rel="stylesheet" />');
+    print('<link href="libs/bootstrap-4.6.0/css/bootstrap.min.css" rel="stylesheet" />');
     print('<link href="'.$this->frontpage['css'].'" rel="stylesheet" />');
     print('</head>');
     print('<body>');
@@ -313,9 +313,9 @@ final class LookingGlass {
     }
     print('</div>');
     print('</body>');
-    print('<script src="libs/jquery-3.4.1.min.js"></script>');
-    print('<script src="libs/bootstrap-4.5.0/js/bootstrap.min.js"></script>');
-    print('<script src="libs/fontawesome-5.11.2/js/all.min.js"></script>');
+    print('<script src="libs/jquery-3.5.1.min.js"></script>');
+    print('<script src="libs/bootstrap-4.6.0/js/bootstrap.min.js"></script>');
+    print('<script src="libs/fontawesome-5.15.2/js/all.min.js"></script>');
     print('<script src="js/looking-glass.js"></script>');
     if ($this->recaptcha['enabled'] && isset($this->recaptcha['apikey']) && isset($this->recaptcha['secret'])) {
       print('<script src="https://www.google.com/recaptcha/api.js" async defer></script>');
