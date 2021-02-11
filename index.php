@@ -104,10 +104,15 @@ final class LookingGlass {
   }
 
   private function render_parameter() {
+    if ($this->frontpage['show_visitor_ip']) {
+      $requester = htmlentities(get_requester_ip());
+    } else {
+      $requester = "";
+    }
     print('<div class="form-group">');
     print('<label for="input-param">Parameter</label>');
     print('<div class="input-group">');
-    print('<input class="form-control" name="parameter" id="input-param" autofocus />');
+    print('<input class="form-control" name="parameter" id="input-param" autofocus value="'.$requester.'" />');
     print('<div class="input-group-append">');
     print('<button type="button" class="btn btn-info" data-toggle="modal" data-target="#help">');
     print('<i class="fas fa-question-circle"></i> Help');
@@ -203,16 +208,7 @@ final class LookingGlass {
     print('<p class="text-center">');
 
     if ($this->frontpage['show_visitor_ip']) {
-      if ($this->misc['enable_http_x_forwarded_for'] === true && isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-        // The user can pass several proxy's, which each one will add its own IP address,
-        //  so we like to take only the first IP address
-        $ips = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
-        $ip = trim($ips[0]);
-        $requester = is_valid_ip_address($ip) ? $ip : $_SERVER['REMOTE_ADDR']; // as a fallback we use the REMOTE_ADDR
-        printf('Your IP address: %s<br>', htmlentities($requester));
-      } else {
-        printf('Your IP address: %s<br>', htmlentities($_SERVER['REMOTE_ADDR']));
-      }
+      printf('Your IP address: %s<br>', htmlentities(get_requester_ip()));
     }
 
     if ($this->frontpage['disclaimer']) {
