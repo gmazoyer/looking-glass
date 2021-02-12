@@ -363,4 +363,21 @@ function quote($string) {
   return sprintf('"%s"', $string);
 }
 
+/**
+ * Return IP address of the requester.
+ */
+function get_requester_ip() {
+  global $config;
+  if ($config['misc']['enable_http_x_forwarded_for'] === true && isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    // The user can pass several proxy's, which each one will add its own IP address,
+    //  so we like to take only the first IP address
+    $ips = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+    $ip = trim($ips[0]);
+    $requester = is_valid_ip_address($ip) ? $ip : $_SERVER['REMOTE_ADDR']; // as a fallback we use the REMOTE_ADDR
+  } else {
+    $requester = $_SERVER['REMOTE_ADDR'];
+  }
+  return $requester;
+}
+
 // End of utils.php
