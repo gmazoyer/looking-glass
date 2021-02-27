@@ -139,6 +139,7 @@ Possible values are:
   * nokia
   * extreme_netiron
   * bird
+  * bird2
   * quagga **or** zebra
   * openbgpd
   * edgeos **or** vyatta **or** vyos

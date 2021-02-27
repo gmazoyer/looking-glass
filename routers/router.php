@@ -23,6 +23,7 @@ require_once('includes/config.defaults.php');
 require_once('config.php');
 require_once('arista.php');
 require_once('bird.php');
+require_once('bird2.php');
 require_once('cisco.php');
 require_once('cisco_iosxr.php');
 require_once('extreme_netiron.php');
@@ -231,6 +232,9 @@ abstract class Router {
 
       case 'bird':
         return new Bird($config, $router_config, $id, $requester);
+
+      case 'bird2':
+        return new Bird2($config, $router_config, $id, $requester);
 
       case 'cisco':
       case 'ios':

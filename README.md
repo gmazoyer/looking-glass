@@ -23,7 +23,7 @@ For now this looking glass is quite simple. Here you have some features:
   * Interface using Javascript and AJAX calls (needs a decent browser)
   * Support the following router types:
     * Arista
-    * BIRD
+    * BIRD (v1 and v2)
     * Cisco (IOS and IOS-XR)
     * Extreme/Brocade NetIron
     * FRRouting
