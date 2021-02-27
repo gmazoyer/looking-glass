@@ -1,4 +1,4 @@
-# Companies using this project.
+# Companies and individuals using this project.
 
 The following companies and organizations trust this looking glass to expose a
 small view of their networks.
@@ -10,8 +10,7 @@ small view of their networks.
   * [BAEHOST](https://baehost.com/) - [Looking Glass](https://baehost.com/looking-glass/)
   * [i3D.net](https://www.i3d.net/) - [Looking Glass](https://noc.i3d.net/lg/)
   * [mazoyer.eu](https://as201281.net/) - [Looking Glass](https://lg.as201281.net/)
-  * [M Networks](https://mnetworks.org/) - [Looking Glass](https://lg.mnetworks.org/)
   * [Anexia](https://www.anexia-it.com/) - [Looking Glass](https://bgp.anexia-it.net/)
   * [Launtel](https://launtel.net.au) - [Looking Glass](https://lg.launtel.net.au)
-  * [MiSaxNet](https://www.misaxnet.de) - [Looking Glass] (https://www.misaxnet.de/looking-glass/index.php)
-  * [Christopher Hawker Consulting](https://www.chrishawker.com.au) - [Looking Glass](https://lg.as136754.net.au)
+  * [MiSaxNet](https://www.misaxnet.de) - [Looking Glass](https://www.misaxnet.de/looking-glass/index.php)
+  * and more (probably)
