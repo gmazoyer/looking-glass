@@ -37,6 +37,13 @@ Sets the image (logo) that should be displayed. If set to null no image will
 be shown.
 
 ```php
+$config['frontpage']['image_width'] = 0;
+$config['frontpage']['image_height'] = 0;
+```
+Sets the image (logo) width and height. If set to 0, the option will be
+ignored. Both options or only one of them can be set.
+
+```php
 $config['frontpage']['header_link'] = null;
 ```
 Sets the link used in the header of the page. If set to null no link will be

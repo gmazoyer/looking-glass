@@ -48,7 +48,7 @@ $config = array(
   'release' => array(
     'version' => '2.1.0',
     'codename' => 'Established',
-    'repository' => 'https://github.com/respawner/looking-glass'
+    'repository' => 'https://github.com/gmazoyer/looking-glass'
   ),
 
   // Frontpage configuration
@@ -61,6 +61,9 @@ $config = array(
     'title' => 'Looking Glass',
     // Image (null for no image)
     'image' => null,
+    // Image width and heoght (0 to ignore)
+    'image_width' => 0,
+    'image_height' => 0,
     // Link for the title/image
     'header_link' => null,
     // Peering Policy file (null for no peering policy)
