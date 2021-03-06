@@ -16,9 +16,8 @@ grab any tagged release by using the tag you need.
 ## Building your own image
 
 If you need to build you own Docker container you'll only need to have a
-webserver that is comfortable with interpreting PHP files. You can track
-down PHP versions comptaibility
-[here](https://travis-ci.org/respawner/looking-glass).
+webserver that is comfortable with interpreting PHP files. PHP version must be
+at least 7.0.
 
 ## Usage and options
 

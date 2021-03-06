@@ -1,4 +1,4 @@
-![Build Status](https://github.com/respawner/looking-glass/workflows/Syntax%20check/badge.svg)
+![Build Status](https://github.com/gmazoyer/looking-glass/workflows/Syntax%20check/badge.svg)
 [![Documentation Status](https://readthedocs.org/projects/looking-glass/badge/?version=latest)](http://looking-glass.readthedocs.io/en/latest/?badge=latest)
 
 # Looking Glass
@@ -49,7 +49,7 @@ future:
   * Support of other types of authentication
 
 Questions? Comments? Join us in the `#looking-glass` Slack channel on
-[NetworkToCode](https://networktocode.slack.com/).
+[NetDev Community](https://join.slack.com/t/netdev-community/shared_invite/zt-mtts8g0n-Sm6Wutn62q_M4OdsaIycrQ).
 
 ## Configuration
 
