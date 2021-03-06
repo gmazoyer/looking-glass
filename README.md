@@ -1,4 +1,4 @@
-![Build Status](https://github.com/gmazoyer/looking-glass/workflows/Syntax%20check/badge.svg)
+![Build Status](https://github.com/gmazoyer/looking-glass/workflows/syntax/badge.svg)
 [![Documentation Status](https://readthedocs.org/projects/looking-glass/badge/?version=latest)](http://looking-glass.readthedocs.io/en/latest/?badge=latest)
 
 # Looking Glass
