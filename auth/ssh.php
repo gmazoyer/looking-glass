@@ -40,7 +40,7 @@ final class SSH extends Authentication {
     $this->port = isset($this->config['port']) ? (int) $this->config['port'] : 22;
 
     if ($this->debug) {
-      define('NET_SSH2_LOGGING', NET_SSH2_LOG_COMPLEX);
+      define('NET_SSH2_LOGGING', SSH2::LOG_COMPLEX);
     }
   }
 
