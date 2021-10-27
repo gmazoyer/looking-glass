@@ -119,6 +119,14 @@ $config = array(
     'secret' => null
   ),
 
+  'hcaptcha' => array(
+    'enabled' => false,
+    'url' => 'https://hcaptcha.com/siteverify',
+    'sitekey' => null,
+    'secret' => null
+  ),
+
+
   // Logs
   'logs' => array(
     // Logs file where commands will be written

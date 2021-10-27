@@ -70,6 +70,38 @@ if (isset($_POST['query']) && !empty($_POST['query']) &&
     }
   }
 
+  if ($config['hcaptcha']['enabled'] &&
+      isset($config['hcaptcha']['sitekey']) &&
+      isset($config['hcaptcha']['secret'])) {
+    $response = $_POST['h-captcha-response'];
+
+    $data = array(
+        'secret' => $config['hcaptcha']['secret'],
+        'response' => $response,
+        'remoteip' => $requester
+    );
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $config['hcaptcha']['url'],
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => $data,
+        CURLOPT_RETURNTRANSFER => true
+    ]);
+
+    $output = curl_exec($ch);
+    curl_close($ch);
+
+    $hcaptcha = json_decode($output, true);
+
+    if ($hcaptcha["success"] == false) {
+      $error = 'Are you a robot?';
+      print(json_encode(array('error' => $error)));
+      return;
+    }
+  }
+
+
   // Do the processing
   $router = Router::instance($hostname, $requester);
   $router_config = $router->get_config();

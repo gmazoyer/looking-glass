@@ -39,6 +39,7 @@ final class LookingGlass {
     $this->misc = $config['misc'];
     $this->routers = $config['routers'];
     $this->doc = $config['doc'];
+    $this->hcaptcha = $config['hcaptcha'];
     $this->recaptcha = $config['recaptcha'];
   }
 
@@ -126,6 +127,11 @@ final class LookingGlass {
     if ($this->recaptcha['enabled'] && isset($this->recaptcha['apikey']) && isset($this->recaptcha['secret'])) {
       print('<div class="form-group d-flex justify-content-center">');
       print('<div class="g-recaptcha" data-sitekey="'.$this->recaptcha['apikey'].'"></div>');
+      print('</div>');
+    }
+    if ($this->hcaptcha['enabled'] && isset($this->hcaptcha['sitekey']) && isset($this->hcaptcha['secret'])) {
+      print('<div class="form-group d-flex justify-content-center">');
+      print('<div class="h-captcha" data-sitekey="'.$this->hcaptcha['sitekey'].'"></div>');
       print('</div>');
     }
     print('<div class="row">');
@@ -322,6 +328,9 @@ final class LookingGlass {
     print('<script src="js/looking-glass.js"></script>');
     if ($this->recaptcha['enabled'] && isset($this->recaptcha['apikey']) && isset($this->recaptcha['secret'])) {
       print('<script src="https://www.google.com/recaptcha/api.js" async defer></script>');
+    }
+    if ($this->hcaptcha['enabled'] && isset($this->hcaptcha['sitekey']) && isset($this->hcaptcha['secret'])) {
+      print('<script src="https://js.hcaptcha.com/1/api.js" async defer></script>');
     }
     print('</html>');
   }

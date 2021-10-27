@@ -35,6 +35,11 @@ $config['recaptcha']['enabled'] = false;
 $config['recaptcha']['apikey'] = 'foobar';
 $config['recaptcha']['secret'] = 'foobar';
 
+// hCaptcha
+$config['hcaptcha']['enabled'] = false;
+$config['hcaptcha']['sitekey'] = 'foobar';
+$config['hcaptcha']['secret'] = 'foobar';
+
 // Routers definitions
 
 // Authentication based on SSH or Telnet with password
