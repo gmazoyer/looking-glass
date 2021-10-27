@@ -11,6 +11,7 @@ Easy to deploy Looking Glass made in PHP.
   * PHP (>= 7.0) module for the webserver (libapache2-mod-php for Apache 2 for
     example)
   * The XML package is required as well (php7.0-xml on Debian for example)
+  * curl is required for hCaptcha (if enabled)
 
 ## Description
 
