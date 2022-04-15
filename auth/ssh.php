@@ -22,7 +22,7 @@
 include('libs/ClassLoader.php');
 
 $loader = new \Composer\Autoload\ClassLoader();
-$loader->addPsr4('phpseclib\\', 'libs/phpseclib-2.0.30');
+$loader->addPsr4('phpseclib\\', 'libs/phpseclib-2.0.37');
 $loader->register();
 
 use phpseclib\Crypt\RSA;
