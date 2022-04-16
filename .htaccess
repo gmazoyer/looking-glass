@@ -13,3 +13,18 @@
     Deny from all
   </IfModule>
 </Files>
+<Files looking-glass.db>
+  <IfModule mod_version.c>
+    <IfVersion < 2.4>
+      Order allow,deny
+      Deny from all
+    </IfVersion>
+    <IfVersion >= 2.4>
+      Require all denied
+    </IfVersion>
+  </IfModule>
+  <IfModule !mod_version.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</Files>

@@ -292,6 +292,21 @@ Pre-defined regexps are the following:
 To reset the default filter, the `unset` command must be used first before
 adding new values.
 
+### Anti-Spam
+
+```php
+$config['antispam']['enabled'] = true;
+```
+
+Enable or disable the built-in anti-spam.
+
+```php
+$config['antispam']['database_file'] = 'looking-glass.db';
+```
+
+Change the filename of the SQLite database to use for storing anti-spam
+details.
+
 ### Google reCAPTCHA
 
 ```php

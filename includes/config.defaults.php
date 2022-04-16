@@ -110,7 +110,13 @@ $config = array(
     )
   ),
 
-// Google reCaptcha
+  // Antispam
+  'antispam' => array(
+    'enabled' => true,
+    'database_file' => 'looking-glass.db'
+  ),
+
+  // Google reCaptcha
   'recaptcha' => array(
     // Disabled by default
     'enabled' => false,

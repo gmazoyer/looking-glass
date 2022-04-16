@@ -22,21 +22,23 @@
 require_once('includes/config.defaults.php');
 require_once('config.php');
 require_once('routers/router.php');
+require_once('includes/antispam.php');
 require_once('includes/utils.php');
 
 // From where the user *really* comes from.
 $requester = get_requester_ip();
 
-// Obvious spam
-if (!isset($_POST['dontlook']) || !empty($_POST['dontlook'])) {
-  log_to_file('Spam detected from '.$requester.'.');
-  die('Spam detected');
+// Check for spam
+if ($config['antispam']['enabled']) {
+  $antispam = new AntiSpam($config['antispam']['database_file']);
+  $antispam->check_spammer($requester);
 }
 
 // Just asked for the documentation
 if (isset($_POST['doc']) && !empty($_POST['doc'])) {
   $query = htmlspecialchars($_POST['doc']);
   print(json_encode($config['doc'][$query]));
+  return;
 }
 
 if (isset($_POST['query']) && !empty($_POST['query']) &&
