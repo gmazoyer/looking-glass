@@ -3,30 +3,30 @@ function request_doc(query) {
     type: 'post',
     url: 'execute.php',
     data: { doc: query, dontlook: '' }
-  }).done(function(response) {
+  }).done(function (response) {
     var response = $.parseJSON(response);
 
     $('#command-reminder').text(response.command);
     $('#description-help').html(response.description);
     $('#parameter-help').html(response.parameter);
-  }).fail(function(xhr) {
+  }).fail(function (xhr) {
     $('#help-content').text('Cannot load documentation...');
   });
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
   // hide the optional parameters field
   $('.result').hide();
   $('.loading').hide();
   $('.alert').hide();
 
   // close the alert bar
-  $('.close').click(function() {
+  $('.close').click(function () {
     $('.alert').slideUp();
   });
 
   // clear the form and page
-  $('#clear').click(function(e) {
+  $('#clear').click(function (e) {
     $('.alert').slideUp();
 
     e.preventDefault();
@@ -38,16 +38,16 @@ $(document).ready(function() {
     $(this).closest('form').get(0).reset();
     request_doc($('#query').val());
     if (typeof grecaptcha.reset === "function") {
-     grecaptcha.reset();
+      grecaptcha.reset();
     }
   });
 
   // reset the view to the default one
-  $('#backhome').click(function() {
+  $('#backhome').click(function () {
     $('.content').slideDown();
     $('.result').slideUp();
     if (typeof grecaptcha.reset === "function") {
-     grecaptcha.reset();
+      grecaptcha.reset();
     }
   });
 
@@ -55,36 +55,36 @@ $(document).ready(function() {
   request_doc($('#query').val());
 
   // update help when a command is selected
-  $('#query').on('change', function(e) {
+  $('#query').on('change', function (e) {
     e.preventDefault();
     request_doc($('#query').val());
   });
 
   // if the field has been completed, turn it back to normal
-  $('#input-param').change(function() {
+  $('#input-param').change(function () {
     $('#input-param').removeClass('is-invalid');
   });
 
   // send an ajax request that will get the info on the router
-  $('form').on('submit', function(e) {
+  $('form').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
       type: 'post',
       url: 'execute.php',
       data: $('form').serialize(),
-      beforeSend: function() {
+      beforeSend: function () {
         // show loading bar
         $('#command_properties').attr('disabled', '');
         $('.alert').hide();
         $('.loading').show();
       },
-      complete: function() {
+      complete: function () {
         // hide loading bar
         $('#command_properties').removeAttr('disabled');
         $('.loading').hide();
       }
-    }).done(function(response) {
+    }).done(function (response) {
       if (!response || (response.length === 0)) {
         // no parameter given
         $('#error-text').text('No parameter given.');
@@ -102,7 +102,7 @@ $(document).ready(function() {
           $('.result').slideDown();
         }
       }
-    }).fail(function(xhr) {
+    }).fail(function (xhr) {
       $('#error-text').text(xhr.responseText);
       $('.alert').slideDown();
     });

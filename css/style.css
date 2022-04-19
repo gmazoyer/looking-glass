@@ -1,21 +1,17 @@
 body {
   font-size:        1em;
-  background-color: #FFFFFF;
 }
 .header_bar {
-  color:            #000000;
   margin-top:       1em;
   margin-bottom:    1em;
 }
 .footer_bar {
-  color:            #000000;
   margin-top:       1em;
 }
 .origin {
   font-size:        0.7em;
 }
 .content {
-  color:            #000000;
   font-size:        1.1em;
   display:          block;
 }

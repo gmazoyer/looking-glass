@@ -65,7 +65,7 @@ final class LookingGlass {
   private function render_routers() {
     print('<div class="form-group">');
     print('<label for="routers">Router to use</label>');
-    print('<select size="'.$this->router_count().'" class="form-control custom-select" name="routers" id="routers">');
+    print('<select size="'.$this->router_count().'" class="form-control form-select" name="routers" id="routers">');
 
     $first = true;
     foreach (array_keys($this->routers) as $router) {
@@ -91,7 +91,7 @@ final class LookingGlass {
   private function render_commands() {
     print('<div class="form-group">');
     print('<label for="query">Command to issue</label>');
-    print('<select size="'.$this->command_count().'" class="form-control custom-select" name="query" id="query">');
+    print('<select size="'.$this->command_count().'" class="form-control form-select" name="query" id="query">');
     $selected = ' selected="selected"';
     foreach (array_keys($this->doc) as $cmd) {
       if (isset($this->doc[$cmd]['command'])) {
@@ -111,11 +111,10 @@ final class LookingGlass {
     }
     print('<div class="form-group">');
     print('<label for="input-param">Parameter</label>');
-    print('<div class="input-group">');
+    print('<div class="input-group mb-3">');
     print('<input class="form-control" name="parameter" id="input-param" autofocus value="'.$requester.'" />');
-    print('<div class="input-group-append">');
-    print('<button type="button" class="btn btn-info" data-toggle="modal" data-target="#help">');
-    print('<i class="fas fa-question-circle"></i> Help');
+    print('<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#help">');
+    print('<i class="bi bi-question-circle-fill"></i> Help');
     print('</button>');
     print('</div>');
     print('</div>');
@@ -169,6 +168,7 @@ final class LookingGlass {
     print('</div>');
     print('<div class="content text-center mx-auto" id="command_options">');
     print('<form role="form" action="execute.php" method="post">');
+    print('<fieldset id="command_properties">');
 
     foreach ($this->frontpage['order'] as $element) {
       switch ($element) {
@@ -194,6 +194,7 @@ final class LookingGlass {
     }
 
     print('<input type="text" class="d-none" name="dontlook" placeholder="Don\'t look at me!" />');
+    print('<fieldset>');
     print('</form>');
     print('</div>');
     print('<div class="loading mx-auto">');
@@ -204,8 +205,8 @@ final class LookingGlass {
     print('</div>');
     print('<div class="result">');
     print('<div id="output"></div>');
-    print('<div class="mx-auto">');
-    print('<button class="btn btn-danger btn-block" id="backhome">Reset</button>');
+    print('<div class="col-12 col-sm-8 col-md-6 mx-auto d-grid">');
+    print('<button class="btn btn-danger" id="backhome">Reset</button>');
     print('</div>');
     print('</div>');
   }
@@ -224,7 +225,7 @@ final class LookingGlass {
     }
 
     if ($this->frontpage['peering_policy_file']) {
-      print('<button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#peering-policy"><i class="fas fa-tasks"></i> Peering Policy</button>');
+      print('<button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#peering-policy"><i class="bi bi-list-task"></i> Peering Policy</button>');
       print('<br><br>');
     }
 
@@ -242,11 +243,11 @@ final class LookingGlass {
 
   private function render_peering_policy_modal() {
     print('<div id="peering-policy" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">');
-    print('<div class="modal-dialog modal-lg" role="document">');
+    print('<div class="modal-dialog modal-dialog-centered modal-lg">');
     print('<div class="modal-content">');
     print('<div class="modal-header">');
     print('<h5 class="modal-title">Peering Policy</h5>');
-    print('<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>');
+    print('<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>');
     print('</div>');
     print('<div class="modal-body">');
     if (!file_exists($this->frontpage['peering_policy_file'])) {
@@ -260,7 +261,7 @@ final class LookingGlass {
     }
     print('</div>');
     print('<div class="modal-footer">');
-    print('<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>');
+    print('<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>');
     print('</div>');
     print('</div>');
     print('</div>');
@@ -269,11 +270,11 @@ final class LookingGlass {
 
   private function render_help_modal() {
     print('<div id="help" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">');
-    print('<div class="modal-dialog" role="document">');
+    print('<div class="modal-dialog modal-dialog-centered modal-lg">');
     print('<div class="modal-content">');
     print('<div class="modal-header">');
     print('<h5 class="modal-title">Help</h5>');
-    print('<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>');
+    print('<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>');
     print('</div>');
     print('<div class="modal-body">');
     print('<h4>Command <span class="badge badge-dark"><small id="command-reminder"></small></span></h4>');
@@ -282,7 +283,7 @@ final class LookingGlass {
     print('<p id="parameter-help"></p>');
     print('</div>');
     print('<div class="modal-footer">');
-    print('<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>');
+    print('<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>');
     print('</div>');
     print('</div>');
     print('</div>');
@@ -293,19 +294,20 @@ final class LookingGlass {
     print('<!DOCTYPE html>');
     print('<html lang="en">');
     print('<head>');
-    print('<meta charset="utf-8" />');
-    print('<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />');
-    print('<meta name="viewport" content="width=device-width, initial-scale=1" />');
-    print('<meta name="keywords" content="Looking Glass, LG, BGP, prefix-list, AS-path, ASN, traceroute, ping, IPv4, IPv6, Cisco, Juniper, Internet" />');
-    print('<meta name="description" content="'.$this->frontpage['title'].'" />');
+    print('<meta charset="utf-8">');
+    print('<meta name="viewport" content="width=device-width, initial-scale=1">');
+    print('<meta name="keywords" content="Looking Glass, LG, BGP, prefix-list, AS-path, ASN, traceroute, ping, IPv4, IPv6, Cisco, Juniper, Internet">');
+    print('<meta name="description" content="'.$this->frontpage['title'].'">');
     if ($this->frontpage['additional_html_header']) {
       print($this->frontpage['additional_html_header']);
     }
     print('<title>'.htmlentities($this->frontpage['title']).'</title>');
-    print('<link href="libs/bootstrap-4.6.0/css/bootstrap.min.css" rel="stylesheet" />');
-    print('<link href="'.$this->frontpage['css'].'" rel="stylesheet" />');
+    print('<link href="libs/bootstrap-5.1.3/css/bootstrap.min.css" rel="stylesheet">');
+    print('<link href="libs/bootstrap-icons-1.8.1/bootstrap-icons.css" rel="stylesheet">');
+    print('<link href="'.$this->frontpage['css'].'" rel="stylesheet">');
     print('</head>');
-    print('<body>');
+    print('<body class="d-flex flex-column h-100">');
+    print('<main class="flex-shrink-0">');
     print('<div class="container">');
     $this->render_header();
     $this->render_content();
@@ -315,10 +317,10 @@ final class LookingGlass {
       $this->render_peering_policy_modal();
     }
     print('</div>');
+    print('</main>');
     print('</body>');
-    print('<script src="libs/jquery-3.5.1.min.js"></script>');
-    print('<script src="libs/bootstrap-4.6.0/js/bootstrap.min.js"></script>');
-    print('<script src="libs/fontawesome-5.15.2/js/all.min.js"></script>');
+    print('<script src="libs/jquery-3.6.0.min.js"></script>');
+    print('<script src="libs/bootstrap-5.1.3/js/bootstrap.min.js"></script>');
     print('<script src="js/looking-glass.js"></script>');
     if ($this->recaptcha['enabled'] && isset($this->recaptcha['apikey']) && isset($this->recaptcha['secret'])) {
       print('<script src="https://www.google.com/recaptcha/api.js" async defer></script>');
