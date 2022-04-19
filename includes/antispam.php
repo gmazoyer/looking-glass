@@ -75,8 +75,7 @@ class AntiSpam {
    * Send a HTTP 403 response to the spammer and quit.
    */
   private function reject_spammer() {
-    http_response_code(403);
-    die('Spam detected');
+    reject_requester('Spam detected');
   }
 
   /**

@@ -1,3 +1,4 @@
+---
 name: syntax
 on: [push, pull_request]
 
