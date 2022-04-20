@@ -20,6 +20,7 @@
  */
 
 require_once('includes/config.defaults.php');
+require_once('includes/captcha.php');
 require_once('includes/utils.php');
 require_once('config.php');
 
@@ -28,6 +29,7 @@ final class LookingGlass {
   private $frontpage;
   private $contact;
   private $misc;
+  private $captcha;
   private $routers;
 
   public function __construct($config) {
@@ -37,9 +39,9 @@ final class LookingGlass {
     $this->frontpage = $config['frontpage'];
     $this->contact = $config['contact'];
     $this->misc = $config['misc'];
+    $this->captcha = new Captcha($config['captcha']);
     $this->routers = $config['routers'];
     $this->doc = $config['doc'];
-    $this->recaptcha = $config['recaptcha'];
   }
 
   private function router_count() {
@@ -118,21 +120,14 @@ final class LookingGlass {
     print('</button>');
     print('</div>');
     print('</div>');
-    print('</div>');
   }
 
   private function render_buttons() {
-    if ($this->recaptcha['enabled'] && isset($this->recaptcha['apikey']) && isset($this->recaptcha['secret'])) {
-      print('<div class="form-group d-flex justify-content-center">');
-      print('<div class="g-recaptcha" data-sitekey="'.$this->recaptcha['apikey'].'"></div>');
-      print('</div>');
-    }
+    $this->captcha->render();
     print('<div class="row">');
     print('<div class="col-12 col-sm-8 col-md-6 mx-auto btn-group">');
-    print('<div class="col-md-12 btn-group">');
     print('<button class="col-md-6 btn btn-primary" id="send" type="submit">Enter</button>');
     print('<button class="col-md-6 btn btn-danger" id="clear" type="reset">Reset</button>');
-    print('</div>');
     print('</div>');
     print('</div>');
   }
@@ -197,7 +192,7 @@ final class LookingGlass {
     print('<fieldset>');
     print('</form>');
     print('</div>');
-    print('<div class="loading mx-auto">');
+    print('<div class="loading">');
     print('<div class="progress">');
     print('<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">');
     print('</div>');
@@ -322,9 +317,7 @@ final class LookingGlass {
     print('<script src="libs/jquery-3.6.0.min.js"></script>');
     print('<script src="libs/bootstrap-5.1.3/js/bootstrap.min.js"></script>');
     print('<script src="js/looking-glass.js"></script>');
-    if ($this->recaptcha['enabled'] && isset($this->recaptcha['apikey']) && isset($this->recaptcha['secret'])) {
-      print('<script src="https://www.google.com/recaptcha/api.js" async defer></script>');
-    }
+    $this->captcha->render_script();
     print('</html>');
   }
 }

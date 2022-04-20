@@ -116,11 +116,13 @@ $config = array(
     'database_file' => 'looking-glass.db'
   ),
 
-  // Google reCaptcha
-  'recaptcha' => array(
+  // Captcha
+  'captcha' => array(
     // Disabled by default
     'enabled' => false,
-    'url' => 'https://www.google.com/recaptcha/api/siteverify',
+    // Can be recaptcha or hcaptcha
+    'type' => null,
+    'url' => null,
     'apikey' => null,
     'secret' => null
   ),

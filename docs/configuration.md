@@ -307,20 +307,34 @@ $config['antispam']['database_file'] = 'looking-glass.db';
 Change the filename of the SQLite database to use for storing anti-spam
 details.
 
-### Google reCAPTCHA
+### CAPTCHA
+
+Two types of CAPTCHA are supported:
+
+* `recaptcha` from Google
+* `hcaptcha`
 
 ```php
-$config['recaptcha']['enabled'] = true;
+$config['captcha']['type'] = 'recaptcha';
 ```
-If set to true, allows the use of Google reCAPTCHA. Sitekey and secret must be
-configured to use reCAPTCHA.
+To use reCAPTCHA.
+
+```php
+$config['captcha']['type'] = 'hcaptcha';
+```
+To use hCAPTCHA.
+
+```php
+$config['captcha']['enabled'] = true;
+```
+If set to true, allows the use of a CAPTCHA.
 
 ```php
 $config['recaptcha']['apikey'] = "foobar";
 $config['recaptcha']['secret'] = "foobar";
 ```
-Defines Google reCAPTCHA sitekey and secret.
-
+Defines sitekey and secret, it may be named differently in the CAPTCHA
+documentation.
 
 ### Misc.
 
