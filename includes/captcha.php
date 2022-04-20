@@ -142,7 +142,6 @@ class Captcha {
         break;
 
       default:
-        print('Unknown captcha type "'.$this->config['type'].'".');
         break;
     }
   }
@@ -161,7 +160,6 @@ class Captcha {
         break;
 
       default:
-        print('Unknown captcha type "'.$this->config['type'].'".');
         break;
     }
   }
