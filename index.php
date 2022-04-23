@@ -157,11 +157,11 @@ final class LookingGlass {
   }
 
   private function render_content() {
-    print('<div class="alert alert-danger alert-dismissable mx-auto" id="error">');
-    print('<button type="button" class="close" aria-hidden="true">&times;</button>');
+    print('<div class="alert alert-danger alert-dismissible" id="error">');
     print('<strong>Error!</strong>&nbsp;<span id="error-text"></span>');
+    print('<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>');
     print('</div>');
-    print('<div class="content text-center mx-auto" id="command_options">');
+    print('<div class="content text-center" id="command_options">');
     print('<form role="form" action="execute.php" method="post">');
     print('<fieldset id="command_properties">');
 
