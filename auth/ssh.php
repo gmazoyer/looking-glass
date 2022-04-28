@@ -22,11 +22,12 @@
 include('libs/ClassLoader.php');
 
 $loader = new \Composer\Autoload\ClassLoader();
-$loader->addPsr4('phpseclib\\', 'libs/phpseclib-2.0.37');
+$loader->addPsr4('phpseclib3\\', 'libs/phpseclib-3.0.14');
+$loader->addPsr4('ParagonIE\ConstantTime\\', 'libs/constant_time_encoding-2.5.0');
 $loader->register();
 
-use phpseclib\Crypt\RSA;
-use phpseclib\Net\SSH2;
+use phpseclib3\Crypt\PublicKeyLoader;
+use phpseclib3\Net\SSH2;
 
 require_once('authentication.php');
 require_once('includes/utils.php');
@@ -70,12 +71,13 @@ final class SSH extends Authentication {
     if ($this->config['auth'] == 'ssh-password') {
       $success = $this->connection->login($this->config['user'], $this->config['pass']);
     } else if ($this->config['auth'] == 'ssh-key') {
-      $key = new RSA();
+      $key = null;
 
       if (isset($this->config['pass'])) {
-        $key->setPassword($this->config['pass']);
+        $key = PublicKeyLoader::load(file_get_contents($this->config['private_key']), $this->config['pass']);
+      } else {
+        $key = PublicKeyLoader::load(file_get_contents($this->config['private_key']));
       }
-      $key->loadKey(file_get_contents($this->config['private_key']));
 
       $success = $this->connection->login($this->config['user'], $key);
     } else {
