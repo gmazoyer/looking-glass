@@ -91,7 +91,13 @@ $(document).ready(function () {
         $('#input-param').focus().addClass('is-invalid');
         $('.alert').slideDown();
       } else {
-        var response = $.parseJSON(response);
+        try {
+          var response = $.parseJSON(response);
+        } catch {
+          $('#error-text').html("<pre>" + response + "</pre>");
+          $('.alert').slideDown();
+          return;
+        }
 
         if (response.error) {
           $('#error-text').text(response.error);
