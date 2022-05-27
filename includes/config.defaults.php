@@ -46,7 +46,7 @@ $config = array(
 
   // Release configuration
   'release' => array(
-    'version' => '2.1.0',
+    'version' => '2.2.0',
     'codename' => 'Established',
     'repository' => 'https://github.com/gmazoyer/looking-glass'
   ),
