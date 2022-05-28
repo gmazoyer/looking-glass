@@ -2,8 +2,12 @@
 #######################
 .*
 !/.gitignore
-!/.travis.yml
 !/.github/
+
+# Custom CSS #
+##############
+*.css
+!/css/style.css
 
 config.php
 logo.*
