@@ -29,7 +29,7 @@ function set_defaults_for_routers(&$parsed_config) {
     'timeout' => 30,
     'disable_ipv6' => false,
     'disable_ipv4' => false,
-    'bgp_detail' => false
+    'bgp_detail' => true
   );
 
   // Loads defaults when key does not exist
@@ -75,11 +75,18 @@ $config = array(
     // Show visitor IP address
     'show_visitor_ip' => true,
     // Frontpage order you can use: routers, commands, parameter, buttons
-    'order' => array('routers', 'commands', 'parameter', 'buttons'),
+    'order' => array('routers', 'vrfs', 'commands', 'parameter', 'buttons'),
     // Number of routers to show on frontpage
     'router_count' => 5,
     // Number of commands to show on frontpage (0 scales dynamically)
     'command_count' => 0
+  ),
+
+  'vrfs' => array(
+      // Enable the vrf subsystem + shows vrfs on frontpage.
+      'enabled' => false,
+      // List of the vrfs that can be looked into
+      'vrfs' => array()
   ),
 
   // Contact (both null for no contact)

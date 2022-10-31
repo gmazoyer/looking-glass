@@ -26,7 +26,7 @@ require_once('includes/utils.php');
 final class FRR extends UNIX {
   protected static $wrapper = 'vtysh -c';
 
-  protected function build_bgp($parameter) {
+  protected function build_bgp($parameter, $vrf = false) {
     $cmd = new CommandBuilder();
     // vytsh commands need to be quoted
     $cmd->add(self::$wrapper, '"', 'show bgp');
@@ -42,7 +42,7 @@ final class FRR extends UNIX {
     return array($cmd);
   }
 
-  protected function build_aspath_regexp($parameter) {
+  protected function build_aspath_regexp($parameter, $vrf = false) {
     $commands = array();
     $cmd = new CommandBuilder();
     // vytsh commands need to be quoted
@@ -58,9 +58,9 @@ final class FRR extends UNIX {
     return $commands;
   }
 
-  protected function build_as($parameter) {
+  protected function build_as($parameter, $vrf = false) {
     $parameter = '^'.$parameter.'_';
-    return $this->build_aspath_regexp($parameter);
+    return $this->build_aspath_regexp($parameter, $vrf);
   }
 }
 

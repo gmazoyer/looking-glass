@@ -24,7 +24,7 @@ require_once('includes/command_builder.php');
 require_once('includes/utils.php');
 
 class Cisco extends Router {
-  protected function build_bgp($parameter) {
+  protected function build_bgp($parameter, $vrf = false) {
     $cmd = new CommandBuilder();
     $cmd->add('show bgp');
 
@@ -39,7 +39,7 @@ class Cisco extends Router {
     return array($cmd);
   }
 
-  protected function build_aspath_regexp($parameter) {
+  protected function build_aspath_regexp($parameter, $vrf = false) {
     $parameter = quote($parameter);
     $commands = array();
     $cmd = new CommandBuilder();
@@ -55,7 +55,7 @@ class Cisco extends Router {
     return $commands;
   }
 
-  protected function build_as($parameter) {
+  protected function build_as($parameter, $vrf = false) {
     $parameter = '^'.$parameter.'_';
     return $this->build_aspath_regexp($parameter);
   }
@@ -75,7 +75,7 @@ class Cisco extends Router {
     return array($cmd);
   }
 
-  protected function build_traceroute($parameter) {
+  protected function build_traceroute($parameter, $vrf = false) {
     if (!is_valid_destination($parameter)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }

@@ -39,7 +39,7 @@ final class OpenBGPD extends UNIX {
     }
   }
 
-  protected function build_bgp($parameter) {
+  protected function build_bgp($parameter, $vrf = false) {
     $cmd = new CommandBuilder();
     $cmd->add($this->wrapper, 'show rib');
 
@@ -51,7 +51,7 @@ final class OpenBGPD extends UNIX {
     return array($cmd);
   }
 
-  protected function build_aspath_regexp($parameter) {
+  protected function build_aspath_regexp($parameter, $vrf = false) {
     $cmd = new CommandBuilder();
     $cmd->add($this->wrapper, 'show rib');
 
@@ -63,7 +63,7 @@ final class OpenBGPD extends UNIX {
     return array($cmd);
   }
 
-  protected function build_as($parameter) {
+  protected function build_as($parameter, $vrf = false) {
     $cmd = new CommandBuilder();
     $cmd->add($this->wrapper, 'show rib');
 
