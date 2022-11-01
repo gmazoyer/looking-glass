@@ -85,7 +85,7 @@ final class Juniper extends Router {
     return $this->build_aspath_regexp($parameter, $vrf);
   }
 
-  protected function build_ping($parameter) {
+  protected function build_ping($parameter, $vrf = false) {
     if (!is_valid_destination($parameter)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
@@ -95,6 +95,10 @@ final class Juniper extends Router {
 
     if ($this->has_source_interface_id()) {
       $cmd->add('interface', $this->get_source_interface_id());
+    }
+
+    if ($vrf !== false) {
+      $cmd->add('routing-instance ' . $vrf);
     }
 
     return array($cmd);
@@ -113,8 +117,8 @@ final class Juniper extends Router {
     }
     $cmd->add($parameter);
 
-    if ($vrf != false) {
-        $cmd->add($vrf);
+    if ($vrf !== false) {
+      $cmd->add('routing-instance ' . $vrf);
     }
 
     if ($this->has_source_interface_id()) {

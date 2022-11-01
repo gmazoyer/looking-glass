@@ -128,7 +128,7 @@ final class LookingGlass {
           return;
       }
       print('<div class="form-group">');
-      print('<label for="input-param">Vrf</label>');
+      print('<label for="input-param">VRF</label>');
       print('<div class="input-group mb-3">');
       print('<select id="vrf" class="form-select" name="vrf">');
       print('<option value="none" selected>None</option>');

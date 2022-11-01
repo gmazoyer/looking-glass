@@ -153,7 +153,7 @@ abstract class Router {
 
   protected abstract function build_as($parameter, $vrf = false);
 
-  protected abstract function build_ping($parameter);
+  protected abstract function build_ping($parameter, $vrf = false);
 
   protected abstract function build_traceroute($parameter, $vrf = false);
 
@@ -178,7 +178,7 @@ abstract class Router {
         return $this->build_as($parameter, $vrf);
 
       case 'ping':
-        return $this->build_ping($parameter);
+        return $this->build_ping($parameter, $vrf);
 
       case 'traceroute':
         return $this->build_traceroute($parameter, $vrf);

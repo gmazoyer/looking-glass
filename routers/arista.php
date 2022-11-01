@@ -66,7 +66,7 @@ final class Arista extends Router {
     return $this->build_aspath_regexp($parameter, $vrf);
   }
 
-  protected function build_ping($parameter): array {
+  protected function build_ping($parameter, $vrf = false): array {
     if (!is_valid_destination($parameter)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }

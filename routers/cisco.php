@@ -60,7 +60,7 @@ class Cisco extends Router {
     return $this->build_aspath_regexp($parameter);
   }
 
-  protected function build_ping($parameter) {
+  protected function build_ping($parameter, $vrf = false) {
     if (!is_valid_destination($parameter)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }

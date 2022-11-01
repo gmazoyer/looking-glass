@@ -66,7 +66,7 @@ class Huawei extends Router {
     throw new Exception('Coomand not supported.');
   }
 
-  protected function build_ping($parameter) {
+  protected function build_ping($parameter, $vrf = false) {
     if (!is_valid_destination($parameter)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }

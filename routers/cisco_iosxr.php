@@ -24,6 +24,25 @@ require_once('includes/command_builder.php');
 require_once('includes/utils.php');
 
 final class IOSXR extends Cisco {
+  protected function build_bgp($parameter, $vrf = false) {
+    $cmd = new CommandBuilder();
+    $cmd->add('show bgp');
+
+    if ($vrf !== false) {
+      $cmd->add('vrf ' . $vrf);
+    }
+
+    if (match_ipv6($parameter, false)) {
+      $cmd->add('ipv6');
+    }
+    if (match_ipv4($parameter, false)) {
+      $cmd->add('ipv4');
+    }
+    $cmd->add('unicast', $parameter);
+
+    return array($cmd);
+  }
+
   protected function build_aspath_regexp($parameter, $vrf = false) {
     $parameter = quote($parameter);
     $commands = array();
@@ -40,7 +59,7 @@ final class IOSXR extends Cisco {
     return $commands;
   }
 
-  protected function build_ping($parameter) {
+  protected function build_ping($parameter, $vrf = false) {
     if (!is_valid_destination($parameter)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
@@ -80,8 +99,12 @@ final class IOSXR extends Cisco {
       if (match_ipv4($parameter) && $this->get_source_interface_id('ipv4')) {
         $cmd->add($this->get_source_interface_id('ipv4'));
       }
-    }
 
+      if ($vrf !== false) {
+        $cmd->add('vrf' . $vrf);
+      }
+
+    }
     return array($cmd);
   }
 
@@ -123,6 +146,10 @@ final class IOSXR extends Cisco {
       if (match_ipv4($parameter) && $this->get_source_interface_id('ipv4')) {
         $cmd->add($this->get_source_interface_id('ipv4'));
       }
+    }
+
+    if ($vrf !== false) {
+      $cmd->add('vrf ' . $vrf);
     }
 
     return array($cmd);
