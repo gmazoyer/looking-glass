@@ -93,12 +93,14 @@ final class Juniper extends Router {
     $cmd = new CommandBuilder();
     $cmd->add('ping count 10 rapid', $parameter);
 
-    if ($this->has_source_interface_id()) {
-      $cmd->add('interface', $this->get_source_interface_id());
+    if ($vrf !== false) {
+      $vrf = str_replace('.inet.0', '', $vrf);
+      $vrf = str_replace('.inet6.0', '', $vrf);
+      $cmd->add('routing-instance ' . $vrf);
     }
 
-    if ($vrf !== false) {
-      $cmd->add('routing-instance ' . $vrf);
+    if ($this->has_source_interface_id()) {
+      $cmd->add('interface', $this->get_source_interface_id());
     }
 
     return array($cmd);
@@ -112,14 +114,15 @@ final class Juniper extends Router {
     $cmd = new CommandBuilder();
     $cmd->add('traceroute');
 
+    if ($vrf !== false) {
+      $cmd->add('routing-instance ' . $vrf);
+    }
+
     if (match_ipv4($parameter)) {
       $cmd->add('as-number-lookup');
     }
     $cmd->add($parameter);
 
-    if ($vrf !== false) {
-      $cmd->add('routing-instance ' . $vrf);
-    }
 
     if ($this->has_source_interface_id()) {
       $cmd->add('interface', $this->get_source_interface_id());
