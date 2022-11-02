@@ -132,7 +132,7 @@ final class LookingGlass {
     print('<select size="5" class="form-control form-select" name="vrf" id="vrf">');
     $selected = ' selected="selected"';
     foreach (array_values($this->vrfs['vrfs']) as $vrf) {
-        print('<option value="'.$vrf.'"'.$selected.'>'.$vrf.'</option>');
+      print('<option value="'.$vrf.'"'.$selected.'>'.$vrf.'</option>');
       $selected = '';
     }
     print('</select>');
