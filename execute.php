@@ -87,8 +87,8 @@ if (isset($_POST['query']) && !empty($_POST['query']) &&
       $error = 'Empty VRF';
       print(json_encode(array('error' => $error)));
     } elseif(!in_array($_POST['vrf'], $config['vrfs']['vrfs'])) {
-    // To prevent people from entering a own value or arguments.
-      $error = 'Invalid VRF. Given VRF is not configured on the server';
+    // To prevent people from entering their own value or arguments.
+      $error = 'Invalid VRF. Given VRF is not configured.';
       print(json_encode(array('error' => $error)));
     } else {
       $vrf = $_POST['vrf'];

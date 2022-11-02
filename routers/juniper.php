@@ -94,8 +94,7 @@ final class Juniper extends Router {
     $cmd->add('ping count 10 rapid', $parameter);
 
     if ($vrf !== false) {
-      $vrf = str_replace('.inet.0', '', $vrf);
-      $vrf = str_replace('.inet6.0', '', $vrf);
+      $vrf = $this->strip_suffix_from_vrf($vrf);
       $cmd->add('routing-instance ' . $vrf);
     }
 
@@ -115,6 +114,7 @@ final class Juniper extends Router {
     $cmd->add('traceroute');
 
     if ($vrf !== false) {
+      $vrf = $this->strip_suffix_from_vrf($vrf);
       $cmd->add('routing-instance ' . $vrf);
     }
 

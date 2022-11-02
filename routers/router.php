@@ -131,6 +131,12 @@ abstract class Router {
     return isset($this->config['routing-table']);
   }
 
+  protected function strip_suffix_from_vrf($vrf) {
+    $vrf = str_replace('.inet.0', '', $vrf);
+    $vrf = str_replace('.inet6.0', '', $vrf);
+    return $vrf;
+  }
+
   protected function get_routing_table_name($ip_version = 'ipv6') {
     // No specific routing table given
     if (!$this->has_routing_table_name()) {

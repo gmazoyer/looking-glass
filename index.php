@@ -124,20 +124,19 @@ final class LookingGlass {
   }
 
   private function render_vrfs() {
-      if( ! $this->vrfs['enabled']){
-          return;
-      }
-      print('<div class="form-group">');
-      print('<label for="input-param">VRF</label>');
-      print('<div class="input-group mb-3">');
-      print('<select id="vrf" class="form-select" name="vrf">');
-      print('<option value="none" selected>None</option>');
-      foreach($this->vrfs['vrfs'] as $vrf){
-          print('<option value='.$vrf.'>'.$vrf.'</option>');
-      }
-      print('</select>');
-      print('</div>');
-      print('</div>');
+    if( ! $this->vrfs['enabled']){
+        return;
+    }
+    print('<div class="form-group">');
+    print('<label for="vrf">VRF</label>');
+    print('<select size="5" class="form-control form-select" name="vrf" id="vrf">');
+    $selected = ' selected="selected"';
+    foreach (array_values($this->vrfs['vrfs']) as $vrf) {
+        print('<option value="'.$vrf.'"'.$selected.'>'.$vrf.'</option>');
+      $selected = '';
+    }
+    print('</select>');
+    print('</div>');
   }
 
   private function render_buttons() {
@@ -203,6 +202,7 @@ final class LookingGlass {
 
         case 'vrfs':
           $this->render_vrfs();
+          break;
 
         default:
           break;

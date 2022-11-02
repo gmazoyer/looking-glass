@@ -83,9 +83,9 @@ $config = array(
   ),
 
   'vrfs' => array(
-      // Enable the vrf subsystem + shows vrfs on frontpage.
+      // Enable the VRF subsystem + shows VRFs on frontpage.
       'enabled' => false,
-      // List of the vrfs that can be looked into
+      // List of VRFs against which lookups can be made.
       'vrfs' => array()
   ),
 
