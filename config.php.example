@@ -131,4 +131,11 @@ $config['tools']['traceroute_options'] = '-A -q1 -w2 -m15';
 $config['tools']['traceroute6'] = 'traceroute6';
 $config['tools']['traceroute4'] = 'traceroute';
 
+// Enables VRF subsystem
+$config['vrfs']['enabled'] = true;
+// The default IPv4 vrf
+$config['vrfs']['vrfs'][] = 'inet.0';
+// The default IPv6 vrf
+$config['vrfs']['vrfs'][] = 'inet6.0';
+
 // End of config.php
