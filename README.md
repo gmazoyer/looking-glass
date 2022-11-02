@@ -43,6 +43,7 @@ For now this looking glass is quite simple. Here you have some features:
   * Log all commands in a file
   * Customizable output with regular expressions
   * Configurable list of allowed commands
+  * Custom VRFs (for now only on Juniper routers)
 
 And here is a list of what this looking glass should be able to do in the
 future:
