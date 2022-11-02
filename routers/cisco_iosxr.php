@@ -101,8 +101,7 @@ final class IOSXR extends Cisco {
       }
 
       if ($vrf !== false) {
-        $vrf = str_replace('.inet.0', '', $vrf);
-        $vrf = str_replace('.inet6.0', '', $vrf);
+        $vrf = $this->strip_suffix_from_vrf($vrf);
         $cmd->add('vrf' . $vrf);
       }
 
