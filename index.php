@@ -130,10 +130,9 @@ final class LookingGlass {
     print('<div class="form-group">');
     print('<label for="vrf">VRF</label>');
     print('<select size="5" class="form-control form-select" name="vrf" id="vrf">');
-    $selected = ' selected="selected"';
+    print('<option value="none" selected>None/Disable</option>');
     foreach (array_values($this->vrfs['vrfs']) as $vrf) {
-      print('<option value="'.$vrf.'"'.$selected.'>'.$vrf.'</option>');
-      $selected = '';
+      print('<option value="'.$vrf.'">'.$vrf.'</option>');
     }
     print('</select>');
     print('</div>');
