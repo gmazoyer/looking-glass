@@ -58,7 +58,7 @@ if (isset($_POST['query']) && !empty($_POST['query']) &&
 
   // Process captcha if it is enabled
   if (isset($config['captcha']) && $config['captcha']['enabled']) {
-    $captcha = new Captcha($config['captcha']['type']);
+    $captcha = new Captcha($config['captcha']);
     if (!$captcha->validate($requester)) {
       reject_requester('Are you a robot?');
     }
