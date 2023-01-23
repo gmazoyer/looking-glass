@@ -43,6 +43,7 @@ abstract class Router {
   protected $config;
   protected $id;
   protected $requester;
+  protected $vrf_cmd;
 
   public function __construct($global_config, $config, $id, $requester) {
     $this->global_config = $global_config;
@@ -207,7 +208,7 @@ abstract class Router {
         '[BEGIN] '.$selected), $this->global_config['logs']['format']);
       log_to_file($log);
 
-      $output = $auth->send_command((string) $selected);
+      $output = $auth->send_command((string) $selected, $this);
       $output = $this->sanitize_output($output);
 
       $data .= $this->format_output($selected, $output);
@@ -216,6 +217,26 @@ abstract class Router {
         array(date('Y-m-d H:i:s'), $this->requester, $this->config['host'],
         '[END] '.$selected), $this->global_config['logs']['format']);
       log_to_file($log);
+    }
+
+    return $data;
+  }
+
+  public function send_ssh_command($command, $connection) {
+
+    $data = $connection->exec($command);
+
+    return $data;
+  }
+
+  public function send_telnet_command($command, $connection) {
+
+    fputs($connection, $command."\r\n");
+
+    $data = '';
+    while (substr($data, -1) != '#' && substr($data, -1) != '>') {
+      $data .= fread($connection, 4096);
+      $data = rtrim($data, " ");
     }
 
     return $data;

@@ -93,10 +93,11 @@ final class SSH extends Authentication {
     }
   }
 
-  public function send_command($command) {
+  public function send_command($command, $router) {
     $this->connect();
 
-    $data = $this->connection->exec($command);
+    $data = $router->send_ssh_command($command, $this->connection);
+
     if ($this->debug) {
       log_to_file($this->connection->getLog());
     }
