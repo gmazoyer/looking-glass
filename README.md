@@ -5,6 +5,10 @@
 
 Easy to deploy Looking Glass made in PHP.
 
+The lack of time and funding has slown down this project quite a lot. It is
+still maintained though. If you like it, use it and want its development to
+be faster, feel free to contribute in any way you can.
+
 ## Requirements
 
   * Webserver such as Apache 2, or Lighttpd, etc…
