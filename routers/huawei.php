@@ -31,7 +31,7 @@ require_once('includes/command_builder.php');
 require_once('includes/utils.php');
 
 class Huawei extends Router {
-  protected function build_bgp($parameter) {
+  protected function build_bgp($parameter, $vrf = false) {
     $cmd = new CommandBuilder();
     $cmd->add('display');
 
@@ -47,7 +47,7 @@ class Huawei extends Router {
     return array($cmd);
   }
 
-  protected function build_aspath_regexp($parameter) {
+  protected function build_aspath_regexp($parameter, $vrf = false) {
     $commands = array();
     $cmd = new CommandBuilder();
     $cmd->add('display bgp');
@@ -62,11 +62,11 @@ class Huawei extends Router {
     return $commands;
   }
 
-  protected function build_as($parameter) {
+  protected function build_as($parameter, $vrf = false) {
     throw new Exception('Coomand not supported.');
   }
 
-  protected function build_ping($parameter) {
+  protected function build_ping($parameter, $vrf = false) {
     if (!is_valid_destination($parameter)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
@@ -82,7 +82,7 @@ class Huawei extends Router {
     return array($cmd);
   }
 
-  protected function build_traceroute($parameter) {
+  protected function build_traceroute($parameter, $vrf = false) {
     if (!is_valid_destination($parameter)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }

@@ -28,7 +28,7 @@ final class Bird extends UNIX {
     return $ipv6 ? 'birdc6' : 'birdc';
   }
 
-  private function get_aspath($parameter) {
+  private function get_aspath($parameter, $vrf = false) {
     $commands = array();
 
     foreach (array(true, false) as $ipv6_enabled) {
@@ -48,7 +48,7 @@ final class Bird extends UNIX {
     return $commands;
   }
 
-  protected function build_bgp($parameter) {
+  protected function build_bgp($parameter, $vrf = false) {
     $cmd = new CommandBuilder();
     $cmd->add($this->get_bird_binary(match_ipv6($parameter, false)));
 
@@ -62,12 +62,12 @@ final class Bird extends UNIX {
     return array($cmd);
   }
 
-  protected function build_aspath_regexp($parameter) {
-    return $this->get_aspath($parameter);
+  protected function build_aspath_regexp($parameter, $vrf = false) {
+    return $this->get_aspath($parameter, $vrf);
   }
 
-  protected function build_as($parameter) {
-    return $this->get_aspath($parameter);
+  protected function build_as($parameter, $vrf = false) {
+    return $this->get_aspath($parameter, $vrf);
   }
 }
 

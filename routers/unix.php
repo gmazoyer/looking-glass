@@ -31,7 +31,7 @@ require_once('includes/utils.php');
  * wrong.
  */
 abstract class UNIX extends Router {
-  protected function build_ping($parameter) {
+  protected function build_ping($parameter, $vrf = false) {
     // If the destination is a hostname, try to resolve it to an IP address
     if (match_hostname($parameter)) {
       $hostname = $parameter;
@@ -67,7 +67,7 @@ abstract class UNIX extends Router {
     return array($cmd);
   }
 
-  protected function build_traceroute($parameter) {
+  protected function build_traceroute($parameter, $vrf = false) {
     // If the destination is a hostname, try to resolve it to an IP address
     if (match_hostname($parameter)) {
       $hostname = $parameter;

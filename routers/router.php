@@ -131,6 +131,12 @@ abstract class Router {
     return isset($this->config['routing-table']);
   }
 
+  protected function strip_suffix_from_vrf($vrf) {
+    $vrf = str_replace('.inet.0', '', $vrf);
+    $vrf = str_replace('.inet6.0', '', $vrf);
+    return $vrf;
+  }
+
   protected function get_routing_table_name($ip_version = 'ipv6') {
     // No specific routing table given
     if (!$this->has_routing_table_name()) {
@@ -147,41 +153,41 @@ abstract class Router {
     return $routing_tables_names[$ip_version];
   }
 
-  protected abstract function build_bgp($parameter);
+  protected abstract function build_bgp($parameter, $vrf = false);
 
-  protected abstract function build_aspath_regexp($parameter);
+  protected abstract function build_aspath_regexp($parameter, $vrf = false);
 
-  protected abstract function build_as($parameter);
+  protected abstract function build_as($parameter, $vrf = false);
 
-  protected abstract function build_ping($parameter);
+  protected abstract function build_ping($parameter, $vrf = false);
 
-  protected abstract function build_traceroute($parameter);
+  protected abstract function build_traceroute($parameter, $vrf = false);
 
-  private function build_commands($command, $parameter) {
+  private function build_commands($command, $parameter, $vrf = false) {
     switch ($command) {
       case 'bgp':
         if (!is_valid_ip_address($parameter)) {
           throw new Exception('The parameter is not an IP address.');
         }
-        return $this->build_bgp($parameter);
+        return $this->build_bgp($parameter, $vrf);
 
       case 'as-path-regex':
         if (!match_aspath_regexp($parameter)) {
           throw new Exception('The parameter is not an AS-Path regular expression.');
         }
-        return $this->build_aspath_regexp($parameter);
+        return $this->build_aspath_regexp($parameter, $vrf);
 
       case 'as':
         if (!match_as($parameter)) {
           throw new Exception('The parameter is not an AS number.');
         }
-        return $this->build_as($parameter);
+        return $this->build_as($parameter, $vrf);
 
       case 'ping':
-        return $this->build_ping($parameter);
+        return $this->build_ping($parameter, $vrf);
 
       case 'traceroute':
-        return $this->build_traceroute($parameter);
+        return $this->build_traceroute($parameter, $vrf);
 
       default:
         throw new Exception('Command not supported.');
@@ -194,8 +200,8 @@ abstract class Router {
     return $this->config;
   }
 
-  public function send_command($command, $parameter) {
-    $commands = $this->build_commands($command, $parameter);
+  public function send_command($command, $parameter, $vrf = false) {
+    $commands = $this->build_commands($command, $parameter, $vrf);
     $auth = Authentication::instance($this->config,
       $this->global_config['logs']['auth_debug']);
 

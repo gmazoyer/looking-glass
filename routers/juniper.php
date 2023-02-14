@@ -24,16 +24,21 @@ require_once('includes/command_builder.php');
 require_once('includes/utils.php');
 
 final class Juniper extends Router {
-  protected function build_bgp($parameter) {
+  protected function build_bgp($parameter, $vrf = false) {
     $cmd = new CommandBuilder();
     $cmd->add('show route', $parameter, 'protocol bgp table');
 
-    if (match_ipv6($parameter, false)) {
-      $cmd->add('inet6.0');
+    if($vrf === false) {
+      if (match_ipv6($parameter, false)) {
+          $cmd->add('inet6.0');
+      }
+      if (match_ipv4($parameter, false)) {
+          $cmd->add('inet.0');
+      }
+    } else {
+      $cmd->add($vrf);
     }
-    if (match_ipv4($parameter, false)) {
-      $cmd->add('inet.0');
-    }
+
     if ($this->config['bgp_detail']) {
       $cmd->add('detail');
     }
@@ -41,7 +46,7 @@ final class Juniper extends Router {
     return array($cmd);
   }
 
-  protected function build_aspath_regexp($parameter) {
+  protected function build_aspath_regexp($parameter, $vrf = false) {
     $parameter = quote($parameter);
     $commands = array();
     $cmd = new CommandBuilder();
@@ -49,7 +54,11 @@ final class Juniper extends Router {
 
     if (!$this->config['disable_ipv6']) {
       $cmd6 = clone $cmd;
-      $cmd6->add('inet6.0');
+      if(!$vrf) {
+        $cmd6->add('inet6.0');
+      } else {
+        $cmd6->add($vrf);
+      }
       if ($this->config['bgp_detail']) {
         $cmd6->add('detail');
       }
@@ -57,7 +66,11 @@ final class Juniper extends Router {
     }
     if (!$this->config['disable_ipv4']) {
       $cmd4 = clone $cmd;
-      $cmd4->add('inet.0');
+      if (!$vrf) {
+        $cmd4->add('inet.0');
+      } else {
+        $cmd4->add($vrf);
+      }
       if ($this->config['bgp_detail']) {
         $cmd4->add('detail');
       }
@@ -67,18 +80,23 @@ final class Juniper extends Router {
     return $commands;
   }
 
-  protected function build_as($parameter) {
+  protected function build_as($parameter, $vrf = false) {
     $parameter = '^'.$parameter.' .*';
-    return $this->build_aspath_regexp($parameter);
+    return $this->build_aspath_regexp($parameter, $vrf);
   }
 
-  protected function build_ping($parameter) {
+  protected function build_ping($parameter, $vrf = false) {
     if (!is_valid_destination($parameter)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
 
     $cmd = new CommandBuilder();
     $cmd->add('ping count 10 rapid', $parameter);
+
+    if ($vrf !== false) {
+      $vrf = $this->strip_suffix_from_vrf($vrf);
+      $cmd->add('routing-instance ' . $vrf);
+    }
 
     if ($this->has_source_interface_id()) {
       $cmd->add('interface', $this->get_source_interface_id());
@@ -87,7 +105,7 @@ final class Juniper extends Router {
     return array($cmd);
   }
 
-  protected function build_traceroute($parameter) {
+  protected function build_traceroute($parameter, $vrf = false) {
     if (!is_valid_destination($parameter)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
@@ -95,10 +113,16 @@ final class Juniper extends Router {
     $cmd = new CommandBuilder();
     $cmd->add('traceroute');
 
+    if ($vrf !== false) {
+      $vrf = $this->strip_suffix_from_vrf($vrf);
+      $cmd->add('routing-instance ' . $vrf);
+    }
+
     if (match_ipv4($parameter)) {
       $cmd->add('as-number-lookup');
     }
     $cmd->add($parameter);
+
 
     if ($this->has_source_interface_id()) {
       $cmd->add('interface', $this->get_source_interface_id());

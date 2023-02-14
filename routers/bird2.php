@@ -24,7 +24,7 @@ require_once('includes/command_builder.php');
 require_once('includes/utils.php');
 
 final class Bird2 extends UNIX {
-  private function get_aspath($parameter) {
+  private function get_aspath($parameter, $vrf = false) {
     $cmd = new CommandBuilder();
     $cmd->add('birdc');
 
@@ -38,7 +38,7 @@ final class Bird2 extends UNIX {
     return array($cmd);
   }
 
-  protected function build_bgp($parameter) {
+  protected function build_bgp($parameter, $vrf = false) {
     $cmd = new CommandBuilder();
     $cmd->add('birdc');
 
@@ -52,12 +52,12 @@ final class Bird2 extends UNIX {
     return array($cmd);
   }
 
-  protected function build_aspath_regexp($parameter) {
+  protected function build_aspath_regexp($parameter, $vrf = false) {
     return $this->get_aspath($parameter);
   }
 
-  protected function build_as($parameter) {
-    return $this->get_aspath($parameter);
+  protected function build_as($parameter, $vrf = false) {
+    return $this->get_aspath($parameter, $vrf);
   }
 }
 

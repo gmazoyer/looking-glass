@@ -18,7 +18,6 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 require_once('includes/config.defaults.php');
 require_once('config.php');
 require_once('routers/router.php');
@@ -82,8 +81,22 @@ if (isset($_POST['query']) && !empty($_POST['query']) &&
     return;
   }
 
+  $vrf = false;
+  if (isset($_POST['vrf']) && mb_strtolower($_POST['vrf']) !== 'none' && $config['vrfs']['enabled']) {
+    if (empty(trim($_POST['vrf']))) {
+      $error = 'Empty VRF';
+      print(json_encode(array('error' => $error)));
+    } elseif(!in_array($_POST['vrf'], $config['vrfs']['vrfs'])) {
+    // To prevent people from entering their own value or arguments.
+      $error = 'Invalid VRF. Given VRF is not configured.';
+      print(json_encode(array('error' => $error)));
+    } else {
+      $vrf = $_POST['vrf'];
+    }
+  }
+
   try {
-    $output = $router->send_command($query, $parameter);
+    $output = $router->send_command($query, $parameter, $vrf);
   } catch (Exception $e) {
     $error = $e->getMessage();
   }

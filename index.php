@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Looking Glass - An easy to deploy Looking Glass
  * Copyright (C) 2014-2023 Guillaume Mazoyer <guillaume@mazoyer.eu>
@@ -31,6 +30,7 @@ final class LookingGlass {
   private $misc;
   private $captcha;
   private $routers;
+  private $vrfs;
 
   public function __construct($config) {
     set_defaults_for_routers($config);
@@ -42,6 +42,7 @@ final class LookingGlass {
     $this->captcha = new Captcha($config['captcha']);
     $this->routers = $config['routers'];
     $this->doc = $config['doc'];
+    $this->vrfs = $config['vrfs'];
   }
 
   private function router_count() {
@@ -122,6 +123,21 @@ final class LookingGlass {
     print('</div>');
   }
 
+  private function render_vrfs() {
+    if( ! $this->vrfs['enabled']){
+        return;
+    }
+    print('<div class="form-group">');
+    print('<label for="vrf">VRF</label>');
+    print('<select size="5" class="form-control form-select" name="vrf" id="vrf">');
+    print('<option value="none" selected>None/Disable</option>');
+    foreach (array_values($this->vrfs['vrfs']) as $vrf) {
+      print('<option value="'.$vrf.'">'.$vrf.'</option>');
+    }
+    print('</select>');
+    print('</div>');
+  }
+
   private function render_buttons() {
     $this->captcha->render();
     print('<div class="row">');
@@ -181,6 +197,10 @@ final class LookingGlass {
 
         case 'buttons':
           $this->render_buttons();
+          break;
+
+        case 'vrfs':
+          $this->render_vrfs();
           break;
 
         default:
