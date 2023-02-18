@@ -31,6 +31,7 @@ final class LookingGlass {
   private $captcha;
   private $routers;
   private $vrfs;
+  private $doc;
 
   public function __construct($config) {
     set_defaults_for_routers($config);
@@ -66,9 +67,9 @@ final class LookingGlass {
   }
 
   private function render_routers() {
-    print('<div class="form-group">');
-    print('<label for="routers">Router to use</label>');
-    print('<select size="'.$this->router_count().'" class="form-control form-select" name="routers" id="routers">');
+    print('<div class="mb-3">');
+    print('<label class="form-label" for="routers">Router to use</label>');
+    print('<select size="'.$this->router_count().'" class="form-select" name="routers" id="routers">');
 
     $first = true;
     foreach (array_keys($this->routers) as $router) {
@@ -92,9 +93,9 @@ final class LookingGlass {
   }
 
   private function render_commands() {
-    print('<div class="form-group">');
-    print('<label for="query">Command to issue</label>');
-    print('<select size="'.$this->command_count().'" class="form-control form-select" name="query" id="query">');
+    print('<div class="mb-3">');
+    print('<label class="form-label" for="query">Command to issue</label>');
+    print('<select size="'.$this->command_count().'" class="form-select" name="query" id="query">');
     $selected = ' selected="selected"';
     foreach (array_keys($this->doc) as $cmd) {
       if (isset($this->doc[$cmd]['command'])) {
@@ -112,8 +113,8 @@ final class LookingGlass {
     } else {
       $requester = "";
     }
-    print('<div class="form-group">');
-    print('<label for="input-param">Parameter</label>');
+    print('<div class="mb-3">');
+    print('<label class="form-label for="input-param">Parameter</label>');
     print('<div class="input-group mb-3">');
     print('<input class="form-control" name="parameter" id="input-param" autofocus value="'.$requester.'" />');
     print('<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#help">');
@@ -124,12 +125,12 @@ final class LookingGlass {
   }
 
   private function render_vrfs() {
-    if( ! $this->vrfs['enabled']){
+    if (!$this->vrfs['enabled']) {
         return;
     }
-    print('<div class="form-group">');
-    print('<label for="vrf">VRF</label>');
-    print('<select size="5" class="form-control form-select" name="vrf" id="vrf">');
+    print('<div class="mb-3">');
+    print('<label class="form-label" for="vrf">VRF</label>');
+    print('<select size="5" class="form-select" name="vrf" id="vrf">');
     print('<option value="none" selected>None/Disable</option>');
     foreach (array_values($this->vrfs['vrfs']) as $vrf) {
       print('<option value="'.$vrf.'">'.$vrf.'</option>');
@@ -141,7 +142,7 @@ final class LookingGlass {
   private function render_buttons() {
     $this->captcha->render();
     print('<div class="row">');
-    print('<div class="col-12 col-sm-8 col-md-6 mx-auto btn-group">');
+    print('<div class="col-12 col-sm-8 col-md-6 mx-auto btn-group btn-group-lg">');
     print('<button class="col-md-6 btn btn-primary" id="send" type="submit">Enter</button>');
     print('<button class="col-md-6 btn btn-danger" id="clear" type="reset">Reset</button>');
     print('</div>');
@@ -150,7 +151,7 @@ final class LookingGlass {
 
   private function render_header() {
     if ($this->frontpage['header_link']) {
-      print('<a href="'.$this->frontpage['header_link'].'" title="Home">');
+      print('<a href="'.$this->frontpage['header_link'].'" class="text-decoration-none" title="Home">');
     }
     print('<div class="header_bar text-center mx-auto">');
     if ($this->frontpage['show_title']) {
@@ -246,12 +247,12 @@ final class LookingGlass {
 
     if ($this->contact['name'] && $this->contact['mail']) {
       print('Contact:&nbsp;');
-      print('<a href="mailto:'.$this->contact['mail'].'">'.
+      print('<a href="mailto:'.$this->contact['mail'].'" class="text-decoration-none">'.
         htmlentities($this->contact['name']).'</a>');
     }
 
     print('<br><br>');
-    print('<span class="origin">Powered by <a href="'.$this->release['repository'].'" title="Looking Glass Project">Looking Glass '.$this->release['version'].'</a></span>');
+    print('<span class="origin">Powered by <a href="'.$this->release['repository'].'" class="text-decoration-none" title="Looking Glass Project">Looking Glass '.$this->release['version'].'</a></span>');
     print('</p>');
     print('</div>');
   }
@@ -317,8 +318,8 @@ final class LookingGlass {
       print($this->frontpage['additional_html_header']);
     }
     print('<title>'.htmlentities($this->frontpage['title']).'</title>');
-    print('<link href="libs/bootstrap-5.1.3/css/bootstrap.min.css" rel="stylesheet">');
-    print('<link href="libs/bootstrap-icons-1.8.1/bootstrap-icons.css" rel="stylesheet">');
+    print('<link href="libs/bootstrap-5.3.0-alpha1/css/bootstrap.min.css" rel="stylesheet">');
+    print('<link href="libs/bootstrap-icons-1.10.3/bootstrap-icons.css" rel="stylesheet">');
     print('<link href="'.$this->frontpage['css'].'" rel="stylesheet">');
     print('</head>');
     print('<body class="d-flex flex-column h-100">');
@@ -334,8 +335,8 @@ final class LookingGlass {
     print('</div>');
     print('</main>');
     print('</body>');
-    print('<script src="libs/jquery-3.6.0.min.js"></script>');
-    print('<script src="libs/bootstrap-5.1.3/js/bootstrap.min.js"></script>');
+    print('<script src="libs/jquery-3.6.3.min.js"></script>');
+    print('<script src="libs/bootstrap-5.3.0-alpha1/js/bootstrap.min.js"></script>');
     print('<script src="js/looking-glass.js"></script>');
     $this->captcha->render_script();
     print('</html>');
