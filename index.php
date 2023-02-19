@@ -142,9 +142,9 @@ final class LookingGlass {
   private function render_buttons() {
     $this->captcha->render();
     print('<div class="row">');
-    print('<div class="col-12 col-sm-8 col-md-6 mx-auto btn-group btn-group-lg">');
-    print('<button class="col-md-6 btn btn-primary" id="send" type="submit">Enter</button>');
-    print('<button class="col-md-6 btn btn-danger" id="clear" type="reset">Reset</button>');
+    print('<div class="col-4 offset-4 btn-group btn-group-lg">');
+    print('<button class="btn btn-primary" id="send" type="submit">Enter</button>');
+    print('<button class="btn btn-danger" id="clear" type="reset">Reset</button>');
     print('</div>');
     print('</div>');
   }
