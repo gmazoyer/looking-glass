@@ -90,11 +90,6 @@ LICENSE file for more information.
 If you have any bugs, errors, improvements, patches, ideas, you can create an
 issue. You are also welcome to fork and make some pull requests.
 
-If you use this looking glass in your company, feel free to update
-[this page](docs/our_users.md) of the documentation and send a pull request. I
-will be glad to know that this project was helpful for you, and will merge the
-PR to include your company inside the list of users.
-
 ## Helping
 
 You can help this project in many ways. Of course you can ask for features,
