@@ -42,7 +42,7 @@ final class Mikrotik extends Router {
       $cmd->add('detail');
     }
 
-    $cmd->add('where', 'dst-address='.quote($parameter));
+    $cmd->add('where', quote($parameter).' in dst-address');
 
     return array($cmd);
   }
