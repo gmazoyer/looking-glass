@@ -42,7 +42,7 @@ class Huawei extends Router {
       $cmd->add('bgp');
     }
     $parameter = str_replace('/', ' ', $parameter);
-    $cmd->add('routing-table', $parameter);
+    $cmd->add('routing-table', $parameter, '| no-more');
 
     return array($cmd);
   }
@@ -53,17 +53,27 @@ class Huawei extends Router {
     $cmd->add('display bgp');
 
     if (!$this->config['disable_ipv6']) {
-      $commands[] = (clone $cmd)->add('ipv6 routing-table regular-expression', $parameter);
+      $commands[] = (clone $cmd)->add('ipv6 routing-table regular-expression', $parameter, '| no-more');
     }
     if (!$this->config['disable_ipv4']) {
-      $commands[] = (clone $cmd)->add('routing-table regular-expression', $parameter);
+      $commands[] = (clone $cmd)->add('routing-table regular-expression', $parameter, '| no-more');
     }
 
     return $commands;
   }
 
   protected function build_as($parameter, $vrf = false) {
-    throw new Exception('Coomand not supported.');
+    $commands = array();
+    $cmd = new CommandBuilder();
+    $cmd->add('display bgp');
+
+    if (!$this->config['disable_ipv6']) {
+      $commands[] = (clone $cmd)->add('ipv6 routing-table regular-expression', '^'.$parameter, '| no-more');
+    }
+    if (!$this->config['disable_ipv4']) {
+      $commands[] = (clone $cmd)->add('routing-table regular-expression', '^'.$parameter, '| no-more');
+    }
+    return $commands;
   }
 
   protected function build_ping($parameter, $vrf = false) {
