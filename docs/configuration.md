@@ -309,6 +309,11 @@ details.
 
 ### CAPTCHA
 
+```php
+$config['captcha']['enabled'] = true;
+```
+If set to true, allows the use of a CAPTCHA.
+
 Two types of CAPTCHA are supported:
 
 * `recaptcha` from Google
@@ -316,23 +321,20 @@ Two types of CAPTCHA are supported:
 
 ```php
 $config['captcha']['type'] = 'recaptcha';
+$config['captcha']['apikey'] = 'foobar';
+$config['captcha']['secret'] = 'foobar';
+$config['captcha']['url'] = 'https://www.google.com/recaptcha/api/siteverify';
 ```
 To use reCAPTCHA.
 
 ```php
 $config['captcha']['type'] = 'hcaptcha';
+$config['captcha']['apikey'] = 'foobar';
+$config['captcha']['secret'] = 'foobar';
+$config['captcha']['url'] = 'https://hcaptcha.com/siteverify';
 ```
 To use hCAPTCHA.
 
-```php
-$config['captcha']['enabled'] = true;
-```
-If set to true, allows the use of a CAPTCHA.
-
-```php
-$config['recaptcha']['apikey'] = "foobar";
-$config['recaptcha']['secret'] = "foobar";
-```
 Defines sitekey and secret, it may be named differently in the CAPTCHA
 documentation.
 
