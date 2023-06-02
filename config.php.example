@@ -30,10 +30,15 @@ $config['filters']['output'][] = ['/replacethis/', 'withthis'];
 // If telnet is used in combination with extreme_netiron, uncomment the following filter
 //$config['filters']['output'][] = '/([^\x20-\x7E]|User|Please|Disable|telnet|^\s*$)/';
 
-// Google reCaptcha integration
-$config['recaptcha']['enabled'] = false;
-$config['recaptcha']['apikey'] = 'foobar';
-$config['recaptcha']['secret'] = 'foobar';
+// Captcha integration
+$config['captcha']['enabled'] = false;
+// Set 'recaptcha' for Google reCaptcha integration, or 'hcaptcha' for https://www.hcaptcha.com integration
+$config['captcha']['type'] = 'recaptcha'; 
+$config['captcha']['apikey'] = 'foobar';
+$config['captcha']['secret'] = 'foobar';
+$config['captcha']['url'] = 'https://www.google.com/recaptcha/api/siteverify';
+// For 'hcaptcha' integration
+//$config['captcha']['url'] = 'https://hcaptcha.com/siteverify';
 
 // Routers definitions
 
