@@ -221,8 +221,10 @@ final class LookingGlass {
     print('</div>');
     print('<div class="result">');
     print('<div id="output"></div>');
-    print('<div class="col-12 col-sm-8 col-md-6 mx-auto d-grid">');
+    print('<div class="row">');
+    print('<div class="col-4 offset-4 btn-group btn-group-lg">');
     print('<button class="btn btn-danger" id="backhome">Reset</button>');
+    print('</div>');
     print('</div>');
     print('</div>');
   }
@@ -318,8 +320,8 @@ final class LookingGlass {
       print($this->frontpage['additional_html_header']);
     }
     print('<title>'.htmlentities($this->frontpage['title']).'</title>');
-    print('<link href="libs/bootstrap-5.3.0-alpha1/css/bootstrap.min.css" rel="stylesheet">');
-    print('<link href="libs/bootstrap-icons-1.10.3/bootstrap-icons.css" rel="stylesheet">');
+    print('<link href="libs/bootstrap-5.3.1/css/bootstrap.min.css" rel="stylesheet">');
+    print('<link href="libs/bootstrap-icons-1.10.5/bootstrap-icons.css" rel="stylesheet">');
     print('<link href="'.$this->frontpage['css'].'" rel="stylesheet">');
     print('</head>');
     print('<body class="d-flex flex-column h-100">');
@@ -335,8 +337,8 @@ final class LookingGlass {
     print('</div>');
     print('</main>');
     print('</body>');
-    print('<script src="libs/jquery-3.6.3.min.js"></script>');
-    print('<script src="libs/bootstrap-5.3.0-alpha1/js/bootstrap.min.js"></script>');
+    print('<script src="libs/jquery-3.7.0.min.js"></script>');
+    print('<script src="libs/bootstrap-5.3.1/js/bootstrap.min.js"></script>');
     print('<script src="js/looking-glass.js"></script>');
     $this->captcha->render_script();
     print('</html>');
