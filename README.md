@@ -56,7 +56,7 @@ future:
   * Support of other types of authentication
 
 Questions? Comments? Join us in the `#looking-glass` Slack channel on
-[NetDev Community](https://join.slack.com/t/netdev-community/shared_invite/zt-mtts8g0n-Sm6Wutn62q_M4OdsaIycrQ).
+[NetDev Community](https://netdev.chat/).
 
 ## Configuration
 

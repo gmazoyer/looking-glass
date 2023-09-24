@@ -3,6 +3,7 @@
 .*
 !/.gitignore
 !/.github/
+!/.readthedocs.yaml
 
 config.php
 logo.*
