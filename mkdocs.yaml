@@ -1,7 +1,9 @@
 ---
 site_name: Looking Glass
 
-pages:
+theme: readthedocs
+
+nav:
   - Home: index.md
   - Configuration Settings: configuration.md
   - Routers Setups:
@@ -12,5 +14,3 @@ pages:
     - Juniper: juniper.md
     - Quagga: quagga.md
     - Vyatta, VyOS, EdgeOS: vyatta.md
-
-theme: readthedocs
