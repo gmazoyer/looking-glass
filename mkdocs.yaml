@@ -6,11 +6,12 @@ theme: readthedocs
 nav:
   - Home: index.md
   - Configuration Settings: configuration.md
+  - Using Docker: docker.md
   - Routers Setups:
-    - BIRD: bird.md
-    - Cisco: cisco.md
-    - Cisco IOS XR: cisco_iosxr.md
-    - FRRouting: frr.md
-    - Juniper: juniper.md
-    - Quagga: quagga.md
-    - Vyatta, VyOS, EdgeOS: vyatta.md
+    - BIRD: routers/bird.md
+    - Cisco: routers/cisco.md
+    - Cisco IOS XR: routers/cisco_iosxr.md
+    - FRRouting: routers/frr.md
+    - Juniper: routers/juniper.md
+    - Quagga: routers/quagga.md
+    - Vyatta, VyOS, EdgeOS: routers/vyatta.md

@@ -1,6 +1,3 @@
-![Build Status](https://github.com/gmazoyer/looking-glass/workflows/syntax/badge.svg)
-[![Documentation Status](https://readthedocs.org/projects/looking-glass/badge/?version=latest)](http://looking-glass.readthedocs.io/en/latest/?badge=latest)
-
 # Looking Glass
 
 Easy to deploy Looking Glass made in PHP.
@@ -12,11 +9,11 @@ be faster, feel free to contribute in any way you can.
 ## Requirements
 
   * Webserver such as Apache 2, or Lighttpd, etc…
-  * PHP (>= 7.0) module for the webserver (`libapache2-mod-php` for Apache 2
+  * PHP (>= 8.1) module for the webserver (`libapache2-mod-php` for Apache 2
     for example)
   * The PDO extension to interact with SQLite for anti-spam feature
-    (`php7.4-sqlite3` on Debian for example)
-  * The XML package is required as well (`php7.4-xml` on Debian for example)
+    (`php8.2-sqlite3` on Debian for example)
+  * The XML package is required as well (`php8.2-xml` on Debian for example)
 
 ## Description
 
