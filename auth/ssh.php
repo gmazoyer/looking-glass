@@ -2,7 +2,7 @@
 
 /*
  * Looking Glass - An easy to deploy Looking Glass
- * Copyright (C) 2014-2023 Guillaume Mazoyer <guillaume@mazoyer.eu>
+ * Copyright (C) 2014-2024 Guillaume Mazoyer <guillaume@mazoyer.eu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,12 +19,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-include('libs/ClassLoader.php');
-
-$loader = new \Composer\Autoload\ClassLoader();
-$loader->addPsr4('phpseclib3\\', 'libs/phpseclib-3.0.21');
-$loader->addPsr4('ParagonIE\ConstantTime\\', 'libs/constant_time_encoding-2.5.0');
-$loader->register();
+require('vendor/autoload.php');
 
 use phpseclib3\Crypt\PublicKeyLoader;
 use phpseclib3\Net\SSH2;
@@ -33,6 +28,7 @@ require_once('authentication.php');
 require_once('includes/utils.php');
 
 final class SSH extends Authentication {
+  protected $connection;
   private $port;
 
   public function __construct($config, $debug) {

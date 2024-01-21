@@ -1,0 +1,11 @@
+.*
+!/.htaccess
+
+/vendor/
+
+config.php
+logo.*
+peering_policy.*
+*.db
+*.log
+*.html

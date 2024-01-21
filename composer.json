@@ -1,0 +1,8 @@
+{
+    "require": {
+        "phpseclib/phpseclib": "^3.0",
+        "twbs/bootstrap": "^5.3",
+        "twbs/bootstrap-icons": "^1",
+        "components/jquery": "^3.6"
+    }
+}

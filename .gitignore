@@ -1,9 +1,16 @@
 # Ignore all dotfiles #
 #######################
 .*
+!/.dockerignore
 !/.gitignore
 !/.github/
 !/.readthedocs.yaml
+!/.htaccess
+
+# Composer #
+############
+composer.phar
+/vendor/
 
 config.php
 logo.*
