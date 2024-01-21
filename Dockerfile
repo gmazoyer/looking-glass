@@ -1,4 +1,4 @@
-FROM php:8.2-apache
+FROM php:8.3-apache
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
