@@ -53,6 +53,8 @@ $config = array(
 
   // Frontpage configuration
   'frontpage' => array(
+    // Enable color mode
+    'color_mode_enabled' => true,
     // CSS to use
     'css' => 'css/style.css',
     // Extra HTML header elements

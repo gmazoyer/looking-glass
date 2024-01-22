@@ -151,7 +151,7 @@ final class LookingGlass {
 
   private function render_header() {
     if ($this->frontpage['header_link']) {
-      print('<a href="'.$this->frontpage['header_link'].'" class="text-decoration-none" title="Home">');
+      print('<a href="'.$this->frontpage['header_link'].'" class="text-decoration-none text-secondary-emphasis" title="Home">');
     }
     print('<div class="header_bar text-center mx-auto">');
     if ($this->frontpage['show_title']) {
@@ -234,7 +234,7 @@ final class LookingGlass {
     print('<p class="text-center">');
 
     if ($this->frontpage['show_visitor_ip']) {
-      printf('Your IP address: %s<br>', htmlentities(get_requester_ip()));
+      print('Your IP address: <code>'.htmlentities(get_requester_ip()).'</code><br>');
     }
 
     if ($this->frontpage['disclaimer']) {
@@ -249,12 +249,12 @@ final class LookingGlass {
 
     if ($this->contact['name'] && $this->contact['mail']) {
       print('Contact:&nbsp;');
-      print('<a href="mailto:'.$this->contact['mail'].'" class="text-decoration-none">'.
+      print('<a href="mailto:'.$this->contact['mail'].'" class="text-decoration-none text-secondary-emphasis">'.
         htmlentities($this->contact['name']).'</a>');
     }
 
     print('<br><br>');
-    print('<span class="origin">Powered by <a href="'.$this->release['repository'].'" class="text-decoration-none" title="Looking Glass Project">Looking Glass '.$this->release['version'].'</a></span>');
+    print('<span class="origin">Powered by <a href="'.$this->release['repository'].'" class="text-decoration-none text-secondary-emphasis" title="Looking Glass Project">Looking Glass '.$this->release['version'].'</a></span>');
     print('</p>');
     print('</div>');
   }
@@ -308,6 +308,54 @@ final class LookingGlass {
     print('</div>');
   }
 
+  private function render_color_mode_switch() {
+    print('<body class="d-flex flex-column h-100">');
+    print('<svg xmlns="http://www.w3.org/2000/svg" class="d-none">');
+    print('<symbol id="check2" viewBox="0 0 16 16">');
+    print('<path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>');
+    print('</symbol>');
+    print('<symbol id="circle-half" viewBox="0 0 16 16">');
+    print('<path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>');
+    print('</symbol>');
+    print('<symbol id="moon-stars-fill" viewBox="0 0 16 16">');
+    print('<path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>');
+    print('<path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>');
+    print('</symbol>');
+    print('<symbol id="sun-fill" viewBox="0 0 16 16">');
+    print('<path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>');
+    print('</symbol>');
+    print('</svg>');
+    print('<div class="dropdown dropup position-fixed bottom-0 end-0 mb-3 me-3 color-mode-toggle">');
+    print('<button class="btn btn-secondary py-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (auto)">');
+    print('<svg class="bi my-1 theme-icon-active" width="1em" height="1em"><use href="#circle-half"></use></svg>');
+    print('<span class="visually-hidden" id="bd-theme-text">Toggle theme</span>');
+    print('</button>');
+    print('<ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">');
+    print('<li>');
+    print('<button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">');
+    print('<svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#sun-fill"></use></svg>');
+    print('Light');
+    print('<svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>');
+    print('</button>');
+    print('</li>');
+    print('<li>');
+    print('<button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">');
+    print('<svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#moon-stars-fill"></use></svg>');
+    print('Dark');
+    print('<svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>');
+    print('</button>');
+    print('</li>');
+    print('<li>');
+    print('<button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">');
+    print('<svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#circle-half"></use></svg>');
+    print('Auto');
+    print('<svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>');
+    print('</button>');
+    print('</li>');
+    print('</ul>');
+    print('</div>');
+  }
+
   public function render() {
     print('<!DOCTYPE html>');
     print('<html lang="en">');
@@ -324,7 +372,9 @@ final class LookingGlass {
     print('<link href="vendor/twbs/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">');
     print('<link href="'.$this->frontpage['css'].'" rel="stylesheet">');
     print('</head>');
-    print('<body class="d-flex flex-column h-100">');
+    if ($this->frontpage['color_mode_enabled']) {
+      $this->render_color_mode_switch();
+    }
     print('<main class="flex-shrink-0">');
     print('<div class="container">');
     $this->render_header();
@@ -338,8 +388,11 @@ final class LookingGlass {
     print('</main>');
     print('</body>');
     print('<script src="vendor/components/jquery/jquery.min.js"></script>');
-    print('<script src="vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>');
+    print('<script src="vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>');
     print('<script src="js/looking-glass.js"></script>');
+    if ($this->frontpage['color_mode_enabled']) {
+      print('<script src="js/color-mode.js"></script>');
+    }
     $this->captcha->render_script();
     print('</html>');
   }

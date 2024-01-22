@@ -21,6 +21,12 @@ that are set if the configuration is not overriden.
 ### Frontpage
 
 ```php
+$config['frontpage']['color_mode_enabled'] = true;
+```
+Enable or disable color mode. When enabled, the default color mode will match
+the user preferences, it can also be changed using the bottom right button.
+
+```php
 $config['frontpage']['css'] = 'css/style.css';
 ```
 Defines the path to the CSS file to use.

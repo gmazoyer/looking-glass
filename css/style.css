@@ -47,3 +47,13 @@ a:hover {
   color:            #000000;
   text-decoration:  none;
 }
+.bi {
+  vertical-align:   -.125em;
+  fill:             currentColor;
+}
+.color-mode-toggle {
+  z-index:          1500;
+}
+.color-mode-toggle .dropdown-menu .active .bi {
+  display:          block !important;
+}
