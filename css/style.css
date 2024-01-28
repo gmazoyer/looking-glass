@@ -39,6 +39,10 @@ pre {
   padding-left:     1%;
   padding-right:    1%;
 }
+.pre-scrollable {
+  max-height:       480px;
+  overflow-y:       scroll;
+}
 a {
   color:            #000000;
   text-decoration:  none;

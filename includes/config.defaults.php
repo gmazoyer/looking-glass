@@ -102,7 +102,9 @@ $config = array(
   // Output control
   'output' => array(
     // Show or hide command in output
-    'show_command' => true
+    'show_command' => true,
+    // Enable or disable scrolling when displaying result
+    'scroll' => true
   ),
 
   // Filters

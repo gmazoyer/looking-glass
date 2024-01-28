@@ -246,6 +246,12 @@ $config['output']['show_command'] = true;
 ```
 Defines if the command used to get the output should be displayed or not.
 
+```php
+$config['output']['scroll'] = true;
+```
+Defines if the result should be displayed as a scrollable element or a an
+unscrollable element.
+
 ### Logs
 
 ```php
