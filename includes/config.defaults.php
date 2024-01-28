@@ -121,8 +121,18 @@ $config = array(
 
   // Antispam
   'antispam' => array(
+    // ENable or disable antispam
     'enabled' => true,
-    'database_file' => 'looking-glass.db'
+    // Path to the SQLite database file
+    'database_file' => 'looking-glass.db',
+    // List of prefixes for which antispam won't trigger
+    'allow_list' => array(
+      '2001:db8::/32',
+      '10.0.0.0/8',
+      '100.64.0.0/10',
+      '172.16.0.0/12',
+      '192.168.0.0/16'
+    )
   ),
 
   // Captcha

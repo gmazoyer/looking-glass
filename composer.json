@@ -1,5 +1,6 @@
 {
     "require": {
+        "mlocati/ip-lib": "^1",
         "phpseclib/phpseclib": "^3.0",
         "twbs/bootstrap": "^5.3",
         "twbs/bootstrap-icons": "^1",

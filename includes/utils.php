@@ -154,6 +154,19 @@ function match_ipv4($ip, $ip_only = true) {
 }
 
 /**
+ * Tell if a given IP address is inside a given IP prefix.
+ * 
+ * @param \IPLib\Address\AddressInterface $ip_address the IP address to check.
+ * @param \IPLib\Range\RangeInterface     $ip_prefix the IP prefix which might
+ *                                                   contain the IP address.
+ * @return boolean                        true if the IP address fits in the
+ *                                             IP prefix.
+ */
+function is_ip_address_in_prefix($ip_address, $ip_prefix) {
+  return $ip_address->matches($ip_prefix);
+}
+
+/**
  * Test if a given parameter is a valid hostname or not.
  *
  * See: http://stackoverflow.com/a/4694816

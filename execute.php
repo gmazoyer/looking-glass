@@ -30,7 +30,7 @@ $requester = get_requester_ip();
 
 // Check for spam
 if ($config['antispam']['enabled']) {
-  $antispam = new AntiSpam($config['antispam']['database_file']);
+  $antispam = new AntiSpam($config['antispam']);
   $antispam->check_spammer($requester);
 }
 

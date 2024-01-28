@@ -24,14 +24,15 @@ require_once('includes/utils.php');
 class AntiSpam {
   private $database_file;
   private $database;
+  private $allow_list;
 
-  public function __construct($database_file) {
+  public function __construct($config) {
     try {
-      $this->database = new PDO('sqlite:'.$database_file);
+      $this->database = new PDO('sqlite:'.$config['database_file']);
       $this->database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
       $this->database->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     } catch(PDOException $e) {
-      die('Unable to open database: ' . $e->getMessage());
+      die('Unable to open database: '.$e->getMessage());
     }
 
     $this->database->exec('pragma auto_vacuum = 1');
@@ -44,6 +45,7 @@ class AntiSpam {
     );
 
     $this->clean_no_query_periods();
+    $this->allow_list = $config['allow_list'];
   }
 
   public function __destruct() {
@@ -79,12 +81,39 @@ class AntiSpam {
   }
 
   /**
+   * Check if an IP address fits in an IP prefix.
+   * 
+   * @param \IPLib\Address\AddressInterface $ip_address the IP address to check.
+   * @return boolean                        true if the IP address fits in one
+   *                                             of the configured IP prefixes.
+   */
+  private function is_allowed_ip($ip_address) {
+    $address = \IPLib\Factory::parseAddressString($ip_address);
+
+    foreach ($this->allow_list as $network) {
+      $prefix = \IPLib\Factory::parseRangeString($network);
+      if (is_ip_address_in_prefix($address, $prefix)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
    * Check the remote address against the database and determine if it's a
    * spam. Set a no query period if it is considered as spam.
+   * 
+   * If the remote address matches one of the prefix in the configured allow
+   * list, the spammer logic will not run.
    * 
    * @param string $remote_address the address of the client.
    */
   public function check_spammer($remote_address) {
+    if ($this->is_allowed_ip($remote_address)) {
+      return;
+    }
+
     $hash = sha1($remote_address);
 
     $query = $this->database->prepare(

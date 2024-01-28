@@ -303,15 +303,25 @@ adding new values.
 ```php
 $config['antispam']['enabled'] = true;
 ```
-
 Enable or disable the built-in anti-spam.
 
 ```php
 $config['antispam']['database_file'] = 'looking-glass.db';
 ```
-
 Change the filename of the SQLite database to use for storing anti-spam
 details.
+
+```php
+$config['antispam']['allow_list'] = array(
+  '2001:db8::/32',
+  '10.0.0.0/8',
+  '100.64.0.0/10',
+  '172.16.0.0/12',
+  '192.168.0.0/16'
+);
+```
+List of IP prefixes for which antispam validation won't be performed. This is
+useful to avoid spam detection for IP addresses known as "safe".
 
 ### CAPTCHA
 
