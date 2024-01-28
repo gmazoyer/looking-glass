@@ -81,7 +81,7 @@ function match_ipv6($ip, $ip_only = true) {
       return false;
     }
 
-    $min_prefix_length = $config['minimum_prefix_length']['ipv6'];
+    $min_prefix_length = $config['misc']['minimum_prefix_length']['ipv6'];
     $prefix_length = intval($ip_and_mask[1]);
     if (($min_prefix_length > 0) && ($prefix_length < $min_prefix_length)) {
       return false;
@@ -130,7 +130,7 @@ function match_ipv4($ip, $ip_only = true) {
       return false;
     }
 
-    $min_prefix_length = $config['minimum_prefix_length']['ipv4'];
+    $min_prefix_length = $config['misc']['minimum_prefix_length']['ipv4'];
     $prefix_length = intval($ip_and_mask[1]);
     if (($min_prefix_length > 0) && ($prefix_length < $min_prefix_length)) {
       return false;
