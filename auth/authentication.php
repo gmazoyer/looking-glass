@@ -21,6 +21,7 @@
 
 require_once('ssh.php');
 require_once('telnet.php');
+require_once('includes/utils.php');
 
 /**
  * This class needs to be extended by every class implementing an
@@ -111,7 +112,9 @@ abstract class Authentication {
       case 'ssh-key':
         return new SSH($config, $debug);
 
+      // Will be removed in 3.0
       case 'telnet':
+        log_to_file('Telnet authentication is deprecated and will be removed in 3.0, please use SSH instead.');
         return new Telnet($config, $debug);
 
       default:

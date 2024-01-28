@@ -21,6 +21,9 @@
 
 require_once('authentication.php');
 
+/**
+ * @deprecated  will be removed in the 3.0.
+ */
 final class Telnet extends Authentication {
   private $port;
 
