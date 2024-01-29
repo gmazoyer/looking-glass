@@ -1,7 +1,47 @@
 ---
 site_name: Looking Glass
+site_url: https://looking-glass.readthedocs.io/
+repo_url: https://github.com/gmazoyer/looking-glass
+edit_uri: ""
 
-theme: readthedocs
+theme:
+  name: material
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - content.code.copy
+    - navigation.indexes
+    - navigation.footer
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-4
+        name: Switch to Dark Mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-7
+        name: Switch to Light Mode
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/gmazoyer/looking-glass
+    - icon: fontawesome/brands/slack
+      link: https://netdev.chat/
+markdown_extensions:
+  - admonition
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - footnotes
 
 nav:
   - Home: index.md
