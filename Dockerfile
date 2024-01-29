@@ -10,10 +10,12 @@ RUN docker-php-ext-install -j$(nproc) gmp \
     && docker-php-ext-install pdo_sqlite \
     && a2enmod remoteip
 
-COPY . /var/www/html
-WORKDIR /var/www/html
+COPY composer.json composer.lock /var/www/html/
+RUN composer install
 
-RUN composer install \
-    && mkdir -p /var/log/ \
+COPY . /var/www/html/
+WORKDIR /var/www/html/
+
+RUN mkdir -p /var/log/ \
     && touch /var/log/looking-glass.log \
     && chown www-data /var/log/looking-glass.log

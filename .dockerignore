@@ -1,9 +1,15 @@
 .*
 !/.htaccess
 
+/docs/
+/scripts/
 /vendor/
 
+LICENSE
 config.php
+config.php.example
+mkdocs.yaml
+
 logo.*
 peering_policy.*
 *.db
