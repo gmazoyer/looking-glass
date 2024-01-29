@@ -26,7 +26,7 @@ require_once('includes/utils.php');
 final class ExtremeNetIron extends Router {
   private static $wrapper = "skip-page-display\r\n";
 
-  protected function build_bgp($parameter, $vrf = false) {
+  protected function build_bgp($parameter, $routing_instance = false) {
     $cmd = new CommandBuilder();
     $cmd->add(self::$wrapper.'show');
 
@@ -47,7 +47,7 @@ final class ExtremeNetIron extends Router {
     return array($cmd);
   }
 
-  protected function build_aspath_regexp($parameter, $vrf = false) {
+  protected function build_aspath_regexp($parameter, $routing_instance = false) {
     $commands = array();
     $cmd = new CommandBuilder();
     $cmd->add(self::$wrapper.'show');
@@ -76,12 +76,12 @@ final class ExtremeNetIron extends Router {
     return $commands;
   }
 
-  protected function build_as($parameter, $vrf = false) {
+  protected function build_as($parameter, $routing_instance = false) {
     $parameter = '^'.$parameter.'_';
-    return $this->build_aspath_regexp($parameter, $vrf);
+    return $this->build_aspath_regexp($parameter, $routing_instance);
   }
 
-  protected function build_ping($parameter, $vrf = false) {
+  protected function build_ping($parameter, $routing_instance = false) {
     if (!is_valid_destination($parameter)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
@@ -122,7 +122,7 @@ final class ExtremeNetIron extends Router {
     return array($cmd);
   }
 
-  protected function build_traceroute($parameter, $vrf = false) {
+  protected function build_traceroute($parameter, $routing_instance = false) {
     if (!is_valid_destination($parameter)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }

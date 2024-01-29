@@ -24,12 +24,12 @@ require_once('includes/command_builder.php');
 require_once('includes/utils.php');
 
 final class IOSXR extends Cisco {
-  protected function build_bgp($parameter, $vrf = false) {
+  protected function build_bgp($parameter, $routing_instance = false) {
     $cmd = new CommandBuilder();
     $cmd->add('show bgp');
 
-    if ($vrf !== false) {
-      $cmd->add('vrf ' . $vrf);
+    if ($routing_instance !== false) {
+      $cmd->add('vrf '.$routing_instance);
     }
 
     if (match_ipv6($parameter, false)) {
@@ -43,7 +43,7 @@ final class IOSXR extends Cisco {
     return array($cmd);
   }
 
-  protected function build_aspath_regexp($parameter, $vrf = false) {
+  protected function build_aspath_regexp($parameter, $routing_instance = false) {
     $parameter = quote($parameter);
     $commands = array();
     $cmd = new CommandBuilder();
@@ -59,7 +59,7 @@ final class IOSXR extends Cisco {
     return $commands;
   }
 
-  protected function build_ping($parameter, $vrf = false) {
+  protected function build_ping($parameter, $routing_instance = false) {
     if (!is_valid_destination($parameter)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
@@ -100,16 +100,15 @@ final class IOSXR extends Cisco {
         $cmd->add($this->get_source_interface_id('ipv4'));
       }
 
-      if ($vrf !== false) {
-        $vrf = $this->strip_suffix_from_vrf($vrf);
-        $cmd->add('vrf' . $vrf);
+      if ($routing_instance !== false) {
+        $cmd->add('vrf '.$routing_instance);
       }
 
     }
     return array($cmd);
   }
 
-  protected function build_traceroute($parameter, $vrf = false) {
+  protected function build_traceroute($parameter, $routing_instance = false) {
     if (!is_valid_destination($parameter)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
@@ -149,8 +148,8 @@ final class IOSXR extends Cisco {
       }
     }
 
-    if ($vrf !== false) {
-      $cmd->add('vrf ' . $vrf);
+    if ($routing_instance !== false) {
+      $cmd->add('vrf '.$routing_instance);
     }
 
     return array($cmd);

@@ -26,7 +26,7 @@ require_once('includes/utils.php');
 class Quagga extends UNIX {
   protected static $wrapper = 'vtysh -c';
 
-  protected function build_bgp($parameter, $vrf = false) {
+  protected function build_bgp($parameter, $routing_instance = false) {
     $cmd = new CommandBuilder();
     // vytsh commands need to be quoted
     $cmd->add(self::$wrapper, '"', 'show');
@@ -42,7 +42,7 @@ class Quagga extends UNIX {
     return array($cmd);
   }
 
-  protected function build_aspath_regexp($parameter, $vrf = false) {
+  protected function build_aspath_regexp($parameter, $routing_instance = false) {
     $commands = array();
     $cmd = new CommandBuilder();
     // vytsh commands need to be quoted
@@ -58,9 +58,9 @@ class Quagga extends UNIX {
     return $commands;
   }
 
-  protected function build_as($parameter, $vrf = false) {
+  protected function build_as($parameter, $routing_instance = false) {
     $parameter = '^'.$parameter.'_';
-    return $this->build_aspath_regexp($parameter, $vrf);
+    return $this->build_aspath_regexp($parameter, $routing_instance);
   }
 }
 

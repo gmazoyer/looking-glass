@@ -24,7 +24,7 @@ require_once('includes/command_builder.php');
 require_once('includes/utils.php');
 
 final class Arista extends Router {
-  protected function build_bgp($parameter, $vrf = false): array {
+  protected function build_bgp($parameter, $routing_instance = false): array {
     $cmd = new CommandBuilder();
     $cmd->add('show');
 
@@ -41,7 +41,7 @@ final class Arista extends Router {
     return array($cmd);
   }
 
-  protected function build_aspath_regexp($parameter, $vrf = false): array {
+  protected function build_aspath_regexp($parameter, $routing_instance = false): array {
     $commands = array();
     $cmd = new CommandBuilder();
     $cmd->add('show');
@@ -61,12 +61,12 @@ final class Arista extends Router {
     return $commands;
   }
 
-  protected function build_as($parameter, $vrf = false): array {
+  protected function build_as($parameter, $routing_instance = false): array {
     $parameter = '^' . $parameter . '_';
-    return $this->build_aspath_regexp($parameter, $vrf);
+    return $this->build_aspath_regexp($parameter, $routing_instance);
   }
 
-  protected function build_ping($parameter, $vrf = false): array {
+  protected function build_ping($parameter, $routing_instance = false): array {
     if (!is_valid_destination($parameter)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }
@@ -91,7 +91,7 @@ final class Arista extends Router {
     return array($cmd);
   }
 
-  protected function build_traceroute($parameter, $vrf = false): array {
+  protected function build_traceroute($parameter, $routing_instance = false): array {
     if (!is_valid_destination($parameter)) {
       throw new Exception('The parameter is not an IP address or a hostname.');
     }

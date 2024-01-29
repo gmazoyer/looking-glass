@@ -81,22 +81,25 @@ if (isset($_POST['query']) && !empty($_POST['query']) &&
     return;
   }
 
-  $vrf = false;
-  if (isset($_POST['vrf']) && mb_strtolower($_POST['vrf']) !== 'none' && $config['vrfs']['enabled']) {
-    if (empty(trim($_POST['vrf']))) {
-      $error = 'Empty VRF';
+  $routing_instance = false;
+  if (isset($_POST['routing_instance']) &&
+      mb_strtolower($_POST['routing_instance']) !== 'none' &&
+      count($config['routing_instances']) > 0) {
+    if (empty(trim($_POST['routing_instance']))) {
+      $error = 'Empty routing instance.';
       print(json_encode(array('error' => $error)));
-    } elseif(!in_array($_POST['vrf'], $config['vrfs']['vrfs'])) {
-    // To prevent people from entering their own value or arguments.
-      $error = 'Invalid VRF. Given VRF is not configured.';
+    } elseif (!array_key_exists($_POST['routing_instance'], $config['routing_instances'])) {
+      // Avoid people trying to use a crafted routing instance name
+      $error = 'Invalid routing instance. Given routing instance is not configured.';
       print(json_encode(array('error' => $error)));
     } else {
-      $vrf = $_POST['vrf'];
+      $routing_instance = $_POST['routing_instance'];
     }
   }
+  log_to_file($routing_instance);
 
   try {
-    $output = $router->send_command($query, $parameter, $vrf);
+    $output = $router->send_command($query, $parameter, $routing_instance);
   } catch (Exception $e) {
     $error = $e->getMessage();
   }

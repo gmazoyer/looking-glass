@@ -1,4 +1,4 @@
-# Looking Glass: Using Docker
+# Using Docker
 
 This looking glass can be run inside a Docker container as long as it meets
 the requirements listed in the README. You can use the shipped Dockerfile or

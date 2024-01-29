@@ -30,7 +30,7 @@ final class LookingGlass {
   private $misc;
   private $captcha;
   private $routers;
-  private $vrfs;
+  private $routing_instances;
   private $doc;
 
   public function __construct($config) {
@@ -43,7 +43,7 @@ final class LookingGlass {
     $this->captcha = new Captcha($config['captcha']);
     $this->routers = $config['routers'];
     $this->doc = $config['doc'];
-    $this->vrfs = $config['vrfs'];
+    $this->routing_instances = $config['routing_instances'];
   }
 
   private function router_count() {
@@ -124,16 +124,18 @@ final class LookingGlass {
     print('</div>');
   }
 
-  private function render_vrfs() {
-    if (!$this->vrfs['enabled']) {
+  private function render_routing_instances() {
+    $routing_instances_count = count($this->routing_instances);
+    if ($routing_instances_count === 0) {
         return;
     }
+
     print('<div class="mb-3">');
-    print('<label class="form-label" for="vrf">VRF</label>');
-    print('<select size="5" class="form-select" name="vrf" id="vrf">');
-    print('<option value="none" selected>None/Disable</option>');
-    foreach (array_values($this->vrfs['vrfs']) as $vrf) {
-      print('<option value="'.$vrf.'">'.$vrf.'</option>');
+    print('<label class="form-label" for="routing-instances">Routing instance</label>');
+    print('<select size="'.($routing_instances_count + 1).'" class="form-select" name="routing_instance" id="routing-instances">');
+    print('<option value="none" selected>None</option>');
+    foreach ($this->routing_instances as $name => $display) {
+      print('<option value="'.$name.'">'.$display.'</option>');
     }
     print('</select>');
     print('</div>');
@@ -200,8 +202,8 @@ final class LookingGlass {
           $this->render_buttons();
           break;
 
-        case 'vrfs':
-          $this->render_vrfs();
+        case 'routing_instances':
+          $this->render_routing_instances();
           break;
 
         default:

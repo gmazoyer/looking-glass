@@ -1,13 +1,13 @@
 ![Build Status](https://github.com/gmazoyer/looking-glass/workflows/syntax/badge.svg)
-[![Documentation Status](https://readthedocs.org/projects/looking-glass/badge/?version=latest)](http://looking-glass.readthedocs.io/en/latest/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/looking-glass/badge/?version=latest)](http://looking-glass.readthedocs.io/)
 
 # Looking Glass
 
 Easy to deploy Looking Glass made in PHP.
 
 The lack of time and funding has slown down this project quite a lot. It is
-still maintained though. If you like it, use it and want its development to
-be faster, feel free to contribute in any way you can.
+still maintained though. If you like it, use it and wants to support its
+development, you can sponsor it or to contribute in any way you can.
 
 ## Requirements
 
@@ -47,7 +47,7 @@ For now this looking glass is quite simple. Here you have some features:
   * Log all commands in a file
   * Customizable output with regular expressions
   * Configurable list of allowed commands
-  * Custom VRFs (for now only on Juniper routers)
+  * Custom routing instances, aka VRFs (Juniper only, for now)
 
 And here is a list of what this looking glass should be able to do in the
 future:

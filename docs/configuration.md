@@ -1,4 +1,4 @@
-# Looking Glass: Configuration Options
+# Configuration Options
 
 ## Format
 
@@ -359,6 +359,24 @@ To use hCAPTCHA.
 
 Defines sitekey and secret, it may be named differently in the CAPTCHA
 documentation.
+
+### Routing Instances
+
+!!! note
+    This feature is currently only available for Juniper Junos devices.
+
+```php
+$config['routing_instances'] => array(
+  'vrf-internet' => 'Internet', 'vrf-mgmt' => 'Management'
+);
+```
+List of routing instances, also known as routing tables or VRFs, available on
+all routers. The list is one of key/value pairs. The key is the unique name of
+the routing instance which will be used in commands sent to routers. The value
+is the name which will be exposed to the users on selection.
+
+The suffixes such as `inet.0` and `inet6.0` can be omitted for Juniper
+devices, only the names of routing instances are needed.
 
 ### Misc.
 
