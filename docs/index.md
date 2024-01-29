@@ -4,8 +4,8 @@ Easy to deploy Looking Glass made in PHP.
 
 !!! warning
     The lack of time and funding has slown down this project quite a lot. It
-    is still maintained though. If you like it, use it and wants to support
-    its development, you can sponsor it or to contribute in any way you can.
+    is still maintained though. If you like it, use it and want to support
+    its development, you can sponsor it or contribute in any way you can.
 
 ## Requirements
 
