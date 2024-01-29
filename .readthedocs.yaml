@@ -6,3 +6,6 @@ build:
     python: "3.9"
 mkdocs:
   configuration: mkdocs.yaml
+python:
+   install:
+   - requirements: docs/requirements.txt
