@@ -1,12 +1,17 @@
 ---
-name: syntax
+name: Code tests
 on:
   - push
   - pull_request
 
 jobs:
-  syntax:
-    name: tests
+  composer-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
+
+  tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:

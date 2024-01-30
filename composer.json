@@ -1,4 +1,8 @@
 {
+    "name": "gmazoyer/looking-glass",
+    "description": "Easy to deploy Looking Glass",
+    "type": "project",
+    "license": "GPL-3.0-or-later",
     "require": {
         "mlocati/ip-lib": "^1",
         "phpseclib/phpseclib": "^3.0",
