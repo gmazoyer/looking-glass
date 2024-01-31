@@ -1,0 +1,66 @@
+---
+name: Code tests
+on:
+  - push
+  - pull_request
+
+jobs:
+  composer-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
+
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-versions:
+          - '8.1'
+          - '8.2'
+          - '8.3'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: xml
+
+      - name: Run syntax check
+        run: ./scripts/cibuild.sh
+
+  docker-build:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs:
+      - composer-validation
+      - tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        id: login
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        id: push
+        with:
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: bleeding-edge
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
