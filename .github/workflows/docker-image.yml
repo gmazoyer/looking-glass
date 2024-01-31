@@ -39,7 +39,7 @@ jobs:
         id: login
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Build and push
         uses: docker/build-push-action@v5
