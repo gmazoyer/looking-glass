@@ -19,10 +19,10 @@ jobs:
         id: meta
         with:
           images: ${{ github.repository }}
-          tags:
-            type=semver,pattern={{version}}
+          tags: |
             type=semver,pattern={{major}}
             type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}.{{minor}}.{{patch}}
 
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v3
