@@ -1,0 +1,11 @@
+---
+ci: &ci
+  - ".github/workflows/ci.yml"
+  - ".github/file-filters.yml"
+
+composer: &composer
+  - "composer.json"
+  - "composer.lock"
+
+php: &php
+  - "**/*.php"
