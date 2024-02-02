@@ -5,7 +5,28 @@ on:
   - pull_request
 
 jobs:
+  changed-files:
+    name: Detect changed files
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      ci:  ${{ steps.changes.outputs.ci }}
+      composer: ${{ steps.changes.outputs.composer}}
+      php: ${{ steps.changes.outputs.php }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check for file changes
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: .github/file-filters.yml
+
   composer-validation:
+    if: needs.changed-files.outputs.composer == 'true'
+    needs:
+      - changed-files
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -15,6 +36,9 @@ jobs:
         run: composer validate --strict
 
   tests:
+    if: needs.changed-files.outputs.php == 'true'
+    needs:
+      - changed-files
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -36,9 +60,12 @@ jobs:
         run: ./scripts/cibuild.sh
 
   docker-build:
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    if: |
+        github.ref == 'refs/heads/main' && github.event_name != 'pull_request' &&
+        needs.changed-files.outputs.composer == 'true' && needs.changed-files.outputs.php == 'true'
     needs:
       - composer-validation
+      - changed-files
       - tests
     runs-on: ubuntu-latest
     steps:
