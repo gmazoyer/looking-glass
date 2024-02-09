@@ -11,7 +11,7 @@ jobs:
     timeout-minutes: 5
     outputs:
       ci:  ${{ steps.changes.outputs.ci }}
-      composer: ${{ steps.changes.outputs.composer}}
+      composer: ${{ steps.changes.outputs.composer }}
       php: ${{ steps.changes.outputs.php }}
     steps:
       - name: Checkout
