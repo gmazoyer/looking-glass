@@ -43,7 +43,7 @@ class Captcha {
         'method'  => 'POST',
         'content' => http_build_query(
           array(
-            'secret' => $config['secret'],
+            'secret' => $this->config['secret'],
             'response' => $_POST['h-captcha-response'],
             'remoteip' => $requester
           )
@@ -52,7 +52,7 @@ class Captcha {
     );
 
     $context  = stream_context_create($options);
-    $output = file_get_contents($config['url'], false, $context);
+    $output = file_get_contents($this->config['url'], false, $context);
     $captcha = json_decode($output, true);
 
     return $captcha["success"] == true;
