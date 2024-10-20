@@ -14,6 +14,7 @@ development, you can sponsor it or contribute in any way you can.
   * Webserver such as Apache 2, or Lighttpd, etc…
   * PHP (>= 8.1) module for the webserver (`libapache2-mod-php` for Apache 2
     for example)
+  * Composer to install dependencies
   * The PDO extension to interact with SQLite for anti-spam feature
     (`php8.2-sqlite3` on Debian for example)
   * The XML package is required as well (`php8.2-xml` on Debian for example)
@@ -59,6 +60,10 @@ Questions? Comments? Join us in the `#looking-glass` Slack channel on
 [NetDev Community](https://netdev.chat/).
 
 ## Configuration
+
+Install [Composer](https://getcomposer.org/) and run `composer install` to
+install dependencies for this project. This step is not necessary if you use
+Docker.
 
 Copy the configuration **config.php.example** file to create a **config.php**
 file. It contains all the values (PHP variables) used to customize the looking
