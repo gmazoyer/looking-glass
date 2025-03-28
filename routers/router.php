@@ -35,6 +35,7 @@ require_once('quagga.php');
 require_once('frr.php');
 require_once('vyatta.php');
 require_once('huawei.php');
+require_once('includes/command_builder.php');
 require_once('includes/utils.php');
 require_once('auth/authentication.php');
 
@@ -142,6 +143,33 @@ abstract class Router {
 
   protected abstract function build_traceroute($parameter, $routing_instance = false);
 
+  public function build_any($command, $parameter = null, $routing_instance = false) {
+    try {
+      $cmd = new CommandBuilder();
+      $wrapper = $this->global_config['doc'][$command]['wrapper'] ?? '';
+      $raw_command = $this->global_config['doc'][$command]['command'];
+      $is_quoted = $this->global_config['doc'][$command]['quoted'] || false;
+      $accepts_parameters = $this->global_config['doc'][$command]['accepts_parameters'];
+
+      if ($is_quoted) {
+        $cmd->add($wrapper, '"', $raw_command);
+        if ($accepts_parameters) {
+          $cmd->add($parameter);
+        }
+        $cmd->add('"');
+      } else {
+        $cmd->add($wrapper, $raw_command);
+        if ($accepts_parameters) {
+          $cmd->add($parameter);
+        }
+      }
+
+      return array($cmd);
+    } catch (Exception $e) {
+      throw new Exception('Not implemented.');
+    }
+  }
+
   private function build_commands($command, $parameter, $routing_instance = false) {
     switch ($command) {
       case 'bgp':
@@ -169,7 +197,8 @@ abstract class Router {
         return $this->build_traceroute($parameter, $routing_instance);
 
       default:
-        throw new Exception('Command not supported.');
+        //throw new Exception('Command not supported.');
+        return $this->build_any($command, $parameter, $routing_instance);
     }
 
     return null;
