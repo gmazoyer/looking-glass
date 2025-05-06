@@ -34,6 +34,7 @@ require_once('openbgpd.php');
 require_once('quagga.php');
 require_once('frr.php');
 require_once('vyatta.php');
+require_once('vyos.php');
 require_once('huawei.php');
 require_once('includes/utils.php');
 require_once('auth/authentication.php');
@@ -257,10 +258,12 @@ abstract class Router {
         return new FRR($config, $router_config, $id, $requester);
 
       case 'vyatta':
-      case 'vyos':
       case 'edgeos':
         return new Vyatta($config, $router_config, $id, $requester);
 
+      case 'vyos':
+        return new Vyos($config, $router_config, $id, $requester);
+  
       default:
         print('Unknown router type "'.$router_config['type'].'".');
         return null;
