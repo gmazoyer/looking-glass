@@ -40,7 +40,8 @@ For now this looking glass is quite simple. Here you have some features:
     * Nokia
     * OpenBGPd
     * Quagga
-    * Vyatta/VyOS/EdgeOS
+    * Vyatta/EdgeOS
+    * VyOS
   * Support of Telnet and SSH connection to routers using password
     authentication and SSH keys
   * Configurable list of routers
