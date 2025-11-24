@@ -15,7 +15,7 @@ jobs:
       php: ${{ steps.changes.outputs.php }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Check for file changes
         uses: dorny/paths-filter@v3
@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Validate composer.json and composer.lock
         run: composer validate --strict
@@ -48,7 +48,7 @@ jobs:
           - '8.3'
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
