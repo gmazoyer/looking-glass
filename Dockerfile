@@ -19,3 +19,4 @@ WORKDIR /var/www/html/
 RUN mkdir -p /var/log/ \
     && touch /var/log/looking-glass.log \
     && chown www-data /var/log/looking-glass.log
+
