@@ -9,6 +9,9 @@ The lack of time and funding has slown down this project quite a lot. It is
 still maintained though. If you like it, use it and want to support its
 development, you can sponsor it or contribute in any way you can.
 
+Take a look at [Reflet](https://github.com/gmazoyer/reflet), a new project
+with a new approach.
+
 ## Requirements
 
   * Webserver such as Apache 2, or Lighttpd, etc…

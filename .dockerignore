@@ -1,11 +1,10 @@
 .*
 !/.htaccess
-
-/docs/
-/scripts/
-/vendor/
-
+docs/
+scripts/
+vendor/
 LICENSE
+config.php.example
 config.php
 config.php.example
 mkdocs.yaml
@@ -15,3 +14,6 @@ peering_policy.*
 *.db
 *.log
 *.html
+*.md
+mkdocs.yaml
+.readthedocs.yaml
