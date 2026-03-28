@@ -1,5 +1,12 @@
 # Changelog
 
+## Version 2.3.1 | Established (Bug fixes release) | 2026-03-28
+
+  * Fix hcaptcha config variable usage
+  * Add proper support for VyOS (by @diekgait)
+  * Add better support for Mikrotik RouterOS 7 (by @lanrat)
+  * Upgrade phpseclib to 3.0.50 to fix vulnerability
+
 ## Version 2.3.0 | Established (New features release) | 2024-02-02
 
   * [#54](https://github.com/gmazoyer/looking-glass/issues/54) Add support for routing instances (routing tables, VRFs, or other names)

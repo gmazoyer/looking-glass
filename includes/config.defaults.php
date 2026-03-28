@@ -2,7 +2,7 @@
 
 /*
  * Looking Glass - An easy to deploy Looking Glass
- * Copyright (C) 2014-2024 Guillaume Mazoyer <guillaume@mazoyer.eu>
+ * Copyright (C) 2014-2026 Guillaume Mazoyer <guillaume@mazoyer.eu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ $config = array(
 
   // Release configuration
   'release' => array(
-    'version' => '2.3.0',
+    'version' => '2.3.1',
     'codename' => 'Established',
     'repository' => 'https://github.com/gmazoyer/looking-glass'
   ),
