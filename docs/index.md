@@ -10,11 +10,11 @@ Easy to deploy Looking Glass made in PHP.
 ## Requirements
 
   * Webserver such as Apache 2, or Lighttpd, etc…
-  * PHP (>= 8.1) module for the webserver (`libapache2-mod-php` for Apache 2
+  * PHP (>= 8.2) module for the webserver (`libapache2-mod-php` for Apache 2
     for example)
   * The PDO extension to interact with SQLite for anti-spam feature
-    (`php8.2-sqlite3` on Debian for example)
-  * The XML package is required as well (`php8.2-xml` on Debian for example)
+    (`php8.4-sqlite3` on Debian for example)
+  * The XML package is required as well (`php8.4-xml` on Debian for example)
 
 ## Description
 
