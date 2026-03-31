@@ -1,0 +1,21 @@
+{
+	auto_https off
+	admin off
+	servers {
+		trusted_proxies static private_ranges
+	}
+}
+
+:80 {
+	root * /var/www/html
+
+	@blocked path /config.php /looking-glass.db /.htaccess
+	respond @blocked 403
+
+	php_fastcgi 127.0.0.1:9000
+	file_server
+
+	log {
+		output stderr
+	}
+}
