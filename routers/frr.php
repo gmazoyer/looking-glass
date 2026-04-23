@@ -45,14 +45,13 @@ final class FRR extends UNIX {
   protected function build_aspath_regexp($parameter, $routing_instance = false) {
     $commands = array();
     $cmd = new CommandBuilder();
-    // vytsh commands need to be quoted
-    $cmd->add(self::$wrapper, '"', 'show');
+    $cmd->add(self::$wrapper);
 
     if (!$this->config['disable_ipv6']) {
-      $commands[] = (clone $cmd)->add('bgp ipv6 regexp', $parameter, '"');
+      $commands[] = (clone $cmd)->add(escapeshellarg('show bgp ipv6 regexp '.$parameter));
     }
     if (!$this->config['disable_ipv4']) {
-      $commands[] = (clone $cmd)->add('bgp ipv4 regexp', $parameter, '"');
+      $commands[] = (clone $cmd)->add(escapeshellarg('show bgp ipv4 regexp '.$parameter));
     }
 
     return $commands;

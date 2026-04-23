@@ -258,30 +258,12 @@ function match_as($as) {
 function match_aspath_regexp($aspath_regexp) {
   global $config;
 
-  // Empty AS path regexp
-  if (empty($aspath_regexp)) {
+  // Allowlist: digits, space, and POSIX regex metacharacters only.
+  // No letters, no '/', no backtick, no control chars.
+  if (!preg_match('/\A[0-9 _\^\$\.\*\+\?\(\)\[\]\{\}\|\\\\,-]+\z/', $aspath_regexp)) {
     return false;
   }
 
-  // AS path containing a ; (not a valid character)
-  if (strpos($aspath_regexp, ';') !== false) {
-    return false;
-  }
-
-  // AS path containing a " (not a valid character, the string is automatically
-  // quoted if needed)
-  if (strpos($aspath_regexp, '"') !== false) {
-    return false;
-  }
-
-  // AS path containing a ' (not a valid character, the string is automatically
-  // quoted if needed)
-  if (strpos($aspath_regexp, '\'') !== false) {
-    return false;
-  }
-
-  // Check if the AS path regexp in in the list of regexp considered as
-  // invalid (see config option)
   foreach ($config['filters']['aspath_regexp'] as $invalid_aspath_regexp) {
     if ($invalid_aspath_regexp === $aspath_regexp) {
       return false;

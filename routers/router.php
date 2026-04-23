@@ -103,14 +103,14 @@ abstract class Router {
     $displayable = '';
 
     if ($this->global_config['output']['show_command']) {
-      $displayable .= '<p><kbd>Command: '.$command.'</kdb></p>';
+      $displayable .= '<p><kbd>Command: '.htmlspecialchars($command, ENT_QUOTES | ENT_HTML5).'</kbd></p>';
     }
     if ($this->global_config['output']['scroll']) {
       $displayable .= '<pre class="pre-scrollable">';
     } else {
       $displayable .= '<pre>';
     }
-    $displayable .= $output.'</pre>';
+    $displayable .= htmlspecialchars($output, ENT_QUOTES | ENT_HTML5).'</pre>';
 
     return $displayable;
   }

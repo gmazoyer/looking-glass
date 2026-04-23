@@ -45,14 +45,13 @@ class Quagga extends UNIX {
   protected function build_aspath_regexp($parameter, $routing_instance = false) {
     $commands = array();
     $cmd = new CommandBuilder();
-    // vytsh commands need to be quoted
-    $cmd->add(self::$wrapper, '"', 'show');
+    $cmd->add(self::$wrapper);
 
     if (!$this->config['disable_ipv6']) {
-      $commands[] = (clone $cmd)->add('ipv6 bgp regexp', $parameter, '"');
+      $commands[] = (clone $cmd)->add(escapeshellarg('show ipv6 bgp regexp '.$parameter));
     }
     if (!$this->config['disable_ipv4']) {
-      $commands[] = (clone $cmd)->add('ip bgp regexp', $parameter, '"');
+      $commands[] = (clone $cmd)->add(escapeshellarg('show ip bgp regexp '.$parameter));
     }
 
     return $commands;

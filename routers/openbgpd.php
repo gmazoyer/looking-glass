@@ -25,6 +25,7 @@ require_once('includes/command_builder.php');
 require_once('includes/utils.php');
 
 final class OpenBGPD extends UNIX {
+  protected string $wrapper;
 
   public function __construct($global_config, $config, $id, $requester) {
     parent::__construct($global_config, $config, $id, $requester);
@@ -58,7 +59,7 @@ final class OpenBGPD extends UNIX {
     if ($this->config['bgp_detail']) {
       $cmd->add('detail');
     }
-    $cmd->add('as', $parameter);
+    $cmd->add('as', escapeshellarg($parameter));
 
     return array($cmd);
   }
