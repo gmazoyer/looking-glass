@@ -123,8 +123,8 @@ class AntiSpam {
     $query->execute();
     $result = $query->fetch();
 
-    $in_period = !empty($result) and time() < $result['no_query_period'];
-    $obvious_spam = !isset($_POST['dontlook']) or !empty($_POST['dontlook']);
+    $in_period = (!empty($result) && time() < $result['no_query_period']);
+    $obvious_spam = (isset($_POST['dontlook']) && !empty($_POST['dontlook']));
 
     $degree = $in_period ? $result['degree'] + 1 : ($obvious_spam ? 512 : 1);
     $no_query_period = $this->no_query_period($degree);
