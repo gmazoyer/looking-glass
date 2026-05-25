@@ -80,10 +80,10 @@ final class IOSXR extends Cisco {
       }
 
       if (match_ipv6($parameter)) {
-        $cmd->add('ipv6', (isset($hostname) ? $hostname : $parameter));
+        $cmd->add('ipv6', $hostname);
       }
       if (match_ipv4($parameter)) {
-        $cmd->add('ipv4', (isset($hostname) ? $hostname : $parameter));
+        $cmd->add('ipv4', $hostname);
       }
     }
 
@@ -129,10 +129,10 @@ final class IOSXR extends Cisco {
       }
 
       if (match_ipv6($parameter)) {
-        $cmd->add('ipv6', (isset($hostname) ? $hostname : $parameter));
+        $cmd->add('ipv6', $hostname);
       }
       if (match_ipv4($parameter)) {
-        $cmd->add('ipv4', (isset($hostname) ? $hostname : $parameter));
+        $cmd->add('ipv4', $hostname);
       }
     }
 

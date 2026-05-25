@@ -96,10 +96,10 @@ class Cisco extends Router {
       }
 
       if (match_ipv6($parameter)) {
-        $cmd->add('ipv6', (isset($hostname) ? $hostname : $parameter));
+        $cmd->add('ipv6', $hostname);
       }
       if (match_ipv4($parameter)) {
-        $cmd->add('ip', (isset($hostname) ? $hostname : $parameter));
+        $cmd->add('ip', $hostname);
       }
     }
 

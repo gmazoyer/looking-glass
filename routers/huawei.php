@@ -115,10 +115,10 @@ class Huawei extends Router {
       }
 
       if (match_ipv6($parameter)) {
-        $cmd->add('ipv6', (isset($hostname) ? $hostname : $parameter));
+        $cmd->add('ipv6', $hostname);
       }
       if (match_ipv4($parameter)) {
-        $cmd->add((isset($hostname) ? $hostname : $parameter));
+        $cmd->add($hostname);
       }
     }
 
