@@ -49,11 +49,10 @@ class CommandBuilder {
    *                separator.
    */
   public function __toString() {
-    $string = '';
-    foreach ($this->elements as $element) {
-      $string .= $this->separator.$element;
+    if (empty($this->elements)) {
+      return '';
     }
-    return $string;
+    return $this->separator.implode($this->separator, $this->elements);
   }
 }
 
