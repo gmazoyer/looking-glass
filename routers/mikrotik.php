@@ -107,11 +107,10 @@ final class Mikrotik extends Router {
 
     if ($this->has_source_interface_id()) {
       if (is_valid_ip_address($this->get_source_interface_id())) {
-        $cmd->add('src-address=');
         if (match_ipv6($parameter)) {
-          $cmd->add($this->get_source_interface_id('ipv6'));
+          $cmd->add('src-address='.$this->get_source_interface_id('ipv6'));
         } else {
-          $cmd->add($this->get_source_interface_id('ipv4'));
+          $cmd->add('src-address='.$this->get_source_interface_id('ipv4'));
         }
       } else {
         $cmd->add('interface='.$this->get_source_interface_id());
@@ -140,11 +139,10 @@ final class Mikrotik extends Router {
 
     if ($this->has_source_interface_id()) {
       if (is_valid_ip_address($this->get_source_interface_id())) {
-        $cmd->add('src-address=');
         if (match_ipv6($parameter)) {
-          $cmd->add($this->get_source_interface_id('ipv6'));
+          $cmd->add('src-address='.$this->get_source_interface_id('ipv6'));
         } else {
-          $cmd->add($this->get_source_interface_id('ipv4'));
+          $cmd->add('src-address='.$this->get_source_interface_id('ipv4'));
         }
       } else {
         $cmd->add('interface='.$this->get_source_interface_id());
