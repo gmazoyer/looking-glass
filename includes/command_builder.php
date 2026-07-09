@@ -30,17 +30,6 @@ class CommandBuilder {
   }
 
   /**
-   * Breaks down an element into smaller one using the instance separator as
-   * delimiter.
-   *
-   * @param  string $element the element to break down.
-   * @return array  an array containing sub-elements.
-   */
-  private function breakdown_element($element) {
-    return explode($this->separator, $element);
-  }
-
-  /**
    * Adds given parameters to the command.
    *
    * There are no parameters in this function signature but it stil uses them.
@@ -60,11 +49,10 @@ class CommandBuilder {
    *                separator.
    */
   public function __toString() {
-    $string = '';
-    foreach ($this->elements as $element) {
-      $string .= $this->separator.$element;
+    if (empty($this->elements)) {
+      return '';
     }
-    return $string;
+    return $this->separator.implode($this->separator, $this->elements);
   }
 }
 

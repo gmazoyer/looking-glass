@@ -100,7 +100,7 @@ final class ExtremeNetIron extends Router {
       if (match_ipv6($parameter)) {
         $cmd->add('ipv6');
       }
-      $cmd->add(isset($hostname) ? $hostname : $parameter);
+      $cmd->add($hostname);
     } else {
       if (match_ipv6($parameter)) {
         $cmd->add('ipv6');
@@ -141,7 +141,7 @@ final class ExtremeNetIron extends Router {
       if (match_ipv6($parameter)) {
         $cmd->add('ipv6');
       }
-      $cmd->add(isset($hostname) ? $hostname : $parameter);
+      $cmd->add($hostname);
     } else {
       if (match_ipv6($parameter)) {
         $cmd->add('ipv6');

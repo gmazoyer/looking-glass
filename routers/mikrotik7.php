@@ -110,7 +110,6 @@ final class Mikrotik7 extends Router {
     }
 
     return array($cmd);
-    //return $commands;
   }
 
   protected function build_ping($parameter, $routing_instance = false) {
