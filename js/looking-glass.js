@@ -37,7 +37,7 @@ $(document).ready(function () {
     // reset the form and update the doc modal
     $(this).closest('form').get(0).reset();
     request_doc($('#query').val());
-    if (typeof grecaptcha.reset === "function") {
+    if (typeof grecaptcha !== "undefined" && typeof grecaptcha.reset === "function") {
       grecaptcha.reset();
     }
   });
@@ -46,7 +46,7 @@ $(document).ready(function () {
   $('#backhome').click(function () {
     $('.content').slideDown();
     $('.result').slideUp();
-    if (typeof grecaptcha.reset === "function") {
+    if (typeof grecaptcha !== "undefined" && typeof grecaptcha.reset === "function") {
       grecaptcha.reset();
     }
   });
