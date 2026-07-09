@@ -29,7 +29,7 @@ class Quagga extends UNIX {
   protected function build_bgp($parameter, $routing_instance = false) {
     $cmd = new CommandBuilder();
     // vytsh commands need to be quoted
-    $cmd->add(self::$wrapper, '"', 'show');
+    $cmd->add(static::$wrapper, '"', 'show');
 
     if (match_ipv6($parameter, false)) {
       $cmd->add('ipv6');
@@ -45,7 +45,7 @@ class Quagga extends UNIX {
   protected function build_aspath_regexp($parameter, $routing_instance = false) {
     $commands = array();
     $cmd = new CommandBuilder();
-    $cmd->add(self::$wrapper);
+    $cmd->add(static::$wrapper);
 
     if (!$this->config['disable_ipv6']) {
       $commands[] = (clone $cmd)->add(escapeshellarg('show ipv6 bgp regexp '.$parameter));
