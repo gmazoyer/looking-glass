@@ -14,21 +14,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      TAG_NAME: ${{ github.event.inputs.tag_name || github.event.release.tag_name }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
         with:
-          ref: ${{ github.event.inputs.tag_name || github.event.release.tag_name }}
+          ref: ${{ env.TAG_NAME }}
 
       - name: Build Docker image tags
         uses: docker/metadata-action@v6
         id: meta
         with:
           images: ${{ github.repository }}
+          # value is needed because a manual run has a branch ref, not a tag ref
           tags: |
-            type=semver,pattern={{major}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}.{{minor}}.{{patch}}
+            type=semver,pattern={{major}},value=${{ env.TAG_NAME }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ env.TAG_NAME }}
+            type=semver,pattern={{major}}.{{minor}}.{{patch}},value=${{ env.TAG_NAME }}
 
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v4
@@ -45,6 +48,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v7
         with:
+          # build the checked-out tag, not the Git context of github.sha
+          context: .
           push: true
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
